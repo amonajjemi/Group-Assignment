@@ -12,3 +12,7 @@ Can you read this?
 Yes I can
 
 Can we edit at the same time?
+
+To do:
+  Everyone create pseudo code for the inventory database module
+  Create UML diagram for any classes used
