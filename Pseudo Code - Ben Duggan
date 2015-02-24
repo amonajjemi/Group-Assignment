@@ -1,0 +1,218 @@
+Objects
+
+Book
+- ISBN : int
+- Title : Name
+- Author : string
+- Publisher : string
++ Book()
++ Book(isbn : int, title : string, author : string, pub : string)
++ Book(&obj : const Book)
++ ~Book()
++ SetISBN(isbn : int)
++ SetTitle(title : string)
++ SetAuthor(author : name)
++ SetPublisher(pub : string)
++ GetISBN() : int
++ GetTitle() : string
++ GetAuthor() : string
++ GetPublisher() : string
+
+
+Date
+- Day : int
+- Month : int
+- Year : int
++ Day() :
++ Day(month : int, day : int, year : int) :
++ Day(&obj : const Date) :
++ ~Day() :
++ SetDay(day : int) : void
++ SetMonth(month : int) : void
++ SetYear(year : int) : void
++ GetDay() : int
++ GetMonth() : int
++ GetYear() : int
++ GetDate(date : Date) : string
+
+Name
+- First : string
+- Last : string
++ Name() :
++ Name(first : string, last : string) : 
++ Name(&obj : const Name) :
++ ~Name() :
++ SetFirstName(first : string) : void
++ SetLastName(last : string) : void
++ GetFirstName() : string
++ GetLastName() : string
++ GetName(name : name) : string
+
+InventoryItem
+- BookItem : Book
+- DateAdded : Date
+- Quantity : int
+- Wholesale : double
+- Price : double
++ InventoryItem() :
++ InventoryItem(item : Book, date : date, quantitiy : int, whole : double, price : double) :
++ InventoryItem(&obj : const InventoryItem) :
++ ~InventoryItem() :
++ SetBook(book : Book) : void
++ SetDateAdded(date : Date) : void
++ SetQuantitiy(quantitiy : int) : void
++ SetWholesale(wholesale : double) : void
++ SetPrice(price : double) : void
++ GetBook() : Book
++ GetDateAdded() : Date
++ GetQuanitity() : int
++ GetWholesale() : double
++ GetPrice() : double
+
+
+Files:
+  Four binary files, all storing data in the same way. The first value is the number of inventory items. 
+  The rest of the file are the values of the database, in the order of which it was saved as, to allow easy reading
+    of the file into an array of Inventory Items
+  The different files hold the same data, but sorted in different ways.
+  The first file will hold the data unsorted (this will be the default file to use)
+  The second file will hold the data with the inventory items sorted by ISBN
+  The third file will hold the data with the inventory items sorted by book title
+  The fourth file will hold the data with the inventory items sorted by book author
+
+
+PSEUDO CODE
+
+// Possibly replace dynamic arrays with vectors
+
+Test if database file exists (will be a binary file)
+	Open file for binary input. Call object inFile
+	if it does, read the first value into an int variable (numItems)
+	Create a dynamic array of type InventoryItem with numItems elements 
+(dynInventory)
+	for loop. (int index = 0; while index < numItems; increment index by 1)
+		read binary files into each element of dynInventory
+Sort array using selection sort, sort based on Author’s last name
+Test if sorted database files exist (will be a binary file)
+	If they exist, create flags for each file which the program can user later to 
+	determine which sorted files exist
+Create copies of the array.	
+do while loop (Runs until the user chooses option ‘5’)
+Display Main Menu for module 
+	Option 1) Search for an item
+	Option 2) Modify an existing item
+	Option 3) Add a new item
+	Option 4) Remove an item
+	Option 5) Exit module
+get input from user corresponding to menu choices
+switch statement (user input from menu)
+case ‘1’: 	// Search for an item
+	Display Sub Menu
+	option 1) Search by ISBN
+	option 2) Search by book title
+	option 3) Search by book author
+	get input from user corresponding to sub menu choices
+	switch statement (user input from sub menu)
+		case ‘1’:	// Search by ISBN
+			Get user input for ISBN
+			Test for file sorted by ISBN flag
+			If flag is set to true (sorted file exists)
+				Read the file into a new dynamic array
+			if flag is set to false (sorted file doesn’t exist)
+				Create copy of dynInventory array
+				Perform selection sort on new array
+				Write new array to a file with corresponding name
+			Use Binary search on array to find item(s) with the correct ISBN 
+List all items found matching input
+		case ‘2’:	// Search by book title
+Get user input for book title
+			Test for file sorted by book title flag
+			If flag is set to true (sorted file exists)
+				Read the file into a new dynamic array
+			if flag is set to false (sorted file doesn’t exist)
+				Create copy of dynInventory array
+				Perform selection sort on new array
+				Write new array to a file with corresponding name
+			Use Binary search on array to find item(s) with the correct book title 
+List all items found matching input. 
+		case ‘3’:	// Search by book author
+Get user input for book author
+			Test for file sorted by book author flag
+			If flag is set to true (sorted file exists)
+				Read the file into a new dynamic array
+			if flag is set to false (sorted file doesn’t exist)
+				Create copy of dynInventory array
+				Perform selection sort on new array
+				Write new array to a file with corresponding name
+			Use Binary search on array to find item(s) with the correct book 
+author 
+List all items found matching input. 
+case ‘2’:  	// Modify an existing item
+		// Performs the same tasks as the search, but allows the user to modify the 
+// data as well
+	Display sub menu
+		Option 1) Modify an item with given ISBN
+		Option 2) Modify an item with given book title
+		Option 3) Modify an item with given book author
+	Get menu input from user
+	Get user input for field data corresponding to menu choice (ISBN, title, or author)
+	Test for sorted file flags for given field type (ISBN file flag, title file flag, author file 
+flag) These flags say whether a file with the data sorted by the given field exists
+If the flag is set to true (sorted file exists)
+	Read the file into a new dynamic array
+if the flag is set to false (sorted file doesn’t exist)
+	Create a copy of dynInventory array
+	Perform selection sort on new array based on field type (ISBN, title, or 
+author)
+Write new array to a binary file with name corresponding to field type
+Use binary search on new array to find the item(s) that matches user input
+List all items found matching input. Allow user to specify from a list which one to choose.
+Display sub menu to allow user to modify the data on the item chosen
+			Option 1) ISBN 
+			Option 2)Title
+			Option 3) Author
+			Option 4) Publisher
+			Option 5) Date added
+			Option 6) Quantitiy
+			Option 7) Wholesale Cost
+			Option 8) Price
+do while loop (loop until user chooses “no”)
+				Give prompts for option chosen, allowing the user to modify 
+a piece of data
+After chosen field has been modified, ask if user wants to 
+modify another field. Repeat until user chooses not to
+end loop
+case ‘3’: 	// Add an item
+	Display information telling user how to format input for adding an item
+do while loop (loop until user chooses not to enter any more items)
+	Get current date
+	Get input from user, create new InventoryItem object (using current date)
+	Allocate more memory for the dynInventory array
+	Add copy of the object to the array dynInventory. Delete original copy
+	Ask if user wants to add another item. If so, repeat loop. Else, end loop
+end of loop
+Re-sort array by ISBN. 
+case ‘4’:	// Remove an item
+		// Performs the same tasks as the search, but allows the user to remove an 
+// item as well
+Display sub menu
+		Option 1) Remove an item with given ISBN
+		Option 2) Remove an item with given book title
+		Option 3) Remove an item with given book author
+	Get menu input from user
+	Get user input for field data corresponding to menu choice (ISBN, title, or author)
+	Test for sorted file flags for given field type (ISBN file flag, title file flag, author file 
+flag) These flags say whether a file with the data sorted by the given field exists
+If the flag is set to true (sorted file exists)
+	Read the file into a new dynamic array
+if the flag is set to false (sorted file doesn’t exist)
+	Create a copy of dynInventory array
+	Perform selection sort on new array based on field type (ISBN, title, or 
+author)
+Write new array to a binary file with name corresponding to field type
+Use binary search on new array to find the item(s) that matches user input
+List all items found matching input. Allow user to specify from a list which one to choose.
+Prompt user for confirmation of deletion
+case ‘5’
+	Exit module
+end do while loop (loop repeats until ‘5’ is chosen in the main menu)
