@@ -60,3 +60,6 @@ void Name::SetLastName(string last){ Last = last; }
 string Name::GetFirstName(){ return First; }
 string Name::GetLastName(){ return Last; }
 string Name::GetName(){ return Last + ", " + First; }
+
+
+//TEST
