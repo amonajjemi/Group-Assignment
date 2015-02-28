@@ -64,10 +64,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Book.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="InventoryItem.h" />
+    <ClInclude Include="Name.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Book.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="InventoryItem.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Name.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="BenPseudocode.txt" />
