@@ -18,13 +18,13 @@
     <ClInclude Include="Date.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Book.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Name.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InventoryItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Book.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,13 +41,18 @@
     <ClCompile Include="Name.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="BenPseudocode.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="books.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bookgenerator.rb">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

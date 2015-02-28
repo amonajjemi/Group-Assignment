@@ -83,3 +83,23 @@ double InventoryItem::getPrice()
 {
 	return Price;
 }
+
+/*int InventoryItem::GetISBN()
+{
+	return BookItem.getISBN();
+}
+
+string InventoryItem::GetTitle()
+{
+	return BookItem.getTitle();
+}
+
+string InventoryItem::GetAuthor()
+{
+	return BookItem.getAuthor();
+}
+
+string InventoryItem::GetPublisher()
+{
+	return BookItem.getPublisher();
+}*/
