@@ -5,12 +5,23 @@
 
 using namespace std;
 
+Book::~Book()
+{}
+
+Book::Book(const Book &obj)
+{
+	ISBN = obj.ISBN;
+	title = obj.title;
+	author = obj.author;
+	publisher = obj.publisher;
+}
+
 Book::Book()
 {
-	//MUST FILL IN
-	//
-	//
-	//
+	ISBN = 0;
+	title = "";
+	author.Name::Name();
+	publisher = "";
 }
 
 Book::Book(int eISBN, string eTitle, Name eAuthor, string ePublisher)

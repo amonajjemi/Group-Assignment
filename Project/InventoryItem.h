@@ -14,6 +14,7 @@ private:
 public:
 	InventoryItem();
 	InventoryItem(Book, Date, int, double, double);
+	InventoryItem(const InventoryItem&);
 	~InventoryItem();
 
 	void setBook(Book);
