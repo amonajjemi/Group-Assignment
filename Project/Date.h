@@ -1,7 +1,5 @@
-#pragma once
 #ifndef DATE_H
 #define DATE_H
-
 #include <string>
 
 using namespace std;
@@ -16,6 +14,12 @@ public:
 	Date(const Date&);
 	Date(int, int, int);
 	~Date();
+	bool operator>(const Date&);
+	bool operator>=(const Date&);
+	bool operator<(const Date&);
+	bool operator<=(const Date&);
+	bool operator==(const Date&);
+	void operator=(const Date&);
 	//Setters
 	void SetDay(int);
 	void SetMonth(int);
