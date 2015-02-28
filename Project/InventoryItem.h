@@ -28,6 +28,11 @@ public:
 	int getQuantity();
 	double getWholesale();
 	double getPrice();
+
+	int GetISBN();
+	string GetTitle();
+	string GetAuthor();
+	string GetPublisher();
 };
 
 #endif
