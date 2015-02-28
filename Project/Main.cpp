@@ -199,32 +199,37 @@ int main()
 	
 
 
-	
-	cout 
-		<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
-		<< setw(10) << "Date Added" << setw(8) << "Quantity" << setw(8) << "Wholesale" << setw(6) << "Price" << endl;
-		
+
+	// Assigns values for all objects in the items[] array
 	for (int k = 0; k < 50; k++)
 	{
 		items[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
-		
+		/*
+		// Display all values for each object in the array
 		cout << left
 			<< setw(14) << items[k].getBook().getISBN() << "\"" << setw(15) << items[k].getBook().getTitle() << "\"" << setw(12) << items[k].getBook().getAuthor() << setw(10) << items[k].getBook().getPublisher() << endl
 			<< setw(10) << items[k].getDateAdded() << setw(8) << items[k].getQuantity()
-			<< setw(8) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;
-	
+			<< setw(8) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;	
+			*/
 	}
-	system("pause");
+	// Write the array of objects into a binary file
 	outBinary.open(strUnsorted, ios::out | ios::binary);
 	BinaryWrite(outBinary, items, 50);
 	outBinary.close();
-	outBinary.clear();
+	outBinary.clear();	// End of writing
 
+	// Read the binary file into the dynamic array items2[]
 	inBinary.open(strUnsorted, ios::in | ios::binary);
 	BinaryRead(inBinary, items2);
-	inBinary.close();
+	inBinary.close();	// End of reading
 	
+	// Header formating for output
+	cout
+		<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+		<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl;
 
+
+	// Display all values for each object in the array
 	cout << endl << endl << "Binary Read:" << endl << endl;
 	system("pause");
 	for (int k = 0; k < 50; k++)
@@ -232,7 +237,7 @@ int main()
 		cout << left
 			<< setw(14) << items2[k].getBook().getISBN() << "\"" << setw(15) << items2[k].getBook().getTitle() << "\"" << setw(12) << items2[k].getBook().getAuthor() << setw(10) << items2[k].getBook().getPublisher() << endl
 			<< setw(10) << items2[k].getDateAdded() << setw(8) << items2[k].getQuantity()
-			<< setw(8) << "Whole " << items2[k].getWholesale() << setw(6) << " Price " << items2[k].getPrice() << endl << endl;
+			<< setw(8) << items2[k].getWholesale() << setw(6) << items2[k].getPrice() << endl << endl;
 
 	}
 
