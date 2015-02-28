@@ -54,9 +54,7 @@ void TextRead(fstream &inFile, Book *book)
 		char temp;
 		string strISBN;
 		string title, first, last, publisher;
-	//	char comma;
 		inFile >> size;
-	//	book = new Book[size];
 		for (count = 0; count < size; count++)
 		{
 			inFile >> strISBN;
@@ -69,12 +67,6 @@ void TextRead(fstream &inFile, Book *book)
 			book[count].setTitle(title);
 			book[count].setAuthor({ last, first });
 			book[count].setPublisher(publisher);
-	/*		cout 
-				<< "ISBN: " << strISBN << endl
-				<< "Title: " << title << endl
-				<< "Name: " << last << ", "<< first << endl 
-				<< "Publisher: " << publisher << endl;
-				*/
 		}
 //	}
 //	else
@@ -166,21 +158,144 @@ void Database()
 }
 void DatabaseMenu(InventoryItem *items, int size)
 {
+	char choice1, choice2, choice3;
 	string strMainMenu[] = {
 		"What would you like to do?\n",
-		"1) - Display currently stored inventory items\n" };
-	switch (Choice(1, 1))
-	{
-	case '1':
-		for (int k = 0; k < size; k++)
-		{
-			cout
-				<< "ISBN: " << items[k].getBook().getISBN() << " Title: " << items[k].getBook().getTitle() << " Author: " << items[k].getBook().getAuthor() << " Publisher: " << items[k].getBook().getPublisher()
-				<< " Date added: " << items[k].getDateAdded() << " Quantity: " << items[k].getQuantity() << " Wholesale: " << items[k].getWholesale() << " Price: " << items[k].getPrice() << endl;
-		}
-		break;
-	}
+		"1) - Search for an Item\n",
+		"2) - Modify an existing item\n",
+		"3) - Add a new item\n",
+		"4) - Remove an item\n",
+		"5) - Exit module\n"};
+	string strSubMenu1[] = {	// Menu number corresponds to choice in MainMenu. (1 is for searching for an item)
+		"Search for an item\n",
+		"1) - Search by ISBN\n",
+		"2) - Search by book title\n", 
+		"3) - Search by book author\n"};
+	string strSubMenu2[] = {	// Menu number corresponds to choice in MainMenu. (2 is for modifying an item)
+		"Modify an existing item\n",
+		"1) - Modify an item with given ISBN\n",
+		"2) - Modify an item with given book title\n",
+		"3) - Modify an item with given book author\n"};
+	string strFieldMenu[] = {	// Menu used for modifying an item, allowing the user to choose which fields to modify
+		"What data field do you wish to modify?\n",
+		"1) - ISBN\n",
+		"2) - Book Title\n",
+		"3) - Book Aathor\n",
+		"4) - Book Publisher\n",
+		"5) - Date Added \n",
+		"6) - Quantity\n",
+		"7) - Wholesale Cost\n",
+		"8) - Price\n"};
+	string strSubMenu4[] = {
+		"Remove an item\n",
+		"1) - Remove an item with given ISBN\n",
+		"2) - Remove an item with given book title\n",
+		"3) - Remove an item with given book author\n",	};
 
+	while (1)	// Will always loop. The only exit condition is if the user chooses '5' in the main menu
+	{
+		for (string temp : strMainMenu)	// Display main menu
+			cout << temp;
+		switch (Choice('1','5'))
+		{
+		case '1':	// Search for an item
+			do
+			{
+				for (string temp : strSubMenu1)	// Display sub menu 
+					cout << temp;
+				int itemIndex = 0;
+				switch (Choice('1', '3'))
+				{
+				case '1':
+					// Get user input for ISBN
+					// Search array by ISBN, retrieve indexes of found matches
+					cout << "Enter ISBN: " << endl;
+					break;
+				case '2':
+					// Get user input for book title
+					// Search array by book title, retreive indexes of found matches
+					cout << "Enter book title: " << endl;
+					break;
+				case '3':
+					// Get user input for book author
+					// Search array by book author, retreive indexes of found matches
+					cout << "Enter book author: " << endl;
+					break;
+				}
+				// Display all items found matching search parameters
+				cout << "Would you like to search for another item? \"n\" for no, \"y\" for yes" << endl;
+			} while (tolower(YesNo()) == 'y');
+			break;
+		case '2':	// Modify an existing item
+			do
+			{
+				for (string temp : strSubMenu2)	// Display sub menu
+					cout << temp;
+				switch (Choice('1', '3'))
+				{
+				case '1':
+					// Get user input for ISBN
+					// Search array by ISBN, retrieve indexes of found matches
+					cout << "Enter ISBN: " << endl;
+					break;
+				case '2':
+					break;
+				case '3':
+					break;
+				}
+				// Display all items found matching search parameters, with numbered options to allow selection
+				// Allow user to choose which result to modify
+				/*
+				for (int count = 0; count < numMatches; index++)
+				{
+					// 
+				}
+				*/
+				for (string temp : strFieldMenu)
+					cout << temp;
+				switch (Choice('1', '8'))	// Modify the data members of the choosen inventory item
+				{
+
+				}
+				cout << "Would you like to modify another item? \"n\" for no, \"y\" for yes" << endl;
+			} while (tolower(YesNo()) == 'y');
+			break;
+		case '3':	// Add an item
+			do
+			{
+
+				cout << "Would you like to add another item?  \"n\" for no, \"y\" for yes" << endl;
+			} while (tolower(YesNo()) == 'y');
+			break;
+		case '4':	// Remove an item
+			do
+			{
+				for (string temp : strSubMenu4)	// Display sub menu
+					cout << temp;
+				switch (Choice('1', '3'))
+				{
+				case '1':
+					// Get user input for ISBN
+					// Search array by ISBN, retrieve indexes of found matches
+					break;
+				case '2':
+					// Get user input for book title
+					// Search array by book title, retreive indexes of found matches
+					break;
+				case '3':
+					// Get user input for book author
+					// Search array by book author, retreive indexes of found matches
+					break;
+					// Display all items found matching search parameters, with numbered options to allow selection
+					// Allow user to choose which result to remove
+				}
+				cout << "Would you like to remove another item?  \"n\" for no, \"y\" for yes" << endl;
+			} while (tolower(YesNo()) == 'y');
+			break;
+		case '5':	// Exit module
+			return;
+		}
+	}
 }
 int main()
 {
@@ -202,16 +317,7 @@ int main()
 
 	// Assigns values for all objects in the items[] array
 	for (int k = 0; k < 50; k++)
-	{
 		items[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
-		/*
-		// Display all values for each object in the array
-		cout << left
-			<< setw(14) << items[k].getBook().getISBN() << "\"" << setw(15) << items[k].getBook().getTitle() << "\"" << setw(12) << items[k].getBook().getAuthor() << setw(10) << items[k].getBook().getPublisher() << endl
-			<< setw(10) << items[k].getDateAdded() << setw(8) << items[k].getQuantity()
-			<< setw(8) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;	
-			*/
-	}
 	// Write the array of objects into a binary file
 	outBinary.open(strUnsorted, ios::out | ios::binary);
 	BinaryWrite(outBinary, items, 50);
@@ -241,6 +347,6 @@ int main()
 
 	}
 
-
+	DatabaseMenu(items2, 50);
 	return 0;
 }
