@@ -19,6 +19,9 @@ Date::Date(const Date &obj){
 Date::Date(int year, int month, int day){
 	// Constructor for Date class
 	// Prevents invalid values, so there can't be any months beyond 12, or any days beyond what is allowed for the given date
+	Day = day;
+	Month = month;
+	Year = year;
 	if (month > 12)	
 		month = 12;
 	switch (month)	// Prevents months from having too many days
@@ -88,9 +91,7 @@ Date::Date(int year, int month, int day){
 			day = 31;
 		break;
 	}
-	Day = day;
-	Month = month;
-	Year = year;
+
 
 }
 Date::~Date(){
