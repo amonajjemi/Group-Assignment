@@ -80,100 +80,112 @@ Date::~Date(){
 
 }
 bool Date::operator>(const Date &obj){
-	if (Year > obj.Year)
+	// Greater than operator for Date class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if (Year > obj.Year)		// If the year is greater, the date is greater
 		return true;
-	else if (Year < obj.Year)
+	else if (Year < obj.Year)	// If the year is lesser, the date is not greater
 		return false;
-	else
+	else			// equivalent to if (Year == obj.Year) If year is equal, more testing is needed
 	{
-		if (Month > obj.Month)
+		if (Month > obj.Month)	// If year is equal, and month is greater, the date is greater
 			return true;
-		else if (Month < obj.Month)
+		else if (Month < obj.Month)	// If year is equal, and month is lesser, the date is not greater
 			return false;
-		else
+		else		// equivalent toif (Month == obj.Month) If year and month is equal, more testing is needed
 		{
-			if (Day > obj.Day)
+			if (Day > obj.Day)	// If year and month is equal, and day is greater, the date is greater
 				return true;
-			else if (Day < obj.Day)
+			else if (Day < obj.Day)	// If year and month is equal, and day is lesser, the date is not greater
 				return false;
-			else
+			else // equivalent to if (Day == obj.Day) If year and month and day is equal, the date is not greater
 				return false;
 		}
 	}
 }
 bool Date::operator>=(const Date &obj){
-	if (Year > obj.Year)
+	// Greater than or equal to operator for the Date class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if (Year > obj.Year) // If the year is greater, the date is greater or equal
 		return true;
-	else if (Year < obj.Year)
+	else if (Year < obj.Year) // If the year is lesser, the date is not greater or equal
 		return false;
-	else
+	else		// equivalent to if (Year == obj.Year) If year is equal, more testing is needed
 	{
-		if (Month > obj.Month)
+		if (Month > obj.Month) // If year is equal, and month is greater, the date is greater or equal
 			return true;
-		else if (Month < obj.Month)
+		else if (Month < obj.Month) // If year is equal, and month is lesser, the date is not greater or equal
 			return false;
-		else
+		else	// equivalent to if (Month == obj.Month) If year and month is equal, more testing is needed
 		{
-			if (Day > obj.Day)
+			if (Day > obj.Day) // If year and month is equal, and day is greater, the date is greater or equal
 				return true;
-			else if (Day < obj.Day)
+			else if (Day < obj.Day) // If year and month is equal, and day is lesser, the date is not greater or equal
 				return false;
-			else
+			else	// equivalent to if (Day == obj.Day) If year and month and day is equal, the date is greater or equal
 				return true;
 		}
 	}
 }
 bool Date::operator<(const Date &obj){
-	if (Year > obj.Year)
+	// Less than operator for the Date class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if (Year > obj.Year) // If the year is greater, the date is not lesser
 		return false;
-	else if (Year < obj.Year)
+	else if (Year < obj.Year) // If the year is lesser, the date is lesser
 		return true;
-	else
+	else		// equivalent to if (Year == obj.Year) If year is equal, more testing is needed
 	{
-		if (Month > obj.Month)
+		if (Month > obj.Month) // If year is equal, and month is greater, the date is not lesser
 			return false;
-		else if (Month < obj.Month)
+		else if (Month < obj.Month) // If year is equal, and month is lesser, the date is lesser
 			return true;
-		else
+		else	// equivalent to if (Month == obj.Month) If year and month is equal, more testing is needed
 		{
-			if (Day > obj.Day)
+			if (Day > obj.Day) // If year and month is equal, and day is greater, the date is not lesser
 				return false;
-			else if (Day < obj.Day)
+			else if (Day < obj.Day) // If year and month is equal, and day is lesser, the date is lesser
 				return true;
-			else
+			else	// equivalent to if (Day == obj.Day) If year and month and day is equal, the date is not lesser
 				return false;
 		}
 	}
 }
 bool Date::operator<=(const Date &obj){
-	if (Year > obj.Year)
+	// Less than or equal to operator for the Date class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if (Year > obj.Year) // If the year is greater, the date is not lesser or equal
 		return false;
-	else if (Year < obj.Year)
+	else if (Year < obj.Year) // If the year is lesser, the date is lesser or equal
 		return true;
-	else
+	else		// equivalent to if (Year == obj.Year) If year is equal, more testing is needed
 	{
-		if (Month > obj.Month)
+		if (Month > obj.Month) // If year is equal, and month is greater, the date is not lesser or equal
 			return false;
-		else if (Month < obj.Month)
+		else if (Month < obj.Month) // If year is equal, and month is lesser, the date is lesser or equal
 			return true;
-		else
+		else	// equivalent to if (Month == obj.Month) If year and month is equal, more testing is needed
 		{
-			if (Day > obj.Day)
+			if (Day > obj.Day) // If year and month is equal, and day is greater, the date is not lesser or equal
 				return false;
-			else if (Day < obj.Day)
+			else if (Day < obj.Day) // If year and month is equal, and day is lesser, the date is lesser or equal
 				return true;
-			else
+			else // equivalent to if (Day == obj.Day) If year and month and day is equal, the date is lesser or equal
 				return true;
 		}
 	}
 }
 bool Date::operator==(const Date &obj){
-	if (Year == obj.Year && Month == obj.Month && Day == obj.Day)
+	// Equal to operator for the Date class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if (Year == obj.Year && Month == obj.Month && Day == obj.Day)	// If year, month, and day is equal, the date is equal
 		return true;
 	else
 		return false;
 }
 void Date::operator=(const Date &obj){
+	// Assignment operator for the Date class
+	// Assigns the value of the right hand side to the left hand side (obj is right hand side)
 	Day = obj.Day;
 	Month = obj.Month;
 	Year = obj.Year;
