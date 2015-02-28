@@ -18,13 +18,13 @@ Book::Book(const Book &obj)
 
 Book::Book()
 {
-	ISBN = 0;
+	ISBN = "";
 	title = "";
 	author.Name::Name();
 	publisher = "";
 }
 
-Book::Book(int eISBN, string eTitle, Name eAuthor, string ePublisher)
+Book::Book(string eISBN, string eTitle, Name eAuthor, string ePublisher)
 {
 	ISBN = eISBN;
 	title = eTitle;
@@ -32,7 +32,7 @@ Book::Book(int eISBN, string eTitle, Name eAuthor, string ePublisher)
 	publisher = ePublisher;
 }
 
-void Book::setISBN(int eISBN)
+void Book::setISBN(string eISBN)
 {
 	ISBN = eISBN;
 }
@@ -52,7 +52,7 @@ void Book::setPublisher(string ePublisher)
 	publisher = ePublisher;
 }
 
-int Book::getISBN()
+string Book::getISBN()
 {
 	return ISBN;
 }

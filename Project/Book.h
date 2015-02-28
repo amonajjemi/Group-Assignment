@@ -8,22 +8,22 @@ using namespace std;
 class Book
 {
 private:
-	int ISBN;
+	string ISBN;
 	string title;
 	Name author;
 	string publisher;
 public:
 	Book();
-	Book(int eISBN, string eTitle, Name eAuthor, string ePublisher);
+	Book(string eISBN, string eTitle, Name eAuthor, string ePublisher);
 	Book(const Book&);
 	~Book();
 
-	void setISBN(int);
+	void setISBN(string);
 	void setTitle(string);
 	void setAuthor(Name);
 	void setPublisher(string);
 
-	int getISBN();
+	string getISBN();
 	string getTitle();
 	string getAuthor();
 	string getPublisher();
