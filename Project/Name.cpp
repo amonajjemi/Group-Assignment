@@ -7,7 +7,7 @@ Name::Name(){
 	First = "";
 	Last = "";
 }
-Name::Name(string first, string last){
+Name::Name(string last, string first){
 	First = first;
 	Last = last;
 }
