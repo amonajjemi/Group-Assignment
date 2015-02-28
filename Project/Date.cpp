@@ -16,10 +16,12 @@ Date::Date(const Date &obj){
 	Year = obj.Year;
 
 }
-Date::Date(int month, int day, int year){
-	if (month > 12)
+Date::Date(int year, int month, int day){
+	// Constructor for Date class
+	// Prevents invalid values, so there can't be any months beyond 12, or any days beyond what is allowed for the given date
+	if (month > 12)	
 		month = 12;
-	switch (month)
+	switch (month)	// Prevents months from having too many days
 	{
 	case 1:
 		if (day > 31)
@@ -27,7 +29,23 @@ Date::Date(int month, int day, int year){
 		break;
 	case 2:
 		if (day > 28)
+		{
 			day = 28;
+			// Cases to check for leap year
+			if (year % 4 == 0)	// If year is divisble by 4, it IS a leap year
+			{	
+				day = 29;
+				if (year % 100 == 0) // But if the year is also divisible by 100, it is NOT a leap year
+				{
+					day = 28;
+					if (year % 400 == 0) // But if the year is also divisble by 400, it IS a leap year
+					{
+						day = 29;
+					}
+				}
+			}
+		}
+			
 		break;
 	case 3:
 		if (day > 31)
@@ -76,7 +94,6 @@ Date::Date(int month, int day, int year){
 
 }
 Date::~Date(){
-
 
 }
 bool Date::operator>(const Date &obj){
