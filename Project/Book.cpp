@@ -23,11 +23,6 @@ Book::Book(int eISBN, string eTitle, Name eAuthor, string ePublisher)
 
 void Book::setISBN(int eISBN)
 {
-	while (eISBN < 0)
-	{
-		cout << "Please enter a non-negative number." << endl;
-		cin >> eISBN;
-	}
 	ISBN = eISBN;
 }
 

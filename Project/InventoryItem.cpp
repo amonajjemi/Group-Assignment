@@ -32,32 +32,17 @@ void InventoryItem::setDateAdded(Date eDate)
 
 void InventoryItem::setQuantity(int eQuantity)
 {
-	while (eQuantity < 0)
-	{
-		cout << "Please enter a non-negative number." << endl;
-		cin >> eQuantity;
-	}
 		Quantity = eQuantity;
 
 }
 
 void InventoryItem::setWholesale(double eWhole)
 {
-	while (eWhole < 0)
-	{
-		cout << "Please enter a non-negative number." << endl;
-		cin >> eWhole;
-	}
 	Wholesale = eWhole;
 }
 
 void InventoryItem::setPrice(double ePrice)
 {
-	while (ePrice < 0)
-	{
-		cout << "Please enter a non-negative number." << endl;
-		cin >> ePrice;
-	}
 	Price = ePrice;
 }
 
