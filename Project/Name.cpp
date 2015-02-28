@@ -18,40 +18,52 @@ Name::Name(const Name &obj){
 Name::~Name(){
 }
 bool Name::operator>(const Name &obj){
-	if ((Last + First) > (obj.Last + obj.First))
+	// Greater than operator for the Name class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if ((Last + First) > (obj.Last + obj.First))	// Compares alphabetically starting with last name
 		return true;
 	else
 		return false;
 }
 bool Name::operator>=(const Name &obj){
-	if ((Last + First) > (obj.Last + obj.First))
+	// Greater than or equal to operator for the Name class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if ((Last + First) > (obj.Last + obj.First)) // Compares alphabetically starting with last name
 		return true;
-	else if ((Last + First) == (obj.Last + obj.First))
+	else if ((Last + First) == (obj.Last + obj.First)) // Compares alphabetically starting with last name
 		return true;
 	else
 		return false;
 }
 bool Name::operator<(const Name &obj){
-	if ((Last + First) < (obj.Last + obj.First))
+	// Less than operator for the Name class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if ((Last + First) < (obj.Last + obj.First)) // Compares alphabetically starting with last name
 		return true;
 	else
 		return false;
 }
 bool Name::operator<=(const Name &obj){
-	if ((Last + First) < (obj.Last + obj.First))
+	// Less than or equal to operator for the Name class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if ((Last + First) < (obj.Last + obj.First)) // Compares alphabetically starting with last name
 		return true;
-	else if ((Last + First) == (obj.Last + obj.First))
+	else if ((Last + First) == (obj.Last + obj.First)) // Compares alphabetically starting with last name
 		return true;
 	else
 		return false;
 }
 bool Name::operator==(const Name &obj){
-	if ((Last + First) == (obj.Last + obj.First))
+	// Equal to operator for the Name class
+	// Compares the left hand side to the right hand side (obj is right hand side)
+	if ((Last + First) == (obj.Last + obj.First)) // Compares alphabetically starting with last name
 		return true;
 	else
 		return false;
 }
 void Name::operator=(const Name &obj){
+	// Assignment operator for the Name class
+	// Assigns the value of the right hand side to the left hand side (obj is right hand side)
 	First = obj.First;
 	Last = obj.Last;
 }
