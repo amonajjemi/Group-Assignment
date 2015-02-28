@@ -77,6 +77,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="BenPseudocode.txt" />
+    <Text Include="books.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bookgenerator.rb" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
