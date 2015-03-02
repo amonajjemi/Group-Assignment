@@ -3,55 +3,127 @@
 #include <fstream>
 using namespace std;
 
-void BinaryRead(fstream &inFile, InventoryItem *items)
+
+void BinaryRead(string strInFile, InventoryItem *items)
 {
-	int iSize;
-	inFile.read(reinterpret_cast<char *>(&iSize), sizeof(iSize));
-	cout << "Number of Inventory Items: " << iSize << endl;
-
-	for (int k = 0; k < iSize; k++)
+	fstream inBinary;
+	inBinary.open(strInFile, ios::in | ios::binary);
+	if (inBinary.good())
 	{
-		inFile.read(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));
+		int iSize;
+		inBinary.read(reinterpret_cast<char *>(&iSize), sizeof(iSize));
+		cout << "Number of Inventory Items: " << iSize << endl;
+		InventoryItem temp;
+		items = new InventoryItem[iSize];
+		for (int k = 0; k < iSize; k++)
+		{
+			inBinary.read(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));
+		}
+		cout << "End of binary read" << endl;
 
+		//	delete reinterpret_cast<char *>(temp);
 	}
-	cout << "End of binary read" << endl;
+	else
+		cout << "Error opening file" << endl;
 	system("pause");
+	inBinary.close();
+	inBinary.clear();
 }
-void BinaryWrite(fstream &outFile, InventoryItem *items, int size){
-	outFile.write(reinterpret_cast<char *>(&size), sizeof(size));
-	for (int k = 0; k < size; k++)
+void  BinaryWrite(string strOutFile, InventoryItem *items, int size){
+	fstream outFile;
+	outFile.open(strOutFile, ios::out | ios::binary);
+	if (outFile.good())
 	{
-		outFile.write(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));
+		outFile.write(reinterpret_cast<char *>(&size), sizeof(size));
+		InventoryItem temp;
+		for (int k = 0; k < size; k++)
+		{
+			outFile.write(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));
+		}
+		cout << "End of binary write" << endl;
+		system("pause");
+		//	delete reinterpret_cast<char *>(temp);
 	}
-
-	cout << "End of binary write" << endl;
-	system("pause");
+	else
+		cout << "Error opening file" << endl;
+	outFile.close();
+	outFile.clear();
 }
-void TextRead(fstream &inFile, Book *book)
+void TextRead(string strFile, InventoryItem *items){
+	fstream inFile;
+	inFile.open(strFile, ios::in);
+	if (inFile.good())
+	{
+		int size;
+		string temp;
+		string ISBN, title, first, last, publisher;
+		int year, month, day, quantity;
+		double wholesale, price;
+		inFile >> size;
+		for (int k = 0; k < size && !inFile.eof(); k++)
+		{
+			inFile >> ISBN;
+			getline(inFile, temp, '\'');
+			getline(inFile, title, '\'');
+			inFile >> last >> first >> publisher >> year >> month >> day >> quantity >> wholesale >> price;
+			items[k] = { { ISBN, title, { last, first }, publisher }, { year, month, day }, quantity, wholesale, price };
+		}
+		//	cout << "End of text read for Inventory Items" << endl;
+		//	system("pause");
+	}
+	else
+		cout << "Error opening file" << endl;
+	inFile.close();
+	inFile.clear();
+}
+void TextWrite(string strFile, InventoryItem *items, int size){
+	fstream outFile;
+	outFile.open(strFile, ios::out);
+	if (outFile.good())
+	{
+		outFile << size << endl;
+		for (int k = 0; k < size; k++)
+		{
+			outFile
+				<< items[k].getBook().getISBN() << " " << "\'" << items[k].getBook().getTitle() << "\'" << items[k].getBook().getAuthor().GetLastName() << " " << items[k].getBook().getAuthor().GetFirstName() << " " << items[k].getBook().getPublisher() << " "
+				<< items[k].getDateAdded().GetYear() << " " << items[k].getDateAdded().GetMonth() << " " << items[k].getDateAdded().GetDay() << " " << items[k].getQuantity() << " " << items[k].getWholesale() << " " << items[k].getPrice() << endl;
+			//	cout << k + 1 << ") Book title written: " << items[k].getBook().getTitle() << endl;
+		}
+		//	cout << "End of text write for Inventory Items" << endl;
+		//	system("pause");
+	}
+	else
+		cout << "Error opening file" << endl;
+	outFile.close();
+	outFile.clear();
+}
+
+void TextRead(string strFile, Book *book)
 {
-	//	if (inFile.good())
-	//	{
-	int count, size;
-	char temp;
-	string strISBN;
-	string title, first, last, publisher;
-	inFile >> size;
-	for (count = 0; count < size; count++)
+	fstream inFile;
+	inFile.open(strFile, ios::in);
+	if (inFile.good())
 	{
-		inFile >> strISBN;
-		inFile.get(temp);
-		inFile.get(temp);
-		getline(inFile, title, '\'');
-		getline(inFile, last, ',');
-		inFile >> first >> publisher;
-		book[count].setISBN(strISBN);
-		book[count].setTitle(title);
-		book[count].setAuthor({ last, first });
-		book[count].setPublisher(publisher);
+		int size;
+		char temp;
+		string ISBN;
+		string title, first, last, publisher;
+		inFile >> size;
+		for (int index = 0; index < size; index++)
+		{
+			inFile >> ISBN;
+			inFile.get(temp);
+			inFile.get(temp);
+			getline(inFile, title, '\'');
+			getline(inFile, last, ',');
+			inFile >> first >> publisher;
+			book[index] = { ISBN, title, { last, first }, publisher };
+		}
 	}
-	//	}
-	//	else
-	//		cout << "File error, cannot open file" << endl;
+	else
+		cout << "Error opening file" << endl;
+	inFile.close();
+	inFile.clear();
 }
 
 
