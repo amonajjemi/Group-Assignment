@@ -3,6 +3,7 @@
 
 #include "InventoryItem.h"
 
+using namespace std;
 
 char Choice(char, char);
 char YesNo();

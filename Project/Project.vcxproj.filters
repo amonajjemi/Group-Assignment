@@ -27,6 +27,12 @@
     <ClInclude Include="InventoryItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Database.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Files.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Date.cpp">
@@ -44,14 +50,26 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Files.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="BenPseudocode.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="books.txt" />
+    <Text Include="unsorted.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="bookgenerator.rb" />
+    <None Include="unsorted">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

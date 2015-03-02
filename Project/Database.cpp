@@ -1,5 +1,7 @@
-#include "Database.h"
 #include "InventoryItem.h"
+#include "Database.h"
+#include "Files.h"
+
 
 #include <iostream>
 #include <fstream>
@@ -8,6 +10,7 @@
 #include <cstdlib>
 
 using namespace std;
+
 
 char Choice(char low, char high)
 {	/*
@@ -49,7 +52,37 @@ char YesNo()
 }
 void Database()
 {
+	string strUnsorted = "unsorted.txt";
+	bool unsortedFlag = false, ISBNflag = false, authorFlag = false, titleFlag = false;
+//	int iSize;
 
+	InventoryItem *items = nullptr;
+	items = new InventoryItem[50];
+
+
+
+	
+	/*	// File creator using books.txt file
+	string strBooks = "books.txt";
+	fstream inBook;
+	Book books[50];
+	InventoryItem items[50];
+	inBook.open(strBooks, ios::in);
+	TextRead(inBook, books);
+	inBook.close();
+	// Assigns values for all objects in the items[] array
+	for (int k = 0; k < 50; k++)
+		items[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
+	// Write the array of objects into a file
+	
+	outItems.open(strUnsorted, ios::out);
+	TextWrite(outItems, items, 50);
+	outItems.close();
+	*/
+
+	TextRead(strUnsorted, items);
+	TextWrite("test", items, 50);
+	DatabaseMenu(items, 50);
 }
 void DatabaseMenu(InventoryItem *items, int size)
 {
@@ -59,7 +92,8 @@ void DatabaseMenu(InventoryItem *items, int size)
 		"2) - Modify an existing item\n",
 		"3) - Add a new item\n",
 		"4) - Remove an item\n",
-		"5) - Exit module\n" };
+		"5) - Exit module\n",
+		"6) - Display all items\n"};
 	string strSubMenu1[] = {	// Menu number corresponds to choice in MainMenu. (1 is for searching for an item)
 		"Search for an item\n",
 		"1) - Search by ISBN\n",
@@ -89,12 +123,14 @@ void DatabaseMenu(InventoryItem *items, int size)
 	while (1)	// Will always loop. The only exit condition is if the user chooses '5' in the main menu
 	{
 		cout << flush;
+//		system("pause");
 		system("cls");
 		for (string temp : strMainMenu)	// Display main menu
 			cout << temp;
-		switch (Choice('1', '5'))
+		switch (Choice('1', '6'))
 		{
 		case '1':	// Search for an item
+			system("cls");
 			do
 			{
 				for (string temp : strSubMenu1)	// Display sub menu 
@@ -123,6 +159,7 @@ void DatabaseMenu(InventoryItem *items, int size)
 			} while (tolower(YesNo()) == 'y');
 			break;
 		case '2':	// Modify an existing item
+			system("cls");
 			do
 			{
 				for (string temp : strSubMenu2)	// Display sub menu
@@ -178,6 +215,7 @@ void DatabaseMenu(InventoryItem *items, int size)
 			} while (tolower(YesNo()) == 'y');
 			break;
 		case '3':	// Add an item
+			system("cls");
 			do
 			{
 
@@ -185,6 +223,7 @@ void DatabaseMenu(InventoryItem *items, int size)
 			} while (tolower(YesNo()) == 'y');
 			break;
 		case '4':	// Remove an item
+			system("cls");
 			do
 			{
 				for (string temp : strSubMenu4)	// Display sub menu
@@ -214,6 +253,40 @@ void DatabaseMenu(InventoryItem *items, int size)
 			break;
 		case '5':	// Exit module
 			return;
+			break;
+		case '6':
+			// Header formating for output
+			system("cls");
+			cout
+				<< "================================================================================"
+				<< "\t\t\tList of all inventory items" << endl
+				<< "================================================================================"
+				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+				<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+				<< "--------------------------------------------------------------------------------";
+			// Display all values for each object in the array
+			for (int k = 0; k < 50; k++)
+			{
+				if (k % 15 == 0)	// Allows user to view the results page by page
+				{
+					system("pause");
+					cout << endl
+						<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+						<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+						<< "--------------------------------------------------------------------------------";
+				}
+				cout << left
+					<< setw(14) << items[k].getBook().getISBN() << "\"" << items[k].getBook().getTitle() << "\"; " << setw(12) << items[k].getBook().getAuthor().GetstrName() << "; " << setw(10) << items[k].getBook().getPublisher() << endl
+					<< setw(13) << items[k].getDateAdded().GetDate() << setw(6) << items[k].getQuantity()
+					<< setw(8) << fixed << setprecision(2) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;
+			}
+			cout << endl 
+				<< "================================================================================"
+				<< "\t\t\t\tEnd of list" << endl
+				<< "================================================================================";
+			system("pause");
+			break;
+
 		}
 	}
 }
