@@ -20,7 +20,7 @@ Book::Book()
 {
 	ISBN = "";
 	title = "";
-	author.Name::Name();
+	author = { "", "" };
 	publisher = "";
 }
 
@@ -62,9 +62,9 @@ string Book::getTitle()
 	return title;
 }
 
-string Book::getAuthor()
+Name Book::getAuthor()
 {
-	return author.GetName();
+	return author;
 }
 
 string Book::getPublisher()

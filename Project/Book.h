@@ -7,7 +7,7 @@ using namespace std;
 
 class Book
 {
-private:
+protected:
 	string ISBN;
 	string title;
 	Name author;
@@ -25,7 +25,7 @@ public:
 
 	string getISBN();
 	string getTitle();
-	string getAuthor();
+	Name getAuthor();
 	string getPublisher();
 };
 
