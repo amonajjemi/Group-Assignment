@@ -1,56 +1,12 @@
-#include "InventoryItem.h"
 #include "Database.h"
 #include "Files.h"
 
-
-#include <iostream>
-#include <fstream>
 #include <iomanip>
-#include <string>
 #include <cstdlib>
 
 using namespace std;
 
-
-char Choice(char low, char high)
-{	/*
-	Function: Allows user to input char values between two values, based on ASCII values
-	Parameters:
-	low - Lowest value char to be used
-	high - Highest char value to be used
-	Returns: Valid character input (characters between 'low' and 'high' based on ASCII values)
-	*/
-	char cI;
-	do			// Loop runs until valid character input is received (characters between 'low' and 'high')
-	{
-		cout << "Choice: ";
-		cin.get(cI);
-		//cin.clear();
-		cin.ignore(10000, '\n');
-		if (cI < low || cI > high)
-			cout << "Invalid choice, try again" << endl;
-	} while (cI < low || cI > high);
-	return cI;
-}
-char YesNo()
-{	/*
-	Function: Allows user to input char values that corresponds to a yes/no decision
-	Parameters:
-	none
-	Returns: Valid character input ('y', 'Y', 'n', or 'N')
-	*/
-	char cYN;
-	do			// Loop runs until valid character input is received ('y', 'Y', 'n', or 'N') 
-	{			// Uppercase characters are converted to lowercase solely for testing purposes. The function will still return an uppercase 'Y' or 'N'
-		cout << "Y/N: ";
-		cin.get(cYN);
-		cin.ignore(10000, '\n');
-		if (!(tolower(cYN) == 'y' || tolower(cYN) == 'n'))
-			cout << "Invalid choice. Choice is either \"y\" for yes, or \"n\" for no" << endl;
-	} while (!(tolower(cYN) == 'y' || tolower(cYN) == 'n'));
-	return cYN;
-}
-void Database()
+void DatabaseModule()
 {
 	string strUnsorted = "unsorted.txt";
 	bool unsortedFlag = false, ISBNflag = false, authorFlag = false, titleFlag = false;
@@ -87,38 +43,45 @@ void Database()
 void DatabaseMenu(InventoryItem *items, int size)
 {
 	string strMainMenu[] = {
-		"What would you like to do?\n",
-		"1) - Search for an Item\n",
-		"2) - Modify an existing item\n",
-		"3) - Add a new item\n",
-		"4) - Remove an item\n",
-		"5) - Exit module\n",
-		"6) - Display all items\n"};
+		"================================================================================",
+		"\t\t\t\tDATABASE MODULE\n",
+		"================================================================================",
+		"\tWhat would you like to do?\n",
+		"\t1) - Search for an Item\n",
+		"\t2) - Modify an existing item\n",
+		"\t3) - Add a new item\n",
+		"\t4) - Remove an item\n",
+		"\t5) - Exit module\n",
+		"\t6) - Display all items\n"};
 	string strSubMenu1[] = {	// Menu number corresponds to choice in MainMenu. (1 is for searching for an item)
-		"Search for an item\n",
-		"1) - Search by ISBN\n",
-		"2) - Search by book title\n",
-		"3) - Search by book author\n" };
+		"\tSearch for an item\n",
+		"--------------------------------------------------------------------------------",
+		"\t1) - Search by ISBN\n",
+		"\t2) - Search by book title\n",
+		"\t3) - Search by book author\n" };
 	string strSubMenu2[] = {	// Menu number corresponds to choice in MainMenu. (2 is for modifying an item)
-		"Modify an existing item\n",
-		"1) - Modify an item with given ISBN\n",
-		"2) - Modify an item with given book title\n",
-		"3) - Modify an item with given book author\n" };
+		"\tModify an existing item\n",
+		"--------------------------------------------------------------------------------",
+		"\t1) - Modify an item with given ISBN\n",
+		"\t2) - Modify an item with given book title\n",
+		"\t3) - Modify an item with given book author\n" };
 	string strFieldMenu[] = {	// Menu used for modifying an item, allowing the user to choose which fields to modify
-		"What data field do you wish to modify?\n",
-		"1) - ISBN\n",
-		"2) - Book Title\n",
-		"3) - Book Aathor\n",
-		"4) - Book Publisher\n",
-		"5) - Date Added \n",
-		"6) - Quantity\n",
-		"7) - Wholesale Cost\n",
-		"8) - Price\n" };
+		"\tWhat data field do you wish to modify?\n",
+		"--------------------------------------------------------------------------------",
+		"\t1) - ISBN\n",
+		"\t2) - Book Title\n",
+		"\t3) - Book Aathor\n",
+		"\t4) - Book Publisher\n",
+		"\t5) - Date Added \n",
+		"\t6) - Quantity\n",
+		"\t7) - Wholesale Cost\n",
+		"\t8) - Price\n" };
 	string strSubMenu4[] = {
-		"Remove an item\n",
-		"1) - Remove an item with given ISBN\n",
-		"2) - Remove an item with given book title\n",
-		"3) - Remove an item with given book author\n", };
+		"\tRemove an item\n",
+		"--------------------------------------------------------------------------------",
+		"\t1) - Remove an item with given ISBN\n",
+		"\t2) - Remove an item with given book title\n",
+		"\t3) - Remove an item with given book author\n", };
 
 	while (1)	// Will always loop. The only exit condition is if the user chooses '5' in the main menu
 	{
@@ -260,14 +223,12 @@ void DatabaseMenu(InventoryItem *items, int size)
 			cout
 				<< "================================================================================"
 				<< "\t\t\tList of all inventory items" << endl
-				<< "================================================================================"
-				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
-				<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
-				<< "--------------------------------------------------------------------------------";
+				<< "================================================================================";
+
 			// Display all values for each object in the array
 			for (int k = 0; k < 50; k++)
 			{
-				if (k % 15 == 0)	// Allows user to view the results page by page
+				if (k % 17 == 0 || k == 0)	// Allows user to view the results page by page
 				{
 					system("pause");
 					cout << endl

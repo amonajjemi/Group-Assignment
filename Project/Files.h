@@ -8,6 +8,10 @@ void TextWrite(string, InventoryItem*, int);
 void BinaryRead(string, InventoryItem*);
 void BinaryWrite(string, InventoryItem*, int);
 void TextRead(fstream&, Book*);
+
+char Choice(char, char);
+char YesNo();
+
 int Random(int, int);
 Date RandomDate();
 double RandomWholesale();

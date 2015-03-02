@@ -5,9 +5,8 @@
 
 using namespace std;
 
-char Choice(char, char);
-char YesNo();
-void Database();
+
+void DatabaseModule();
 void DatabaseMenu(InventoryItem*, int);
 
 

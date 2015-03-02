@@ -126,7 +126,44 @@ void TextRead(string strFile, Book *book)
 	inFile.clear();
 }
 
-
+char Choice(char low, char high)
+{	/*
+	Function: Allows user to input char values between two values, based on ASCII values
+	Parameters:
+	low - Lowest value char to be used
+	high - Highest char value to be used
+	Returns: Valid character input (characters between 'low' and 'high' based on ASCII values)
+	*/
+	char cI;
+	do			// Loop runs until valid character input is received (characters between 'low' and 'high')
+	{
+		cout << "Choice: ";
+		cin.get(cI);
+		//cin.clear();
+		cin.ignore(10000, '\n');
+		if (cI < low || cI > high)
+			cout << "Invalid choice, try again" << endl;
+	} while (cI < low || cI > high);
+	return cI;
+}
+char YesNo()
+{	/*
+	Function: Allows user to input char values that corresponds to a yes/no decision
+	Parameters:
+	none
+	Returns: Valid character input ('y', 'Y', 'n', or 'N')
+	*/
+	char cYN;
+	do			// Loop runs until valid character input is received ('y', 'Y', 'n', or 'N') 
+	{			// Uppercase characters are converted to lowercase solely for testing purposes. The function will still return an uppercase 'Y' or 'N'
+		cout << "Y/N: ";
+		cin.get(cYN);
+		cin.ignore(10000, '\n');
+		if (!(tolower(cYN) == 'y' || tolower(cYN) == 'n'))
+			cout << "Invalid choice. Choice is either \"y\" for yes, or \"n\" for no" << endl;
+	} while (!(tolower(cYN) == 'y' || tolower(cYN) == 'n'));
+	return cYN;
+}
 int Random(int min, int max)
 {	/*
 	Function: Generates a random integer value that is between two values
