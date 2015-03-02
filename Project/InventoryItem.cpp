@@ -33,57 +33,17 @@ InventoryItem::InventoryItem(Book item, Date date, int eQuantity, double whole, 
 	Price = ePrice;
 }
 
-void InventoryItem::setBook(Book eBook)
-{
-	BookItem = eBook;
-}
+void InventoryItem::setBook(Book eBook){ BookItem = eBook; }
+void InventoryItem::setDateAdded(Date eDate){ DateAdded = eDate; }
+void InventoryItem::setQuantity(int eQuantity){ Quantity = eQuantity; }
+void InventoryItem::setWholesale(double eWhole){ Wholesale = eWhole; }
+void InventoryItem::setPrice(double ePrice){ Price = ePrice; }
+Book InventoryItem::getBook(){ return BookItem; }
+Date InventoryItem::getDateAdded(){ return DateAdded; }
+int InventoryItem::getQuantity(){ return Quantity; }
+double InventoryItem::getWholesale(){ return Wholesale; }
 
-void InventoryItem::setDateAdded(Date eDate)
-{
-	DateAdded = eDate;
-}
-
-void InventoryItem::setQuantity(int eQuantity)
-{
-		Quantity = eQuantity;
-
-}
-
-void InventoryItem::setWholesale(double eWhole)
-{
-	Wholesale = eWhole;
-}
-
-void InventoryItem::setPrice(double ePrice)
-{
-	Price = ePrice;
-}
-
-Book InventoryItem::getBook()
-{
-	return BookItem;
-}
-
-string InventoryItem::getDateAdded()
-{
-	return DateAdded.GetDate();
-}
-
-int InventoryItem::getQuantity()
-{
-	return Quantity;
-}
-
-double InventoryItem::getWholesale()
-{
-	return Wholesale;
-}
-
-double InventoryItem::getPrice()
-{
-	return Price;
-}
-
+double InventoryItem::getPrice(){ return Price; }
 /*int InventoryItem::GetISBN()
 {
 	return BookItem.getISBN();
