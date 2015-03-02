@@ -39,8 +39,8 @@ public:
 
 	friend ostream& operator<<(ostream &, const Name &);
 	friend istream& operator>>(istream &, Name &);
-//	friend ofstream& operator<<(ofstream &, const Name &);
-//	friend ifstream& operator>>(ifstream &, Name &);
+	friend ofstream& operator<<(ofstream &, const Name &);
+	friend ifstream& operator>>(ifstream &, Name &);
 };
 
 #endif

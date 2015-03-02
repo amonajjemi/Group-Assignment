@@ -1,5 +1,4 @@
 #include "Name.h"
-#include <string>
 
 using namespace std;
 
@@ -82,7 +81,6 @@ istream& operator>>(istream &is, Name &obj){
 	is >> obj.Last >> obj.First;
 	return is;
 }
-/*
 ofstream& operator<<(ofstream &ofs, const Name &obj){
 	ofs << obj.Last << " " << obj.First;
 	return ofs;
@@ -91,4 +89,3 @@ ifstream& operator>>(ifstream &ifs, Name &obj){
 	ifs >> obj.Last >> obj.First;
 	return ifs;
 }
-*/
