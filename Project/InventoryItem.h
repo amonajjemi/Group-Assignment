@@ -2,6 +2,7 @@
 #define INVENTORYITEM_H
 #include "Book.h"
 #include "Date.h"
+#include <iostream>
 #include <fstream>
 
 class InventoryItem

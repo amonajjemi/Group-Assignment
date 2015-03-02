@@ -1,5 +1,4 @@
 #include "InventoryItem.h"
-#include <iostream>
 
 using namespace std;
 
