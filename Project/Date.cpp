@@ -14,7 +14,7 @@ Date::Date(const Date &obj){
 	Day = obj.Day;
 	Month = obj.Month;
 	Year = obj.Year;
-
+	BoundsChecker();
 }
 Date::Date(int year, int month, int day){
 	// Constructor for Date class
@@ -22,80 +22,104 @@ Date::Date(int year, int month, int day){
 	Day = day;
 	Month = month;
 	Year = year;
-	if (month > 12)	
-		month = 12;
-	switch (month)	// Prevents months from having too many days
+	BoundsChecker();
+}
+Date::~Date(){
+
+}
+
+//Setters
+void Date::SetDay(int day){ Day = day; }
+void Date::SetMonth(int month){ Month = month; }
+void Date::SetYear(int year){ Year = year; }
+//Getters
+int Date::GetDay(){ return Day; }
+int Date::GetMonth(){ return Month; }
+int Date::GetYear(){ return Year; }
+string Date::GetDate(){// Returns the date object as a string, in the format of "year/month/day"
+	string str;
+	str = to_string(Year) + "/";
+	if (to_string(Month).length() == 1)
+		str += "0" + to_string(Month) + "/";
+	else
+		str += to_string(Month) + "/";
+	if (to_string(Day).length() == 1)
+		str += "0" + to_string(Day);
+	else
+		str += to_string(Day);
+	return str;
+
+}
+void Date::BoundsChecker(){
+	if (Month > 12)
+		Month = 12;
+	switch (Month)	// Prevents months from having too many days
 	{
 	case 1:
-		if (day > 31)
-			day = 31;
+		if (Day > 31)
+			Day = 31;
 		break;
 	case 2:
-		if (day > 28)
+		if (Day > 28)
 		{
-			day = 28;
+			Day = 28;
 			// Cases to check for leap year
-			if (year % 4 == 0)	// If year is divisble by 4, it IS a leap year
-			{	
-				day = 29;
-				if (year % 100 == 0) // But if the year is also divisible by 100, it is NOT a leap year
+			if (Year % 4 == 0)	// If year is divisble by 4, it IS a leap year
+			{
+				Day = 29;
+				if (Year % 100 == 0) // But if the year is also divisible by 100, it is NOT a leap year
 				{
-					day = 28;
-					if (year % 400 == 0) // But if the year is also divisble by 400, it IS a leap year
+					Day = 28;
+					if (Year % 400 == 0) // But if the year is also divisble by 400, it IS a leap year
 					{
-						day = 29;
+						Day = 29;
 					}
 				}
 			}
 		}
-			
+
 		break;
 	case 3:
-		if (day > 31)
-			day = 31;
+		if (Day > 31)
+			Day = 31;
 		break;
 	case 4:
-		if (day > 30)
-			day = 30;
+		if (Day > 30)
+			Day = 30;
 		break;
 	case 5:
-		if (day > 31)
-			day = 31;
+		if (Day > 31)
+			Day = 31;
 		break;
 	case 6:
-		if (day > 30)
-			day = 30;
+		if (Day > 30)
+			Day = 30;
 		break;
 	case 7:
-		if (day > 31)
-			day = 31;
+		if (Day > 31)
+			Day = 31;
 		break;
 	case 8:
-		if (day > 31)
-			day = 31;
+		if (Day > 31)
+			Day = 31;
 		break;
 	case 9:
-		if (day > 30)
-			day = 30;
+		if (Day > 30)
+			Day = 30;
 		break;
 	case 10:
-		if (day > 31)
-			day = 31;
+		if (Day > 31)
+			Day = 31;
 		break;
 	case 11:
-		if (day > 30)
-			day = 30;
+		if (Day > 30)
+			Day = 30;
 		break;
 	case 12:
-		if (day > 31)
-			day = 31;
+		if (Day > 31)
+			Day = 31;
 		break;
 	}
-
-
-}
-Date::~Date(){
-
 }
 bool Date::operator>(const Date &obj){
 	// Greater than operator for Date class
@@ -207,26 +231,29 @@ void Date::operator=(const Date &obj){
 	Day = obj.Day;
 	Month = obj.Month;
 	Year = obj.Year;
+	BoundsChecker();
 }
-//Setters
-void Date::SetDay(int day){ Day = day; }
-void Date::SetMonth(int month){ Month = month; }
-void Date::SetYear(int year){ Year = year; }
-//Getters
-int Date::GetDay(){ return Day; }
-int Date::GetMonth(){ return Month; }
-int Date::GetYear(){ return Year; }
-string Date::GetDate(){// Returns the date object as a string, in the format of "year/month/day"
-	string str;
-	str = to_string(Year) + "/";
-	if (to_string(Month).length() == 1)
-		str += "0" + to_string(Month) + "/";
-	else
-		str += to_string(Month) + "/";
-	if (to_string(Day).length() == 1)
-		str += "0" + to_string(Day);
-	else
-		str += to_string(Day);
-	return str;
-
+ostream& operator<<(ostream &os, const Date &obj){
+	os << obj.Year << "/";
+	if (to_string(obj.Month).length() == 1)
+		os << "0";
+	os << obj.Month << "/";
+	if (to_string(obj.Day).length() == 1)
+		os << "0";
+	os << obj.Day;
+	return os;
 }
+istream& operator>>(istream &is, Date &obj){
+	is >> obj.Year >> obj.Month >> obj.Day;
+	return is;
+}
+/*
+ofstream& operator<<(ofstream &ofs, const Date &obj){
+	ofs << obj.Year;
+	return ofs;
+}
+ifstream& operator>>(ifstream &ifs, Date &obj){
+	ifs >> obj;
+	return ifs;
+}
+*/
