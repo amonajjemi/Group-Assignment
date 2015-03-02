@@ -1,6 +1,9 @@
 #ifndef DATE_H
 #define DATE_H
+
 #include <string>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -37,8 +40,8 @@ public:
 
 	friend ostream& operator<<(ostream &, const Date &);
 	friend istream& operator>>(istream &, Date &);
-//	friend ofstream& operator<<(ofstream &, const Date &);
-//	friend ifstream& operator>>(ifstream &, Date &);
+	friend ofstream& operator<<(ofstream &, const Date &);
+	friend ifstream& operator>>(ifstream &, Date &);
 
 };
 

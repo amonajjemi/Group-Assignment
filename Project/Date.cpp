@@ -1,5 +1,4 @@
 #include "Date.h"
-#include <string>
 
 using namespace std;
 
@@ -27,7 +26,6 @@ Date::Date(int year, int month, int day){
 Date::~Date(){
 
 }
-
 //Setters
 void Date::SetDay(int day){ Day = day; }
 void Date::SetMonth(int month){ Month = month; }
@@ -247,13 +245,17 @@ istream& operator>>(istream &is, Date &obj){
 	is >> obj.Year >> obj.Month >> obj.Day;
 	return is;
 }
-/*
 ofstream& operator<<(ofstream &ofs, const Date &obj){
-	ofs << obj.Year;
+	ofs << obj.Year << "/";
+	if (to_string(obj.Month).length() == 1)
+		ofs << "0";
+	ofs << obj.Month << "/";
+	if (to_string(obj.Day).length() == 1)
+		ofs << "0";
+	ofs << obj.Day;
 	return ofs;
 }
 ifstream& operator>>(ifstream &ifs, Date &obj){
-	ifs >> obj;
+	ifs >> obj.Year >> obj.Month >> obj.Day;
 	return ifs;
 }
-*/
