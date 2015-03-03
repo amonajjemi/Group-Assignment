@@ -113,11 +113,12 @@ void TextRead(string strFile, InventoryItem *&items)
 		items = new InventoryItem[size];	// Allocate memory for an array of objects big enough to read all the values from the file
 		for (int k = 0; k < size && !inFile.eof(); k++)
 		{
-			inFile >> ISBN;
-			getline(inFile, temp, '\'');
-			getline(inFile, title, '\'');
-			inFile >> last >> first >> publisher >> year >> month >> day >> quantity >> wholesale >> price;
-			items[k] = { { ISBN, title, { last, first }, publisher }, { year, month, day }, quantity, wholesale, price };	// Use the constructor to assign values to each object in the array
+			inFile >> items[k];		// Need fstream overload
+		//	inFile >> ISBN;
+		//	getline(inFile, temp, '\'');
+		//	getline(inFile, title, '\'');
+		//	inFile >> last >> first >> publisher >> year >> month >> day >> quantity >> wholesale >> price;
+		//	items[k] = { { ISBN, title, { last, first }, publisher }, { year, month, day }, quantity, wholesale, price };	// Use the constructor to assign values to each object in the array
 		//	cout << k + 1 << ") Title: " << items[k].getBook().getTitle() << endl;
 		//	cout << k + 1 << ") Price: " << items[k].getPrice() << endl;
 		}
@@ -147,9 +148,10 @@ void TextWrite(string strFile, InventoryItem *items, int size)
 		outFile << size << endl;	// The first value written to the file is the number of objects
 		for (int k = 0; k < size; k++)
 		{
-			outFile	// Each object has all of its values written to a line. The title of the object is enclosed in single quotes ('title goes here')
-				<< items[k].getBook().getISBN() << " " << "\'" << items[k].getBook().getTitle() << "\'" << items[k].getBook().getAuthor().GetLastName() << " " << items[k].getBook().getAuthor().GetFirstName() << " " << items[k].getBook().getPublisher() << " "
-				<< items[k].getDateAdded().GetYear() << " " << items[k].getDateAdded().GetMonth() << " " << items[k].getDateAdded().GetDay() << " " << items[k].getQuantity() << " " << items[k].getWholesale() << " " << items[k].getPrice() << endl;
+			outFile << items[k];
+		//	outFile	// Each object has all of its values written to a line. The title of the object is enclosed in single quotes ('title goes here')
+		//		<< items[k].getBook().getISBN() << " " << "\'" << items[k].getBook().getTitle() << "\'" << items[k].getBook().getAuthor().GetLastName() << " " << items[k].getBook().getAuthor().GetFirstName() << " " << items[k].getBook().getPublisher() << " "
+		//		<< items[k].getDateAdded().GetYear() << " " << items[k].getDateAdded().GetMonth() << " " << items[k].getDateAdded().GetDay() << " " << items[k].getQuantity() << " " << items[k].getWholesale() << " " << items[k].getPrice() << endl;
 			//	cout << k + 1 << ") Book title written: " << items[k].getBook().getTitle() << endl;
 		}
 		//	cout << "End of text write for Inventory Items" << endl;

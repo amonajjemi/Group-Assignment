@@ -57,6 +57,12 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		"\t2) - Modify an item with given book title\n",
 		"\t3) - Modify an item with given book author\n",
 		"\t4) - Go back\n" };
+	string strSubMenu3[] = {	// Menu number corresponds to choice in the module's MainMenu. (2 is for adding an item)
+		"================================================================================",
+		"\tAdd an item\n",
+		"================================================================================",
+		"\t1) - Add an item\n",
+		"\t2) - Go back\n"};
 	string strFieldMenu[] = {	// Menu used for modifying an item, allowing the user to choose which fields to modify
 		"================================================================================",
 		"\tWhat data field do you wish to modify?\n",
@@ -88,7 +94,6 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		switch (Choice('1', '5'))
 		{
 		case '1':	// Search for an item
-
 			do
 			{
 				exitFlag = false;
@@ -188,9 +193,19 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			system("cls");
 			do
 			{
-
+				exitFlag = false;
+				for (string temp : strSubMenu3)
+					cout << temp;
+				switch (Choice('1', '2'))
+				{
+				case '1':
+					break;
+				case '2':
+					exitFlag = true;
+					break;
+				}
 				cout << "Would you like to add another item?  \"n\" for no, \"y\" for yes" << endl;
-			} while (tolower(YesNo()) == 'y');
+			} while (exitFlag == false && tolower(YesNo()) == 'y');
 			break;
 		case '4':	// Remove an item
 			system("cls");
