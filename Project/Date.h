@@ -42,6 +42,8 @@ public:
 	friend istream& operator>>(istream &, Date &);
 	friend ofstream& operator<<(ofstream &, const Date &);
 	friend ifstream& operator>>(ifstream &, Date &);
+	friend fstream& operator<<(fstream &, const Date &);
+	friend fstream& operator>>(fstream &, Date &);
 
 };
 

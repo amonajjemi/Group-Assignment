@@ -252,16 +252,18 @@ istream& operator>>(istream &is, Date &obj){
 	return is;
 }
 ofstream& operator<<(ofstream &ofs, const Date &obj){
-	ofs << obj.Year << "/";
-	if (to_string(obj.Month).length() == 1)
-		ofs << "0";
-	ofs << obj.Month << "/";
-	if (to_string(obj.Day).length() == 1)
-		ofs << "0";
-	ofs << obj.Day;
+	ofs << obj.Year << " " << obj.Month << " " << obj.Day << " ";
 	return ofs;
 }
 ifstream& operator>>(ifstream &ifs, Date &obj){
 	ifs >> obj.Year >> obj.Month >> obj.Day;
 	return ifs;
+}
+fstream& operator<<(fstream &fs, const Date &obj){
+	fs << obj.Year << " " << obj.Month << " " << obj.Day << " ";
+	return fs;
+}
+fstream& operator>>(fstream &fs, Date &obj){
+	fs >> obj.Year >> obj.Month >> obj.Day;
+	return fs;
 }
