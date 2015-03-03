@@ -1,57 +1,57 @@
-#include "Book.h"
-#include "Date.h"
-#include "Name.h"
 #include "InventoryItem.h"
+#include "Book.h"
+#include "Cashier.h"
+#include "Database.h"
+#include "Report.h"
+#include "Files.h"
 
-
-#include <iostream>
-#include <fstream>
 #include <iomanip>
-#include <string>
+#include <cstdlib>
 
 using namespace std;
 
-void BinaryRead(fstream&, InventoryItem*);
-void TextRead(fstream&, Book*, int);
+const string
+	strUnsorted = "unsorted.txt",
+	strISBNSorted = "ISBN.txt",
+	strTitleSorted = "title.txt",
+	strAuthorSorted = "author.txt";
 
-void BinaryRead(fstream &inFile, InventoryItem *items)
-{
-	int iSize;
-	inFile.read(reinterpret_cast<char *>(&iSize), sizeof(iSize));
-	cout << "Number of Inventory Items: " << iSize;
+bool
+	bUnsortedFlag = false,
+	bISBNFlag = false,
+	bTitleFlag = false,
+	bAuthorFlag = false;
 
-	items = new InventoryItem[iSize];
-	InventoryItem temp;
-	for (int k = 0; k < iSize; k++)
-	{
-		inFile.read(reinterpret_cast<char *>(&temp), sizeof(temp));
-		items[k] = temp;
-	}
-}
-void TextRead(fstream &inFile, Book *book, int size)
-{
-	int count;
-	int ISBN;
-	string title, first, last, publisher;
-	Name name;
-	for (count = 0; !inFile.eof(); count++)
-	{
-		inFile >> ISBN >> title >> last >> first >> publisher;
-		book->setISBN(ISBN);
-		book->setTitle(title);
-		book->setAuthor({first, last});
-		book->setPublisher(publisher);
-	}
-}
-void DatabaseMenu()
-{
-
-}
 int main()
 {
-	Book books[50];
-	InventoryItem *itemsPtr;
-	fstream inFile;
-	inFile.open("unsorted.txt", ios::in | ios::binary);
-	BinaryRead(inFile, itemsPtr);
+
+	string MainMenu[] = {
+		"================================================================================",
+		"\t\t\t\tMAIN MENU\n",
+		"================================================================================",
+		"\t1) - Cashier module\n",
+		"\t2) - Inventory Database Module\n",
+		"\t3) - Report Module\n",
+		"\t4) - Exit Program\n" };
+	while (1)	// Will always loop. The only exit condition is if the user chooses '4' in the main menu
+	{
+		system("cls");
+		for (string temp : MainMenu)
+			cout << temp;
+		switch (Choice('1', '4'))
+		{
+		case '1':
+			CashierModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);
+			break;
+		case '2':
+			DatabaseModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);
+			break;
+		case '3':
+			ReportModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);
+			break;
+		case '4':
+			return 0;
+			break;
+		}
+	};
 }

@@ -20,7 +20,7 @@ Book::Book()
 {
 	ISBN = "";
 	title = "";
-	author.Name::Name();
+	author = { "", "" };
 	publisher = "";
 }
 
@@ -31,43 +31,48 @@ Book::Book(string eISBN, string eTitle, Name eAuthor, string ePublisher)
 	author = eAuthor;
 	publisher = ePublisher;
 }
+void Book::setISBN(string eISBN){ ISBN = eISBN; }
+void Book::setTitle(string eTitle){ title = eTitle; }
+void Book::setAuthor(Name eAuthor){ author = eAuthor; }
+void Book::setPublisher(string ePublisher){ publisher = ePublisher; }
+string Book::getISBN(){ return ISBN; }
+string Book::getTitle(){ return title; }
+Name Book::getAuthor(){ return author; }
+string Book::getPublisher(){ return publisher; }
 
-void Book::setISBN(string eISBN)
-{
-	ISBN = eISBN;
+bool Book::operator==(const Book &obj){
+	if (ISBN == obj.ISBN && title == obj.title && author == obj.author && publisher == obj.publisher)
+		return true;
+	else
+		return false;
 }
-
-void Book::setTitle(string eTitle)
-{
-	title = eTitle;
+void Book::operator=(const Book &obj){
+	ISBN = obj.ISBN;
+	title = obj.title;
+	author = obj.author;
+	publisher = obj.publisher;
 }
-
-void Book::setAuthor(Name eAuthor)
-{
-	author = eAuthor;
+ofstream& operator<<(ofstream &ofs, const Book &obj){
+	ofs << obj.ISBN << " '" << obj.title << "' " << obj.author << " " << obj.publisher;
+	return ofs;
 }
-
-void Book::setPublisher(string ePublisher)
-{
-	publisher = ePublisher;
+ifstream& operator>>(ifstream &ifs, Book &obj){
+	string temp;
+	ifs >> obj.ISBN;
+	getline(ifs, temp, '\'');
+	getline(ifs, obj.title, '\'');
+	ifs >> obj.author >> obj.publisher;
+	return ifs;
 }
-
-string Book::getISBN()
-{
-	return ISBN;
+fstream& operator<<(fstream &fs, const Book &obj){
+	fs << obj.ISBN << " '" << obj.title << "' " << obj.author << " " << obj.publisher;
+	return fs;
 }
-
-string Book::getTitle()
-{
-	return title;
-}
-
-string Book::getAuthor()
-{
-	return author.GetName();
-}
-
-string Book::getPublisher()
-{
-	return publisher;
+fstream& operator>>(fstream &fs, Book &obj){
+	string temp;
+	fs >> obj.ISBN;
+	getline(fs, temp, '\'');
+	getline(fs, obj.title, '\'');
+	fs >> obj.author >> obj.publisher;
+	return fs;
 }

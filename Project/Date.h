@@ -1,6 +1,9 @@
 #ifndef DATE_H
 #define DATE_H
+
 #include <string>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -14,12 +17,7 @@ public:
 	Date(const Date&);
 	Date(int, int, int);
 	~Date();
-	bool operator>(const Date&);
-	bool operator>=(const Date&);
-	bool operator<(const Date&);
-	bool operator<=(const Date&);
-	bool operator==(const Date&);
-	void operator=(const Date&);
+
 	//Setters
 	void SetDay(int);
 	void SetMonth(int);
@@ -29,6 +27,24 @@ public:
 	int GetMonth();
 	int GetYear();
 	string GetDate();
+	// Other
+	void BoundsChecker();
+
+	//Operator overloads
+	bool operator>(const Date&);
+	bool operator>=(const Date&);
+	bool operator<(const Date&);
+	bool operator<=(const Date&);
+	bool operator==(const Date&);
+	void operator=(const Date&);
+
+	friend ostream& operator<<(ostream &, const Date &);
+	friend istream& operator>>(istream &, Date &);
+	friend ofstream& operator<<(ofstream &, const Date &);
+	friend ifstream& operator>>(ifstream &, Date &);
+	friend fstream& operator<<(fstream &, const Date &);
+	friend fstream& operator>>(fstream &, Date &);
+
 };
 
 #endif DATE_H

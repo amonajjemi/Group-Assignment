@@ -2,10 +2,12 @@
 #define INVENTORYITEM_H
 #include "Book.h"
 #include "Date.h"
+#include <iostream>
+#include <fstream>
 
 class InventoryItem
 {
-private:
+protected:
 	Book BookItem;
 	Date DateAdded;
 	int Quantity;
@@ -24,15 +26,24 @@ public:
 	void setPrice(double);
 
 	Book getBook();
-	string getDateAdded();
+	Date getDateAdded();
 	int getQuantity();
 	double getWholesale();
 	double getPrice();
 
-	int GetISBN();
+	string GetISBN();
 	string GetTitle();
-	string GetAuthor();
+	Name GetAuthor();
+	string GetAuthorName();
 	string GetPublisher();
+	
+	bool operator==(const InventoryItem&);
+	void operator=(const InventoryItem&);
+
+	friend ofstream& operator<<(ofstream &, const InventoryItem&);
+	friend ifstream& operator>>(ifstream &, InventoryItem&);
+	friend fstream& operator<<(fstream &, const InventoryItem&);
+	friend fstream& operator>>(fstream &, InventoryItem&);
 };
 
 #endif

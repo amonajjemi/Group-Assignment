@@ -7,7 +7,7 @@ using namespace std;
 
 class Book
 {
-private:
+protected:
 	string ISBN;
 	string title;
 	Name author;
@@ -25,8 +25,16 @@ public:
 
 	string getISBN();
 	string getTitle();
-	string getAuthor();
+	Name getAuthor();
 	string getPublisher();
+
+	bool operator==(const Book&);
+	void operator=(const Book&);
+
+	friend ofstream& operator<<(ofstream &, const Book&);
+	friend ifstream& operator>>(ifstream &, Book&);
+	friend fstream& operator<<(fstream &, const Book&);
+	friend fstream& operator>>(fstream &, Book&);
 };
 
 #endif

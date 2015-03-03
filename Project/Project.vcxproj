@@ -65,22 +65,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Book.h" />
+    <ClInclude Include="Cashier.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="Files.h" />
     <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="Name.h" />
+    <ClInclude Include="Report.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
+    <ClCompile Include="Cashier.cpp" />
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Files.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Name.cpp" />
+    <ClCompile Include="Report.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="BenPseudocode.txt" />
     <Text Include="books.txt" />
+    <Text Include="unsorted.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bookgenerator.rb" />
+    <None Include="unsorted" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
