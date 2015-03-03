@@ -6,42 +6,31 @@
 
 using namespace std;
 
-void DatabaseModule()
+const string
+	strUnsorted = "unsorted.txt",
+	strISBNSorted = "ISBN.txt",
+	strTitleSorted = "title.txt",
+	strAuthorSorted = "author.txt";
+
+void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag)
 {
-	string strUnsorted = "unsorted.txt";
-	bool unsortedFlag = false, ISBNflag = false, authorFlag = false, titleFlag = false;
 //	int iSize;
-
 	InventoryItem *items = nullptr;
-	items = new InventoryItem[50];
-
-
-
-	
-	/*	// File creator using books.txt file
-	string strBooks = "books.txt";
-	fstream inBook;
+	TextRead(strUnsorted, items);
+		// File creator using books.txt file
+	/*
 	Book books[50];
-	InventoryItem items[50];
-	inBook.open(strBooks, ios::in);
-	TextRead(inBook, books);
-	inBook.close();
-	// Assigns values for all objects in the items[] array
-	for (int k = 0; k < 50; k++)
-		items[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
-	// Write the array of objects into a file
-	
-	outItems.open(strUnsorted, ios::out);
-	TextWrite(outItems, items, 50);
-	outItems.close();
+	InventoryItem arrItems[50];
+	TextRead("books.txt", books);
+	for (int k = 0; k < 50; k++)	// Assigns values for all objects in the arrItems[] array
+		arrItems[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
+	TextWrite(strUnsorted, arrItems, 50);	// Write the array of objects into a file
 	*/
 
-	TextRead(strUnsorted, items);
-	TextWrite("test", items, 50);
-	DatabaseMenu(items, 50);
-}
-void DatabaseMenu(InventoryItem *items, int size)
-{
+
+
+//	DatabaseMenu(items, 50);
+
 	string strMainMenu[] = {
 		"================================================================================",
 		"\t\t\t\tDATABASE MODULE\n",
@@ -51,21 +40,23 @@ void DatabaseMenu(InventoryItem *items, int size)
 		"\t2) - Modify an existing item\n",
 		"\t3) - Add a new item\n",
 		"\t4) - Remove an item\n",
-		"\t5) - Exit module\n",
-		"\t6) - Display all items\n"};
-	string strSubMenu1[] = {	// Menu number corresponds to choice in MainMenu. (1 is for searching for an item)
+		"\t5) - Exit module\n"};
+	string strSubMenu1[] = {	// Menu number corresponds to choice in the module's MainMenu. (1 is for searching for an item)
+		"--------------------------------------------------------------------------------",
 		"\tSearch for an item\n",
 		"--------------------------------------------------------------------------------",
 		"\t1) - Search by ISBN\n",
 		"\t2) - Search by book title\n",
 		"\t3) - Search by book author\n" };
-	string strSubMenu2[] = {	// Menu number corresponds to choice in MainMenu. (2 is for modifying an item)
+	string strSubMenu2[] = {	// Menu number corresponds to choice in the module's MainMenu. (2 is for modifying an item)
+		"--------------------------------------------------------------------------------",
 		"\tModify an existing item\n",
 		"--------------------------------------------------------------------------------",
 		"\t1) - Modify an item with given ISBN\n",
 		"\t2) - Modify an item with given book title\n",
 		"\t3) - Modify an item with given book author\n" };
 	string strFieldMenu[] = {	// Menu used for modifying an item, allowing the user to choose which fields to modify
+		"--------------------------------------------------------------------------------",
 		"\tWhat data field do you wish to modify?\n",
 		"--------------------------------------------------------------------------------",
 		"\t1) - ISBN\n",
@@ -76,7 +67,8 @@ void DatabaseMenu(InventoryItem *items, int size)
 		"\t6) - Quantity\n",
 		"\t7) - Wholesale Cost\n",
 		"\t8) - Price\n" };
-	string strSubMenu4[] = {
+	string strSubMenu4[] = {	// Menu number corresponds to choice in the module's MainMenu. (4 is for removing an item)
+		"--------------------------------------------------------------------------------",
 		"\tRemove an item\n",
 		"--------------------------------------------------------------------------------",
 		"\t1) - Remove an item with given ISBN\n",
@@ -86,11 +78,11 @@ void DatabaseMenu(InventoryItem *items, int size)
 	while (1)	// Will always loop. The only exit condition is if the user chooses '5' in the main menu
 	{
 		cout << flush;
-//		system("pause");
+		//		system("pause");
 		system("cls");
 		for (string temp : strMainMenu)	// Display main menu
 			cout << temp;
-		switch (Choice('1', '6'))
+		switch (Choice('1', '5'))
 		{
 		case '1':	// Search for an item
 			system("cls");
@@ -215,39 +207,9 @@ void DatabaseMenu(InventoryItem *items, int size)
 			} while (tolower(YesNo()) == 'y');
 			break;
 		case '5':	// Exit module
+			// Should write current arrays to files, update file flags
 			return;
-			break;
-		case '6':
-			// Header formating for output
-			system("cls");
-			cout
-				<< "================================================================================"
-				<< "\t\t\tList of all inventory items" << endl
-				<< "================================================================================";
-
-			// Display all values for each object in the array
-			for (int k = 0; k < 50; k++)
-			{
-				if (k % 17 == 0 || k == 0)	// Allows user to view the results page by page
-				{
-					system("pause");
-					cout << endl
-						<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
-						<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
-						<< "--------------------------------------------------------------------------------";
-				}
-				cout << left
-					<< setw(14) << items[k].getBook().getISBN() << "\"" << items[k].getBook().getTitle() << "\"; " << setw(12) << items[k].getBook().getAuthor().GetstrName() << "; " << setw(10) << items[k].getBook().getPublisher() << endl
-					<< setw(13) << items[k].getDateAdded().GetDate() << setw(6) << items[k].getQuantity()
-					<< setw(8) << fixed << setprecision(2) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;
-			}
-			cout << endl 
-				<< "================================================================================"
-				<< "\t\t\t\tEnd of list" << endl
-				<< "================================================================================";
-			system("pause");
-			break;
-
 		}
 	}
+
 }

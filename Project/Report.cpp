@@ -1,39 +1,70 @@
 #include "Report.h"
 #include "Files.h"
 
+#include <iomanip>
 #include <cstdlib>
 
 using namespace std;
 
-void ReportModule(){
-	ReportMenu();
-}
-void ReportMenu(){
+const string
+	strUnsorted = "unsorted.txt",
+	strISBNSorted = "ISBN.txt",
+	strTitleSorted = "title.txt",
+	strAuthorSorted = "author.txt";
+
+void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag){
+//	ReportMenu();
+	InventoryItem *items = nullptr;
+	TextRead(strUnsorted, items);
+
 	string strMainMenu[] = {
 		"================================================================================",
-		"\t\t\tREPORT MODULE\n",
+		"\t\t\t\tREPORT MODULE\n",
 		"================================================================================",
-		"What would you like to view?\n",
-		"1) - Inventory Listing\n",
-		"2) - Inventory Wholesale Value\n",
-		"3) - Inventory Retail Value\n",
-		"4) - Listing by Quantity\n",
-		"5) - Listing by Cost\n",
-		"6) - Listing by Age\n",
-		"7) - Exit Module\n"};
+		"\tWhat would you like to view?\n",
+		"\t1) - Inventory Listing\n",
+		"\t2) - Inventory Wholesale Value\n",
+		"\t3) - Inventory Retail Value\n",
+		"\t4) - Listing by Quantity\n",
+		"\t5) - Listing by Cost\n",
+		"\t6) - Listing by Age\n",
+		"\t7) - Exit Module\n" };
 	do
 	{
 		system("cls");
 		for (string temp : strMainMenu)
-		{
-			if (temp[0] != '=')
-				cout << "\t";
 			cout << temp;
-		}
 		switch (Choice('1', '7'))
 		{
 		case '1':
 			// Display inventory sorted by ISBN or title
+			system("cls");
+			cout
+				<< "================================================================================"
+				<< "\t\t\tList of all inventory items" << endl
+				<< "================================================================================";
+
+			// Display all values for each object in the array
+			for (int k = 0; k < 50; k++)
+			{
+				if (k % 17 == 0 || k == 0)	// Allows user to view the results page by page
+				{
+					system("pause");
+					cout << endl
+						<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+						<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+						<< "--------------------------------------------------------------------------------";
+				}
+				cout << left
+					<< setw(14) << items[k].getBook().getISBN() << "\"" << items[k].getBook().getTitle() << "\"; " << setw(12) << items[k].getBook().getAuthor().GetName() << "; " << setw(10) << items[k].getBook().getPublisher() << endl
+					<< setw(13) << items[k].getDateAdded().GetDate() << setw(6) << items[k].getQuantity()
+					<< setw(8) << fixed << setprecision(2) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;
+			}
+			cout << endl
+				<< "================================================================================"
+				<< "\t\t\t\tEnd of list" << endl
+				<< "================================================================================";
+			system("pause");
 			break;
 		case '2':
 			// Display total wholesale value of inventory

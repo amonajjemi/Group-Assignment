@@ -5,10 +5,13 @@
 
 using namespace std;
 
-void CashierModule(){
+const string
+	strUnsorted = "unsorted.txt",
+	strISBNSorted = "ISBN.txt",
+	strTitleSorted = "title.txt",
+	strAuthorSorted = "author.txt";
 
-}
-void CashierMenu(){
+void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag){
 	string strMainMenu[] = {
 		"================================================================================",
 		"\t\t\t\tCASHIER MODULE\n",

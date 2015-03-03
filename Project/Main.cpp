@@ -10,8 +10,21 @@
 
 using namespace std;
 
+const string
+	strUnsorted = "unsorted.txt",
+	strISBNSorted = "ISBN.txt",
+	strTitleSorted = "title.txt",
+	strAuthorSorted = "author.txt";
+
+bool
+	bUnsortedFlag = false,
+	bISBNFlag = false,
+	bTitleFlag = false,
+	bAuthorFlag = false;
+
 int main()
 {
+
 	string MainMenu[] = {
 		"================================================================================",
 		"\t\t\t\tMAIN MENU\n",
@@ -28,13 +41,13 @@ int main()
 		switch (Choice('1', '4'))
 		{
 		case '1':
-			CashierModule();
+			CashierModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);
 			break;
 		case '2':
-			DatabaseModule();
+			DatabaseModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);
 			break;
 		case '3':
-			ReportModule();
+			ReportModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);
 			break;
 		case '4':
 			return 0;

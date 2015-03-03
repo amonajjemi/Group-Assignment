@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void CashierModule();
+void CashierModule(bool&, bool&, bool&, bool&);
 void CashierMenu();
 
 #endif CASHIER_H

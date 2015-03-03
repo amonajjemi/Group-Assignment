@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void ReportModule();
+void ReportModule(bool&, bool&, bool&, bool&);
 void ReportMenu();
 
 #endif REPORT_H

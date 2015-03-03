@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void DatabaseModule();
+void DatabaseModule(bool&, bool&, bool&, bool&);
 void DatabaseMenu(InventoryItem*, int);
 
 
