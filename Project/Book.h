@@ -30,6 +30,11 @@ public:
 
 	bool operator==(const Book&);
 	void operator=(const Book&);
+
+	friend ofstream& operator<<(ofstream &, const Book&);
+	friend ifstream& operator>>(ifstream &, Book&);
+	friend fstream& operator<<(fstream &, const Book&);
+	friend fstream& operator>>(fstream &, Book&);
 };
 
 #endif

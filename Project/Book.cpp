@@ -52,3 +52,27 @@ void Book::operator=(const Book &obj){
 	author = obj.author;
 	publisher = obj.publisher;
 }
+ofstream& operator<<(ofstream &ofs, const Book &obj){
+	ofs << obj.ISBN << " '" << obj.title << "' " << obj.author << " " << obj.publisher;
+	return ofs;
+}
+ifstream& operator>>(ifstream &ifs, Book &obj){
+	string temp;
+	ifs >> obj.ISBN;
+	getline(ifs, temp, '\'');
+	getline(ifs, obj.title, '\'');
+	ifs >> obj.author >> obj.publisher;
+	return ifs;
+}
+fstream& operator<<(fstream &fs, const Book &obj){
+	fs << obj.ISBN << " '" << obj.title << "' " << obj.author << " " << obj.publisher;
+	return fs;
+}
+fstream& operator>>(fstream &fs, Book &obj){
+	string temp;
+	fs >> obj.ISBN;
+	getline(fs, temp, '\'');
+	getline(fs, obj.title, '\'');
+	fs >> obj.author >> obj.publisher;
+	return fs;
+}
