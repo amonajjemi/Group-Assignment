@@ -97,3 +97,15 @@ ifstream& operator>>(ifstream &ifs, Name &obj){
 	ifs >> obj.Last >> obj.First;
 	return ifs;
 }
+fstream& operator<<(fstream &fs, const Name &obj){
+	// fstream operator for the Name class
+	// Gives output in the form of "last name, first name"
+	fs << obj.Last << " " << obj.First;
+	return fs;
+}
+fstream& operator>>(fstream &fs, Name &obj){
+	// fstream operator for the Name class
+	// Gets input for Last name and First name
+	fs >> obj.Last >> obj.First;
+	return fs;
+}
