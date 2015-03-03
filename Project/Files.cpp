@@ -3,88 +3,151 @@
 #include <fstream>
 using namespace std;
 
-
-void BinaryRead(string strInFile, InventoryItem *items)
-{
+bool FileFlagTest(string strFile){
+	bool flag;
+	fstream file;
+	file.open(strFile);
+	if (file.good())
+	{
+		flag = true;
+	}
+	else 
+		flag = false;
+	file.close();
+	file.clear();
+	return flag;
+}
+void BinaryRead(string strInFile, InventoryItem *&items)
+{	/*
+	Function: Reads a binary file of stored objects, reads the values into the passed array
+			The binary file must be properly formated. The first value must be the number of objects written to the file.
+	Parameters:
+		strInFile - Name of the file to be read from
+		*items - Pointer for an array of InventoryItem objects
+	Returns: Nothing
+	*/
 	fstream inBinary;
-	inBinary.open(strInFile, ios::in | ios::binary);
-	if (inBinary.good())
+	inBinary.open(strInFile, ios::in | ios::binary);	// Open the binary file for input
+	if (!inBinary.good())	// If the file was not successfully opened
+	{
+		cout << "Error opening file" << endl;
+		system("pause");
+	}
+	else		// If the file was successfully opened
 	{
 		int iSize;
-		inBinary.read(reinterpret_cast<char *>(&iSize), sizeof(iSize));
+		inBinary.read(reinterpret_cast<char *>(&iSize), sizeof(iSize));	// Gets the first value in the binary file (which should be the number of objects in the file)
 		cout << "Number of Inventory Items: " << iSize << endl;
 		InventoryItem temp;
-		items = new InventoryItem[iSize];
+		items = new InventoryItem[iSize];	// Allocate enough memory to hold all the objects in the file
 		for (int k = 0; k < iSize; k++)
 		{
-			inBinary.read(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));
+			inBinary.read(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));	// Read the file into the newly created objects
 		}
-		cout << "End of binary read" << endl;
-
-		//	delete reinterpret_cast<char *>(temp);
-	}
-	else
-		cout << "Error opening file" << endl;
+	//	cout << "End of binary read" << endl;
+	//	delete reinterpret_cast<char *>(temp);
+	}		
 	system("pause");
 	inBinary.close();
 	inBinary.clear();
 }
-void  BinaryWrite(string strOutFile, InventoryItem *items, int size){
+void BinaryWrite(string strOutFile, InventoryItem *items, int size)
+{	/*
+	Function: Writes an array of objects to a binary file. The first value in the binary file will be the number of elements in the array
+	Parameters:
+		strOutFile - Name of the file to be written to
+		*items - Pointer to an array of InventoryItem objects, this array will be written to the file
+		size - Number of elements in the array
+	Returns: Nothing
+	*/
 	fstream outFile;
-	outFile.open(strOutFile, ios::out | ios::binary);
-	if (outFile.good())
+	outFile.open(strOutFile, ios::out | ios::binary);	// Open the binary file for output
+	if (!outFile.good())		// If the file was not successfully opened
 	{
-		outFile.write(reinterpret_cast<char *>(&size), sizeof(size));
+		cout << "Error opening file" << endl;
+		system("pause");
+	}
+	else		// If the file was successfully opened
+	{
+		outFile.write(reinterpret_cast<char *>(&size), sizeof(size));	// Write the number of objects as the first value of the file
 		InventoryItem temp;
 		for (int k = 0; k < size; k++)
 		{
-			outFile.write(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));
+			outFile.write(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));	// Write all of the objects to the file
 		}
-		cout << "End of binary write" << endl;
-		system("pause");
+	//	cout << "End of binary write" << endl;
+	//	system("pause");
 		//	delete reinterpret_cast<char *>(temp);
 	}
-	else
-		cout << "Error opening file" << endl;
 	outFile.close();
 	outFile.clear();
 }
-void TextRead(string strFile, InventoryItem *items){
+void TextRead(string strFile, InventoryItem *&items)
+{	/*
+	Function: Reads values from a text file into an array of InventoryItem
+			The first line of the file should be the number of lines of input in the file (excluding the line with this number)
+			Each line of input should have all the values of an InventoryItem object, properly formated for input
+	Parameters:
+		strFile - Name of the file
+		*items - Pointer for an array of InventoryItem objects
+	Returns: Nothing
+	*/
+	int size;
+	string temp;
+	string ISBN, title, first, last, publisher;
+	int year, month, day, quantity;
+	double wholesale, price;
+
 	fstream inFile;
-	inFile.open(strFile, ios::in);
-	if (inFile.good())
+	inFile.open(strFile, ios::in);	// Open the file for input
+	if (!inFile.good())		// If the file was not successfully opened
 	{
-		int size;
-		string temp;
-		string ISBN, title, first, last, publisher;
-		int year, month, day, quantity;
-		double wholesale, price;
-		inFile >> size;
+		cout << "Error opening file" << endl;
+		system("pause");
+	}
+	else		// If the file was successfully opened
+	{	// Variables for input
+		inFile.clear();
+
+		inFile >> size;		// Get the size of the file (the number of lines of input)
+		items = new InventoryItem[size];	// Allocate memory for an array of objects big enough to read all the values from the file
 		for (int k = 0; k < size && !inFile.eof(); k++)
 		{
 			inFile >> ISBN;
 			getline(inFile, temp, '\'');
 			getline(inFile, title, '\'');
 			inFile >> last >> first >> publisher >> year >> month >> day >> quantity >> wholesale >> price;
-			items[k] = { { ISBN, title, { last, first }, publisher }, { year, month, day }, quantity, wholesale, price };
+			items[k] = { { ISBN, title, { last, first }, publisher }, { year, month, day }, quantity, wholesale, price };	// Use the constructor to assign values to each object in the array
+		//	cout << k + 1 << ") Title: " << items[k].getBook().getTitle() << endl;
+		//	cout << k + 1 << ") Price: " << items[k].getPrice() << endl;
 		}
 		//	cout << "End of text read for Inventory Items" << endl;
 		//	system("pause");
 	}
-	else
-		cout << "Error opening file" << endl;
 	inFile.close();
 	inFile.clear();
 }
-void TextWrite(string strFile, InventoryItem *items, int size){
+void TextWrite(string strFile, InventoryItem *items, int size)
+{	/*
+	Function: Write an array of objects to a text file, with the values of each object on an individual line
+	Parameters:
+		strFile - Name of the file to write to
+		*items - Pointer to an array of InventoryItem objects
+		size - Number of elements in the array
+	*/
 	fstream outFile;
-	outFile.open(strFile, ios::out);
-	if (outFile.good())
+	outFile.open(strFile, ios::out);	// Open the file for output
+	if (!outFile.good())		// If the file was not successfully opened
 	{
-		outFile << size << endl;
+		cout << "Error opening file" << endl;
+		system("pause");
+	}
+	else
+	{
+		outFile << size << endl;	// The first value written to the file is the number of objects
 		for (int k = 0; k < size; k++)
 		{
-			outFile
+			outFile	// Each object has all of its values written to a line. The title of the object is enclosed in single quotes ('title goes here')
 				<< items[k].getBook().getISBN() << " " << "\'" << items[k].getBook().getTitle() << "\'" << items[k].getBook().getAuthor().GetLastName() << " " << items[k].getBook().getAuthor().GetFirstName() << " " << items[k].getBook().getPublisher() << " "
 				<< items[k].getDateAdded().GetYear() << " " << items[k].getDateAdded().GetMonth() << " " << items[k].getDateAdded().GetDay() << " " << items[k].getQuantity() << " " << items[k].getWholesale() << " " << items[k].getPrice() << endl;
 			//	cout << k + 1 << ") Book title written: " << items[k].getBook().getTitle() << endl;
@@ -92,17 +155,19 @@ void TextWrite(string strFile, InventoryItem *items, int size){
 		//	cout << "End of text write for Inventory Items" << endl;
 		//	system("pause");
 	}
-	else
-		cout << "Error opening file" << endl;
 	outFile.close();
 	outFile.clear();
 }
-
-void TextRead(string strFile, Book *book)
+void TextRead(string strFile, Book *&book)
 {
 	fstream inFile;
 	inFile.open(strFile, ios::in);
-	if (inFile.good())
+	if (!inFile.good())
+	{
+		cout << "Error opening file" << endl;
+		system("pause");
+	}
+	else
 	{
 		int size;
 		char temp;
@@ -120,12 +185,9 @@ void TextRead(string strFile, Book *book)
 			book[index] = { ISBN, title, { last, first }, publisher };
 		}
 	}
-	else
-		cout << "Error opening file" << endl;
 	inFile.close();
 	inFile.clear();
 }
-
 char Choice(char low, char high)
 {	/*
 	Function: Allows user to input char values between two values, based on ASCII values
@@ -193,7 +255,7 @@ double RandomWholesale()
 	Returns: A randomly selected double value from the salary[] array
 	*/
 	double wholesale[] = { 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 5, 5.25, 5.5, 5.75, 6 };
-	return wholesale[Random(0, sizeof(wholesale) / sizeof(wholesale[0] - 1))];
+	return wholesale[Random(0, sizeof(wholesale) / sizeof(wholesale[0]) -1)];
 }
 double RandomPrice()
 {	/*
@@ -204,5 +266,6 @@ double RandomPrice()
 	Returns: A randomly selected double value from the salary[] array
 	*/
 	double price[] = { 6.25, 6.5, 6.75, 7, 7.25, 7.50, 7.75, 8, 8.25, 9.5, 9.75, 10, 10.25, 10.5, 10.75, 11, 11.25, 11.5, 11.75, 12 };
-	return price[Random(0, sizeof(price) / sizeof(price[0] - 1))];
+	return price[Random(0, sizeof(price) / sizeof(price[0]) -1)];
 }
+

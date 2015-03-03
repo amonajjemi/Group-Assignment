@@ -3,11 +3,12 @@
 
 #include "InventoryItem.h"
 
-void TextRead(string, InventoryItem*);
+bool FileFlagTest(string);
+void TextRead(string, InventoryItem*&);
 void TextWrite(string, InventoryItem*, int);
-void BinaryRead(string, InventoryItem*);
+void BinaryRead(string, InventoryItem*&);
 void BinaryWrite(string, InventoryItem*, int);
-void TextRead(fstream&, Book*);
+void TextRead(string, Book*&);
 
 char Choice(char, char);
 char YesNo();
