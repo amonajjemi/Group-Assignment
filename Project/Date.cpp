@@ -49,6 +49,12 @@ string Date::GetDate(){// Returns the date object as a string, in the format of 
 
 }
 void Date::BoundsChecker(){
+	/*
+	Function: Bounds checker for the Date class. Prevents invalid values from being stored. Is called for each constructor, and for the assignment operator
+	Parameters: 
+		None
+	Returns: Nothing
+	*/
 	if (Month > 12)
 		Month = 12;
 	switch (Month)	// Prevents months from having too many days
