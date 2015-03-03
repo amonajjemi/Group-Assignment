@@ -27,7 +27,7 @@ public:
 	//Getters
 	string GetFirstName();
 	string GetLastName();
-	string GetstrName();
+	string GetName();
 
 	//Operator overloads
 	bool operator>(const Name &);
