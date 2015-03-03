@@ -42,23 +42,25 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		"\t4) - Remove an item\n",
 		"\t5) - Exit module\n"};
 	string strSubMenu1[] = {	// Menu number corresponds to choice in the module's MainMenu. (1 is for searching for an item)
-		"--------------------------------------------------------------------------------",
+		"================================================================================",
 		"\tSearch for an item\n",
-		"--------------------------------------------------------------------------------",
+		"================================================================================",
 		"\t1) - Search by ISBN\n",
 		"\t2) - Search by book title\n",
-		"\t3) - Search by book author\n" };
+		"\t3) - Search by book author\n",
+		"\t4) - Go back\n"};
 	string strSubMenu2[] = {	// Menu number corresponds to choice in the module's MainMenu. (2 is for modifying an item)
-		"--------------------------------------------------------------------------------",
+		"================================================================================",
 		"\tModify an existing item\n",
-		"--------------------------------------------------------------------------------",
+		"================================================================================",
 		"\t1) - Modify an item with given ISBN\n",
 		"\t2) - Modify an item with given book title\n",
-		"\t3) - Modify an item with given book author\n" };
+		"\t3) - Modify an item with given book author\n",
+		"\t4) - Go back\n" };
 	string strFieldMenu[] = {	// Menu used for modifying an item, allowing the user to choose which fields to modify
-		"--------------------------------------------------------------------------------",
+		"================================================================================",
 		"\tWhat data field do you wish to modify?\n",
-		"--------------------------------------------------------------------------------",
+		"================================================================================",
 		"\t1) - ISBN\n",
 		"\t2) - Book Title\n",
 		"\t3) - Book Aathor\n",
@@ -68,13 +70,14 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		"\t7) - Wholesale Cost\n",
 		"\t8) - Price\n" };
 	string strSubMenu4[] = {	// Menu number corresponds to choice in the module's MainMenu. (4 is for removing an item)
-		"--------------------------------------------------------------------------------",
+		"================================================================================",
 		"\tRemove an item\n",
-		"--------------------------------------------------------------------------------",
+		"================================================================================",
 		"\t1) - Remove an item with given ISBN\n",
 		"\t2) - Remove an item with given book title\n",
-		"\t3) - Remove an item with given book author\n", };
-
+		"\t3) - Remove an item with given book author\n",
+		"\t4) - Go back\n" };
+	bool exitFlag;
 	while (1)	// Will always loop. The only exit condition is if the user chooses '5' in the main menu
 	{
 		cout << flush;
@@ -85,13 +88,15 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		switch (Choice('1', '5'))
 		{
 		case '1':	// Search for an item
-			system("cls");
+
 			do
 			{
+				exitFlag = false;
+				system("cls");
 				for (string temp : strSubMenu1)	// Display sub menu 
 					cout << temp;
 				int itemIndex = 0;
-				switch (Choice('1', '3'))
+				switch (Choice('1', '4'))
 				{
 				case '1':
 					// Get user input for ISBN
@@ -107,19 +112,23 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					// Get user input for book author
 					// Search array by book author, retreive indexes of found matches
 					cout << "Enter book author: " << endl;
+					break;
+				case '4':
+					exitFlag = true;
 					break;
 				}
 				// Display all items found matching search parameters
 				cout << "Would you like to search for another item? \"n\" for no, \"y\" for yes" << endl;
-			} while (tolower(YesNo()) == 'y');
+			} while (exitFlag == false && tolower(YesNo()) == 'y');
 			break;
 		case '2':	// Modify an existing item
-			system("cls");
 			do
 			{
+				exitFlag = false;
+				system("cls");
 				for (string temp : strSubMenu2)	// Display sub menu
 					cout << temp;
-				switch (Choice('1', '3'))
+				switch (Choice('1', '4'))
 				{
 				case '1':
 					// Get user input for ISBN
@@ -135,6 +144,9 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					// Get user input for book author
 					// Search array by book author, retreive indexes of found matches
 					cout << "Enter book author: " << endl;
+					break;
+				case '4':
+					exitFlag = true;
 					break;
 				}
 				// Display all items found matching search parameters, with numbered options to allow selection
@@ -145,29 +157,32 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				//
 				}
 				*/
-				for (string temp : strFieldMenu)
-					cout << temp;
-				switch (Choice('1', '8'))	// Modify the data members of the choosen inventory item
+				if (exitFlag == false)
 				{
-				case '1':
-					break;
-				case '2':
-					break;
-				case '3':
-					break;
-				case '4':
-					break;
-				case '5':
-					break;
-				case '6':
-					break;
-				case '7':
-					break;
-				case '8':
-					break;
+					for (string temp : strFieldMenu)
+						cout << temp;
+					switch (Choice('1', '8'))	// Modify the data members of the choosen inventory item
+					{
+					case '1':
+						break;
+					case '2':
+						break;
+					case '3':
+						break;
+					case '4':
+						break;
+					case '5':
+						break;
+					case '6':
+						break;
+					case '7':
+						break;
+					case '8':
+						break;
+					}
 				}
 				cout << "Would you like to modify another item? \"n\" for no, \"y\" for yes" << endl;
-			} while (tolower(YesNo()) == 'y');
+			} while (exitFlag == false && tolower(YesNo()) == 'y');
 			break;
 		case '3':	// Add an item
 			system("cls");
@@ -181,9 +196,10 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			system("cls");
 			do
 			{
+				exitFlag = false;
 				for (string temp : strSubMenu4)	// Display sub menu
 					cout << temp;
-				switch (Choice('1', '3'))
+				switch (Choice('1', '4'))
 				{
 				case '1':
 					// Get user input for ISBN
@@ -200,11 +216,13 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					// Search array by book author, retreive indexes of found matches
 					cout << "Enter book author: " << endl;
 					break;
+				case '4':
+					exitFlag = true;
 				}
 				// Display all items found matching search parameters, with numbered options to allow selection
 				// Allow user to choose which result to remove
 				cout << "Would you like to remove another item?  \"n\" for no, \"y\" for yes" << endl;
-			} while (tolower(YesNo()) == 'y');
+			} while (exitFlag == false && tolower(YesNo()) == 'y');
 			break;
 		case '5':	// Exit module
 			// Should write current arrays to files, update file flags
