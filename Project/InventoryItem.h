@@ -31,12 +31,19 @@ public:
 	double getWholesale();
 	double getPrice();
 
-	int GetISBN();
+	string GetISBN();
 	string GetTitle();
-	string GetAuthor();
+	Name GetAuthor();
+	string GetAuthorName();
 	string GetPublisher();
+	
+	bool operator==(const InventoryItem&);
+	void operator=(const InventoryItem&);
 
-
+	friend ofstream& operator<<(ofstream &, const InventoryItem&);
+	friend ifstream& operator>>(ifstream &, InventoryItem&);
+	friend fstream& operator<<(fstream &, const InventoryItem&);
+	friend fstream& operator>>(fstream &, InventoryItem&);
 };
 
 #endif
