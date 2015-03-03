@@ -31,43 +31,24 @@ Book::Book(string eISBN, string eTitle, Name eAuthor, string ePublisher)
 	author = eAuthor;
 	publisher = ePublisher;
 }
+void Book::setISBN(string eISBN){ ISBN = eISBN; }
+void Book::setTitle(string eTitle){ title = eTitle; }
+void Book::setAuthor(Name eAuthor){ author = eAuthor; }
+void Book::setPublisher(string ePublisher){ publisher = ePublisher; }
+string Book::getISBN(){ return ISBN; }
+string Book::getTitle(){ return title; }
+Name Book::getAuthor(){ return author; }
+string Book::getPublisher(){ return publisher; }
 
-void Book::setISBN(string eISBN)
-{
-	ISBN = eISBN;
+bool Book::operator==(const Book &obj){
+	if (ISBN == obj.ISBN && title == obj.title && author == obj.author && publisher == obj.publisher)
+		return true;
+	else
+		return false;
 }
-
-void Book::setTitle(string eTitle)
-{
-	title = eTitle;
-}
-
-void Book::setAuthor(Name eAuthor)
-{
-	author = eAuthor;
-}
-
-void Book::setPublisher(string ePublisher)
-{
-	publisher = ePublisher;
-}
-
-string Book::getISBN()
-{
-	return ISBN;
-}
-
-string Book::getTitle()
-{
-	return title;
-}
-
-Name Book::getAuthor()
-{
-	return author;
-}
-
-string Book::getPublisher()
-{
-	return publisher;
+void Book::operator=(const Book &obj){
+	ISBN = obj.ISBN;
+	title = obj.title;
+	author = obj.author;
+	publisher = obj.publisher;
 }

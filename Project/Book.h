@@ -27,6 +27,9 @@ public:
 	string getTitle();
 	Name getAuthor();
 	string getPublisher();
+
+	bool operator==(const Book&);
+	void operator=(const Book&);
 };
 
 #endif
