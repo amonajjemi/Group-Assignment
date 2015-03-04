@@ -1,20 +1,25 @@
 #include "Files.h"
-#include <iostream>
-#include <fstream>
+
 using namespace std;
 
 bool FileFlagTest(string strFile){
+	/*
+	Function: Tests a file to see if it can be used
+	Parameters:
+		strFile - Name of the file to be tested
+	Returns: True or false, depending upon whether or not the file passed or failed the test
+	*/
 	bool flag;
 	fstream file;
-	file.open(strFile);
-	if (file.good())
+	file.open(strFile);	// Open the file
+	if (file.good())	// Test if the file can be successfully opened
 	{
-		flag = true;
+		flag = true;	
 	}
 	else 
 		flag = false;
-	file.close();
-	file.clear();
+	file.close();		// Close the file
+	file.clear();		// Clear all flags from the file so it can be used again
 	return flag;
 }
 void BinaryRead(string strInFile, InventoryItem *&items)

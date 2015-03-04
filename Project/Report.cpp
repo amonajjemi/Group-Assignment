@@ -14,8 +14,8 @@ const string
 
 void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag){
 //	ReportMenu();
-	InventoryItem *items = nullptr;
-	TextRead(strUnsorted, items);
+	InventoryItem *items = nullptr;	// Pointer that will be used to store the database. When a file is read, it allocates enough memory for an array using this pointer
+	TextRead(strUnsorted, items);	// TextRead will open the strUnsorted file, and allocate enough memory to read the whole file into an array assigned to the items pointer
 
 	string strMainMenu[] = {
 		"================================================================================",
@@ -32,7 +32,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 	while (1)	// Loop repeats forever until the user choose '7' in the module's main menu
 	{
 		system("cls");
-		for (string temp : strMainMenu)
+		for (string temp : strMainMenu)	// Display the module's main menu
 			cout << temp;
 		switch (Choice('1', '7'))
 		{
@@ -48,7 +48,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			for (int k = 0; k < 50; k++)
 			{
 				if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
-				{
+				{							// It will add a system pause and a new header for every 10th object written to screen
 					system("pause");
 					cout << endl
 						<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
@@ -82,8 +82,8 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			// Display inventory sorted by age
 			break;
 		case '7':	// Exit module
+			delete[] items;
 			return;
 		}
-		cout << "Would you like to view another report?  \"n\" for no, \"y\" for yes" << endl;
 	}
 }
