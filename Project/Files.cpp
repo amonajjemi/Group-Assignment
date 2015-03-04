@@ -93,10 +93,10 @@ void TextRead(string strFile, InventoryItem *&items)
 	Returns: Nothing
 	*/
 	int size;
-	string temp;
-	string ISBN, title, first, last, publisher;
-	int year, month, day, quantity;
-	double wholesale, price;
+//	string temp;
+//	string ISBN, title, first, last, publisher;
+//	int year, month, day, quantity;
+//	double wholesale, price;
 
 	fstream inFile;
 	inFile.open(strFile, ios::in);	// Open the file for input
@@ -130,7 +130,7 @@ void TextRead(string strFile, InventoryItem *&items)
 }
 void TextWrite(string strFile, InventoryItem *items, int size)
 {	/*
-	Function: Write an array of objects to a text file, with the values of each object on an individual line
+	Function: Write an array of InventoryItem objects to a text file, with the values of each object on an individual line
 	Parameters:
 		strFile - Name of the file to write to
 		*items - Pointer to an array of InventoryItem objects
@@ -148,7 +148,7 @@ void TextWrite(string strFile, InventoryItem *items, int size)
 		outFile << size << endl;	// The first value written to the file is the number of objects
 		for (int k = 0; k < size; k++)
 		{
-			outFile << items[k];
+			outFile << items[k] << endl;
 		//	outFile	// Each object has all of its values written to a line. The title of the object is enclosed in single quotes ('title goes here')
 		//		<< items[k].getBook().getISBN() << " " << "\'" << items[k].getBook().getTitle() << "\'" << items[k].getBook().getAuthor().GetLastName() << " " << items[k].getBook().getAuthor().GetFirstName() << " " << items[k].getBook().getPublisher() << " "
 		//		<< items[k].getDateAdded().GetYear() << " " << items[k].getDateAdded().GetMonth() << " " << items[k].getDateAdded().GetDay() << " " << items[k].getQuantity() << " " << items[k].getWholesale() << " " << items[k].getPrice() << endl;
@@ -160,8 +160,14 @@ void TextWrite(string strFile, InventoryItem *items, int size)
 	outFile.close();
 	outFile.clear();
 }
-void TextRead(string strFile, Book *&book)
-{
+void TextRead(string strFile, Book *book)
+{	/*
+	Function: Read a text file into an array of Book objects
+	Paramaters:
+		strFile - Name of the input file
+		*&book - Pointer to an array of Book objects, passed as reference
+	Returns: Nothing
+	*/
 	fstream inFile;
 	inFile.open(strFile, ios::in);
 	if (!inFile.good())
@@ -172,19 +178,13 @@ void TextRead(string strFile, Book *&book)
 	else
 	{
 		int size;
-		char temp;
-		string ISBN;
-		string title, first, last, publisher;
+	//	char temp;
+	//	string ISBN;
+	//	string title, first, last, publisher;
 		inFile >> size;
 		for (int index = 0; index < size; index++)
 		{
-			inFile >> ISBN;
-			inFile.get(temp);
-			inFile.get(temp);
-			getline(inFile, title, '\'');
-			getline(inFile, last, ',');
-			inFile >> first >> publisher;
-			book[index] = { ISBN, title, { last, first }, publisher };
+			inFile >> book[index];
 		}
 	}
 	inFile.close();

@@ -1,4 +1,5 @@
 #include "Name.h"
+#include <iostream>
 
 using namespace std;
 
@@ -94,18 +95,24 @@ ofstream& operator<<(ofstream &ofs, const Name &obj){
 ifstream& operator>>(ifstream &ifs, Name &obj){
 	// ifstream operator for the Name class
 	// Gets input for Last name and First name
-	ifs >> obj.Last >> obj.First;
+	char temp;
+	ifs.get(temp);
+	getline(ifs, obj.Last, ',');
+	ifs >> obj.First;
 	return ifs;
 }
 fstream& operator<<(fstream &fs, const Name &obj){
-	// fstream operator for the Name class
+	// input fstream operator for the Name class
 	// Gives output in the form of "last name, first name"
 	fs << obj.Last << " " << obj.First;
 	return fs;
 }
 fstream& operator>>(fstream &fs, Name &obj){
-	// fstream operator for the Name class
+	// output fstream operator for the Name class
 	// Gets input for Last name and First name
-	fs >> obj.Last >> obj.First;
+	char temp;
+	fs.get(temp);
+	getline(fs, obj.Last, ',');
+	fs >> obj.First;
 	return fs;
 }

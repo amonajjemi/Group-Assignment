@@ -51,12 +51,16 @@ string InventoryItem::GetAuthorName(){ return BookItem.getAuthor().GetName(); }
 string InventoryItem::GetPublisher(){ return BookItem.getPublisher(); }
 
 bool InventoryItem::operator==(const InventoryItem &obj){
+	// Equal to operator overload for InventoryItem class
+	// Returns true if all members of the objects are the same, otherwise returns false
 	if ((BookItem == obj.BookItem) && (DateAdded == obj.DateAdded) && (Quantity == obj.Quantity) && (Wholesale == obj.Wholesale) && (Price = obj.Price))
 		return true;
 	else
 		return false;
 }
 void InventoryItem::operator=(const InventoryItem &obj){
+	// Assignment operator overload for InventoryItem class
+	// Copies values from one object to another
 	BookItem = obj.BookItem;
 	DateAdded = obj.DateAdded;
 	Quantity = obj.Quantity;
@@ -64,18 +68,29 @@ void InventoryItem::operator=(const InventoryItem &obj){
 	Price = obj.Price;
 }
 ofstream& operator<<(ofstream &ofs, const InventoryItem &obj){
+	// ofstream operator overload for InventoryItem class
+	// Uses Book and Date class ofstream operators for the BookItem and DateAdded members
+	// Outputs the values with a single space in between them. The title member of the Book class will be enclosed in single quotes ('title goes here')
 	ofs << obj.BookItem << " " << obj.DateAdded << " " << obj.Quantity << " " << obj.Wholesale << " " << obj.Price;
 	return ofs;
 }
 ifstream& operator>>(ifstream &ifs, InventoryItem &obj){
+	// ifstream operator overload for InventoryItem class
+	// Uses Book and Date class ifstream operators for the BookItem and DateAdded members
+	// The values must have a space between them. The title member of the Book class must be enclosed in single quotes ('title goes here')
+	// The values should be on the same line, but it may not be neccesary
 	ifs >> obj.BookItem >> obj.DateAdded >> obj.Quantity >> obj.Wholesale >> obj.Price;
 	return ifs;
 }
 fstream& operator<<(fstream &fs, const InventoryItem &obj){
+	// output fstream operator overload for InventoryItem class
+	// Works the same as the ofstream operator overload
 	fs << obj.BookItem << " " << obj.DateAdded << " " << obj.Quantity << " " << obj.Wholesale << " " << obj.Price;
 	return fs;
 }
 fstream& operator>>(fstream &fs, InventoryItem &obj){
+	// input fstream operator overload for InventoryItem class
+	// Works the same as the ifstream operator overload
 	fs >> obj.BookItem >> obj.DateAdded >> obj.Quantity >> obj.Wholesale >> obj.Price;
 	return fs;
 }

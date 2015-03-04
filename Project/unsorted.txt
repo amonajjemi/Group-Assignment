@@ -1,51 +1,51 @@
 50
-7577674157781 'The Godfather' Kelly Laura Janyx 2002 6 27 35 4.75 6.5
-8176861974089 'With intent' Wells Phillip Topicware 1991 6 6 63 4 11.75
-9834088067645 'By Midnight' Fuller Helen Vipe 1996 8 27 62 4.25 6.5
-0589707856224 'By George' Walker Andrea Vipe 1999 3 4 92 3.5 8
-6843046216832 'If' Gilbert Patrick Zoombox 1997 3 24 22 4.5 10.25
-8514231061985 'For Hire' Richardson James Zoomlounge 1998 10 7 72 3.75 8
-4884641531885 'With menaces' Young Ronald Skyndu 1993 12 6 36 3 8
-5941797059634 'The Inheritance' Hudson Earl JumpXS 2005 10 15 74 4 6.75
-3997659235798 'With sympathy' Simmons Janice Brainbox 1995 11 24 48 4 10.5
-6395451782405 'By design' Mcdonald Shirley Thoughtblab 2000 2 8 24 3.5 11.5
-0263582602119 'If' Reed Donna Oyondu 2000 1 14 91 4.5 11.25
-4764036722930 'And again?' Wallace Lori Eazzy 2003 3 19 65 5.75 6.25
-6903350988817 'By land, by sea' Schmidt Larry Quinu 2003 7 6 71 5 9.75
-0785387690147 'The Contender' Armstrong Roger Babbleopia 1992 1 7 30 6 10.5
-4135688919398 'For Love' Gray Stephen Tagchat 1994 12 30 67 5.5 11.25
-7775003199748 'With sympathy' Gonzalez Richard Topicshots 1992 6 9 27 4 7.25
-8525921378410 'For you' Frazier James Skynoodle 2001 10 19 30 3.5 11.75
-2074882025890 'Andes' Edwards Martin Eadel 1992 10 11 5 4.25 12
-4506621565326 'By land, by sea' Duncan Ernest Jabbertype 1990 9 9 22 3 10.5
-5058320747202 'For books.' Washington James Einti 1990 10 12 78 4.25 9.75
-4890160837633 'As if' Rice Phyllis Brainbox 2005 12 6 62 4 7.75
-1040564814199 'Look with me' Palmer Bruce Topiczoom 2004 3 25 32 3 11
-0933716033875 'The Bridge' Gibson Joe Flipstorm 2005 4 21 67 3.25 6.5
-0368706431148 'Love and desire and hate' Kelly Daniel Oyonder 2005 10 12 58 3.25 8
-2779275006713 'Appointment with danger' Thomas Adam Flipopia 2002 6 25 10 4 7.5
-7910504264889 'For better, for worse' James Nicholas Trudeo 1990 10 11 7 6 6.75
-8325413840366 'If only -' Schmidt Maria Dynabox 1997 11 13 63 3 6.25
-9830205814002 'By fire, by moonlight' Hicks Sharon Gigabox 1999 8 5 49 5.5 7.25
-6508730397797 'The Giver' Vasquez Joan Flashpoint 2002 3 23 92 3.25 6.75
-3714676468998 'You and I, and love' Murray Patrick Shuffletag 1994 1 12 49 5.5 11.25
-6866037618290 'With no regrets' Stephens Victor Voolia 1992 7 16 54 3.5 6.5
-3325844984261 'For better, for worse' Alvarez Carlos Edgetag 2003 9 3 28 4.25 6.25
-8296167386203 'As if' Morales Robert Voolith 1999 7 4 8 4.5 8.25
-3393896524967 'The Pirate' Hayes Martha Trudoo 2001 12 22 10 5.75 10.5
-5654006792011 'By hook and by crook' James Anne Demizz 2005 11 30 20 5.5 6.25
-9673980376737 'Imagine if -' Warren Ronald Yamia 2004 2 29 45 5.5 7.25
-8937586880310 'Magic with everything' Ellis Joshua Jabberbean 1993 8 22 94 5.5 11
-5191530358164 'For better for worse' Davis Tina Ailane 2000 7 29 49 3 10.75
-2307249210133 'The Bible' Harris Wanda Jetpulse 2004 6 30 99 5.5 6.25
-1944877423907 'Sense and sensibility and Pride and prejudice' Ferguson Billy Mydeo 1994 11 1 73 3 9.5
-3654374731647 'If only' Hanson Alan Gigaclub 2005 3 22 91 6 11.75
-5403503738467 'The Americans' Carter Diana Geba 2000 3 11 57 5 11
-3400560927044 'Mothers and and Sons Fathers and Daughters' Hawkins Wanda Centimia 1996 11 17 29 5.25 10.25
-5109933990263 'By invitation' Lawrence Beverly DabZ 1998 1 24 70 3.5 11
-8197478287014 'Covenant with death' Alvarez Heather Topicstorm 1993 2 21 23 4.25 6.5
-1066641558048 'For Better, for Worse' Fuller Ralph Blogtag 1998 12 24 93 4.5 11.5
-6474777053421 'If I' Gibson Maria Kwilith 1990 6 24 4 3.25 6.25
-8352767278807 'Cassandra by chance' Long Diane Zoovu 1999 11 25 56 3 6.5
-4630214043158 'The Iliad' Rogers Melissa Oodoo 2003 10 24 89 3.5 6.75
-1526329061728 'Flop and Mick and John and me' Walker Nicholas Tanoodle 1995 6 16 70 4.25 10.25
+7577674157781 'The Godfather' Kelly, Laura Janyx 2002-06-27 35 4.75 6.5
+8176861974089 'With intent' Wells, Phillip Topicware 1991-06-06 63 4 11.75
+9834088067645 'By Midnight' Fuller, Helen Vipe 1996-08-27 62 4.25 6.5
+0589707856224 'By George' Walker, Andrea Vipe 1999-03-04 92 3.5 8
+6843046216832 'If' Gilbert, Patrick Zoombox 1997-03-24 22 4.5 10.25
+8514231061985 'For Hire' Richardson, James Zoomlounge 1998-10-07 72 3.75 8
+4884641531885 'With menaces' Young, Ronald Skyndu 1993-12-06 36 3 8
+5941797059634 'The Inheritance' Hudson, Earl JumpXS 2005-10-15 74 4 6.75
+3997659235798 'With sympathy' Simmons, Janice Brainbox 1995-11-24 48 4 10.5
+6395451782405 'By design' Mcdonald, Shirley Thoughtblab 2000-02-08 24 3.5 11.5
+0263582602119 'If' Reed, Donna Oyondu 2000-01-14 91 4.5 11.25
+4764036722930 'And again?' Wallace, Lori Eazzy 2003-03-19 65 5.75 6.25
+6903350988817 'By land, by sea' Schmidt, Larry Quinu 2003-07-06 71 5 9.75
+0785387690147 'The Contender' Armstrong, Roger Babbleopia 1992-01-07 30 6 10.5
+4135688919398 'For Love' Gray, Stephen Tagchat 1994-12-30 67 5.5 11.25
+7775003199748 'With sympathy' Gonzalez, Richard Topicshots 1992-06-09 27 4 7.25
+8525921378410 'For you' Frazier, James Skynoodle 2001-10-19 30 3.5 11.75
+2074882025890 'Andes' Edwards, Martin Eadel 1992-10-11 5 4.25 12
+4506621565326 'By land, by sea' Duncan, Ernest Jabbertype 1990-09-09 22 3 10.5
+5058320747202 'For books.' Washington, James Einti 1990-10-12 78 4.25 9.75
+4890160837633 'As if' Rice, Phyllis Brainbox 2005-12-06 62 4 7.75
+1040564814199 'Look with me' Palmer, Bruce Topiczoom 2004-03-25 32 3 11
+0933716033875 'The Bridge' Gibson, Joe Flipstorm 2005-04-21 67 3.25 6.5
+0368706431148 'Love and desire and hate' Kelly, Daniel Oyonder 2005-10-12 58 3.25 8
+2779275006713 'Appointment with danger' Thomas, Adam Flipopia 2002-06-25 10 4 7.5
+7910504264889 'For better, for worse' James, Nicholas Trudeo 1990-10-11 7 6 6.75
+8325413840366 'If only -' Schmidt, Maria Dynabox 1997-11-13 63 3 6.25
+9830205814002 'By fire, by moonlight' Hicks, Sharon Gigabox 1999-08-05 49 5.5 7.25
+6508730397797 'The Giver' Vasquez, Joan Flashpoint 2002-03-23 92 3.25 6.75
+3714676468998 'You and I, and love' Murray, Patrick Shuffletag 1994-01-12 49 5.5 11.25
+6866037618290 'With no regrets' Stephens, Victor Voolia 1992-07-16 54 3.5 6.5
+3325844984261 'For better, for worse' Alvarez, Carlos Edgetag 2003-09-03 28 4.25 6.25
+8296167386203 'As if' Morales, Robert Voolith 1999-07-04 8 4.5 8.25
+3393896524967 'The Pirate' Hayes, Martha Trudoo 2001-12-22 10 5.75 10.5
+5654006792011 'By hook and by crook' James, Anne Demizz 2005-11-30 20 5.5 6.25
+9673980376737 'Imagine if -' Warren, Ronald Yamia 2004-02-29 45 5.5 7.25
+8937586880310 'Magic with everything' Ellis, Joshua Jabberbean 1993-08-22 94 5.5 11
+5191530358164 'For better for worse' Davis, Tina Ailane 2000-07-29 49 3 10.75
+2307249210133 'The Bible' Harris, Wanda Jetpulse 2004-06-30 99 5.5 6.25
+1944877423907 'Sense and sensibility and Pride and prejudice' Ferguson, Billy Mydeo 1994-11-01 73 3 9.5
+3654374731647 'If only' Hanson, Alan Gigaclub 2005-03-22 91 6 11.75
+5403503738467 'The Americans' Carter, Diana Geba 2000-03-11 57 5 11
+3400560927044 'Mothers and and Sons Fathers and Daughters' Hawkins, Wanda Centimia 1996-11-17 29 5.25 10.25
+5109933990263 'By invitation' Lawrence, Beverly DabZ 1998-01-24 70 3.5 11
+8197478287014 'Covenant with death' Alvarez, Heather Topicstorm 1993-02-21 23 4.25 6.5
+1066641558048 'For Better, for Worse' Fuller, Ralph Blogtag 1998-12-24 93 4.5 11.5
+6474777053421 'If I' Gibson, Maria Kwilith 1990-06-24 4 3.25 6.25
+8352767278807 'Cassandra by chance' Long, Diane Zoovu 1999-11-25 56 3 6.5
+4630214043158 'The Iliad' Rogers, Melissa Oodoo 2003-10-24 89 3.5 6.75
+1526329061728 'Flop and Mick and John and me' Walker, Nicholas Tanoodle 1995-06-16 70 4.25 10.25

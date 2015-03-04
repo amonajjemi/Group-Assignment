@@ -8,7 +8,7 @@ void TextRead(string, InventoryItem*&);
 void TextWrite(string, InventoryItem*, int);
 void BinaryRead(string, InventoryItem*&);
 void BinaryWrite(string, InventoryItem*, int);
-void TextRead(string, Book*&);
+void TextRead(string, Book*);
 
 char Choice(char, char);
 char YesNo();

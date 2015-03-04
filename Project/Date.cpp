@@ -1,4 +1,5 @@
 #include "Date.h"
+#include <iostream>
 
 using namespace std;
 
@@ -34,13 +35,13 @@ void Date::SetYear(int year){ Year = year; }
 int Date::GetDay(){ return Day; }
 int Date::GetMonth(){ return Month; }
 int Date::GetYear(){ return Year; }
-string Date::GetDate(){// Returns the date object as a string, in the format of "year/month/day"
+string Date::GetDate(){// Returns the date object as a string, in the format of "year-month-day"
 	string str;
-	str = to_string(Year) + "/";
+	str = to_string(Year) + "-";
 	if (to_string(Month).length() == 1)
-		str += "0" + to_string(Month) + "/";
+		str += "0" + to_string(Month) + "-";
 	else
-		str += to_string(Month) + "/";
+		str += to_string(Month) + "-";
 	if (to_string(Day).length() == 1)
 		str += "0" + to_string(Day);
 	else
@@ -238,32 +239,65 @@ void Date::operator=(const Date &obj){
 	BoundsChecker();
 }
 ostream& operator<<(ostream &os, const Date &obj){
-	os << obj.Year << "/";
+	// ostream operator overload for the Date class
+	// Outputs the date in the format of "year-month-day"
+	// If a month or day is a single digit, a '0' is placed in front of it
+	string temp;
+	temp = to_string(obj.Year) + '-';
 	if (to_string(obj.Month).length() == 1)
-		os << "0";
-	os << obj.Month << "/";
+		temp += '0';
+	temp += to_string(obj.Month) + '-';
 	if (to_string(obj.Day).length() == 1)
-		os << "0";
-	os << obj.Day;
+		temp += '0';
+	temp += to_string(obj.Day);
+	os << temp;
+	//os << obj.Year << "-";
+	//if (to_string(obj.Month).length() == 1)
+	//	os << "0";
+	//os << obj.Month << "-";
+	//if (to_string(obj.Day).length() == 1)
+	//	os << "0";
+	//os << obj.Day;
 	return os;
 }
 istream& operator>>(istream &is, Date &obj){
+	// ifstream operator overload for the Date class
+	// It takes input sequentially as year then month then day
 	is >> obj.Year >> obj.Month >> obj.Day;
 	return is;
 }
 ofstream& operator<<(ofstream &ofs, const Date &obj){
-	ofs << obj.Year << " " << obj.Month << " " << obj.Day << " ";
+	// ofstream operator overload for the Date class
+	// Outputs the date in the formate of "year-month-day"
+	ofs << obj.Year << "-" << obj.Month << "-" << obj.Day << " ";
 	return ofs;
 }
 ifstream& operator>>(ifstream &ifs, Date &obj){
-	ifs >> obj.Year >> obj.Month >> obj.Day;
+	// ifstream operator overload for the Date class
+	// Takes input in the format of "year-month-day". The individual data members must be seperated by a single dash '-', no spaces.
+	// The total date object must be seperated by spaces from other data
+	string temp;
+	getline(ifs, temp, '-');
+	obj.Year = stoi(temp);
+	getline(ifs, temp, '-');
+	obj.Month = stoi(temp);
+	ifs >> obj.Day;
 	return ifs;
 }
 fstream& operator<<(fstream &fs, const Date &obj){
-	fs << obj.Year << " " << obj.Month << " " << obj.Day << " ";
+	// output fstream operator overload for the Date class
+	// Works the same as the ofstream operator overload
+	fs << obj.Year << "-" << obj.Month << "-" << obj.Day << " ";
 	return fs;
 }
 fstream& operator>>(fstream &fs, Date &obj){
-	fs >> obj.Year >> obj.Month >> obj.Day;
+	// input fstream operator overload for the Date class
+	// Works the same as the ifstream operator overload
+	string temp;
+	getline(fs, temp, '-');
+	obj.Year = stoi(temp);
+	getline(fs, temp, '-');
+	obj.Month = stoi(temp);
+	fs >> obj.Day;
 	return fs;
 }
