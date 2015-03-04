@@ -29,7 +29,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 		"\t5) - Listing by Cost\n",
 		"\t6) - Listing by Age\n",
 		"\t7) - Exit Module\n" };
-	do
+	while (1)	// Loop repeats forever until the user choose '7' in the module's main menu
 	{
 		system("cls");
 		for (string temp : strMainMenu)
@@ -47,7 +47,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			// Display all values for each object in the array
 			for (int k = 0; k < 50; k++)
 			{
-				if (k % 17 == 0 || k == 0)	// Allows user to view the results page by page
+				if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
 				{
 					system("pause");
 					cout << endl
@@ -56,9 +56,9 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 						<< "--------------------------------------------------------------------------------";
 				}
 				cout << left
-					<< setw(14) << items[k].getBook().getISBN() << "\"" << items[k].getBook().getTitle() << "\"; " << setw(12) << items[k].getBook().getAuthor().GetName() << "; " << setw(10) << items[k].getBook().getPublisher() << endl
-					<< setw(13) << items[k].getDateAdded().GetDate() << setw(6) << items[k].getQuantity()
-					<< setw(8) << fixed << setprecision(2) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;
+					<< setw(14) << items[k].getBook().getISBN() << "\"" << items[k].getBook().getTitle() << "\"; " << items[k].getBook().getAuthor() << "; " << items[k].getBook().getPublisher() << endl
+					<< setw(12) << items[k].getDateAdded() << setw(4) << items[k].getQuantity()
+					<< setw(6) << fixed << setprecision(2) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;
 			}
 			cout << endl
 				<< "================================================================================"
@@ -83,8 +83,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			break;
 		case '7':	// Exit module
 			return;
-
 		}
 		cout << "Would you like to view another report?  \"n\" for no, \"y\" for yes" << endl;
-	} while (tolower(YesNo()) == 'y');
+	}
 }
