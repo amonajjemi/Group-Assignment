@@ -5,6 +5,7 @@
 #include <vector>
 
 bool FileFlagTest(string);
+bool isEmpty(string);
 void TextRead(string, InventoryItem*&);
 void TextRead(string, vector<InventoryItem>&);
 void TextWrite(string, InventoryItem*, int);
