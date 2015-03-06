@@ -98,11 +98,6 @@ void TextRead(string strFile, InventoryItem *&items)
 	Returns: Nothing
 	*/
 	int size;
-//	string temp;
-//	string ISBN, title, first, last, publisher;
-//	int year, month, day, quantity;
-//	double wholesale, price;
-
 	fstream inFile;
 	inFile.open(strFile, ios::in);	// Open the file for input
 	if (!inFile.good())		// If the file was not successfully opened
@@ -117,15 +112,40 @@ void TextRead(string strFile, InventoryItem *&items)
 		inFile >> size;		// Get the size of the file (the number of lines of input)
 		items = new InventoryItem[size];	// Allocate memory for an array of objects big enough to read all the values from the file
 		for (int k = 0; k < size && !inFile.eof(); k++)
+			inFile >> items[k];	
+		//	cout << "End of text read for Inventory Items" << endl;
+		//	system("pause");
+	}
+	inFile.close();
+	inFile.clear();
+}
+void TextRead(string strFile, vector<InventoryItem> &items)
+{	/*
+	Function: Reads values from a text file into an vectyor of InventoryItem
+		The first line of the file should be the number of lines of input in the file (excluding the line with this number)
+		Each line of input should have all the values of an InventoryItem object, properly formated for input
+	Parameters:
+		strFile - Name of the file
+		*items - Vector of InventoryItems, passed by reference
+	Returns: Nothing
+	*/
+	InventoryItem temp;
+	int size;
+	fstream inFile;
+	inFile.open(strFile, ios::in);	// Open the file for input
+	if (!inFile.good())		// If the file was not successfully opened
+	{
+		cout << "Error opening file" << endl;
+		system("pause");
+	}
+	else		// If the file was successfully opened
+	{	// Variables for input
+		inFile.clear();
+		inFile >> size;		// Get the size of the file (the number of lines of input)
+		for (int k = 0; k < size && !inFile.eof(); k++)
 		{
-			inFile >> items[k];		// Need fstream overload
-		//	inFile >> ISBN;
-		//	getline(inFile, temp, '\'');
-		//	getline(inFile, title, '\'');
-		//	inFile >> last >> first >> publisher >> year >> month >> day >> quantity >> wholesale >> price;
-		//	items[k] = { { ISBN, title, { last, first }, publisher }, { year, month, day }, quantity, wholesale, price };	// Use the constructor to assign values to each object in the array
-		//	cout << k + 1 << ") Title: " << items[k].getBook().getTitle() << endl;
-		//	cout << k + 1 << ") Price: " << items[k].getPrice() << endl;
+			inFile >> temp;
+			items.push_back(temp);
 		}
 		//	cout << "End of text read for Inventory Items" << endl;
 		//	system("pause");
@@ -152,13 +172,32 @@ void TextWrite(string strFile, InventoryItem *items, int size)
 	{
 		outFile << size << endl;	// The first value written to the file is the number of objects
 		for (int k = 0; k < size; k++)
-		{
 			outFile << items[k] << endl;
-		//	outFile	// Each object has all of its values written to a line. The title of the object is enclosed in single quotes ('title goes here')
-		//		<< items[k].getBook().getISBN() << " " << "\'" << items[k].getBook().getTitle() << "\'" << items[k].getBook().getAuthor().GetLastName() << " " << items[k].getBook().getAuthor().GetFirstName() << " " << items[k].getBook().getPublisher() << " "
-		//		<< items[k].getDateAdded().GetYear() << " " << items[k].getDateAdded().GetMonth() << " " << items[k].getDateAdded().GetDay() << " " << items[k].getQuantity() << " " << items[k].getWholesale() << " " << items[k].getPrice() << endl;
-			//	cout << k + 1 << ") Book title written: " << items[k].getBook().getTitle() << endl;
-		}
+		//	cout << "End of text write for Inventory Items" << endl;
+		//	system("pause");
+	}
+	outFile.close();
+	outFile.clear();
+}
+void TextWrite(string strFile, vector<InventoryItem> &items)
+{	/*
+	Function: Write an vector of InventoryItem objects to a text file, with the values of each object on an individual line
+	Parameters:
+	strFile - Name of the file to write to
+	&items - Vector of InventoryItem objects, passed by reference
+	*/
+	fstream outFile;
+	outFile.open(strFile, ios::out);	// Open the file for output
+	if (!outFile.good())		// If the file was not successfully opened
+	{
+		cout << "Error opening file" << endl;
+		system("pause");
+	}
+	else
+	{
+		outFile << items.size() << endl;	// The first value written to the file is the number of objects
+		for (int k = 0; k < items.size(); k++)
+			outFile << items[k] << endl;
 		//	cout << "End of text write for Inventory Items" << endl;
 		//	system("pause");
 	}

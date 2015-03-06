@@ -28,6 +28,17 @@ bool
 
 int main()
 {
+	/*
+	// File creator using books.txt file
+	unsigned seed = time(0);
+	srand(seed);
+	Book books[50];
+	vector<InventoryItem> vecItemsBook(50);
+	TextRead("books.txt", books);
+	for (int k = 0; k < 50; k++)	// Assigns values for all objects in the arrItems[] array
+		vecItemsBook[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
+	TextWrite(strUnsorted, vecItemsBook);	// Write the array of objects into a file
+	*/
 
 	string MainMenu[] = {	// String array to hold the main menu
 		"================================================================================",

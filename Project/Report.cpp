@@ -14,9 +14,10 @@ const string
 
 void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag){
 //	ReportMenu();
-	InventoryItem *items = nullptr;	// Pointer that will be used to store the database. When a file is read, it allocates enough memory for an array using this pointer
-	TextRead(strUnsorted, items);	// TextRead will open the strUnsorted file, and allocate enough memory to read the whole file into an array assigned to the items pointer
-
+//	InventoryItem *items = nullptr;	// Pointer that will be used to store the database. When a file is read, it allocates enough memory for an array using this pointer
+//	TextRead(strUnsorted, items);	// TextRead will open the strUnsorted file, and allocate enough memory to read the whole file into an array assigned to the items pointer
+	vector<InventoryItem> vecItems(0);
+	TextRead(strUnsorted, vecItems);
 	string strMainMenu[] = {
 		"================================================================================",
 		"\t\t\t\tREPORT MODULE\n",
@@ -45,6 +46,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 				<< "================================================================================";
 
 			// Display all values for each object in the array
+			/*
 			for (int k = 0; k < 50; k++)
 			{
 				if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
@@ -60,10 +62,27 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 					<< setw(12) << items[k].getDateAdded() << setw(4) << items[k].getQuantity()
 					<< setw(6) << fixed << setprecision(2) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;
 			}
+			*/
+			for (int k = 0; k < vecItems.size(); k++)
+			{
+				if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
+				{							// It will add a system pause and a new header for every 10th object written to screen
+					system("pause");
+					cout << endl
+						<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+						<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+						<< "--------------------------------------------------------------------------------";
+				}
+				cout << left
+					<< setw(14) << vecItems[k].getBook().getISBN() << "\"" << vecItems[k].getBook().getTitle() << "\"; " << vecItems[k].getBook().getAuthor() << "; " << vecItems[k].getBook().getPublisher() << endl
+					<< setw(12) << vecItems[k].getDateAdded() << setw(4) << vecItems[k].getQuantity()
+					<< setw(6) << fixed << setprecision(2) << vecItems[k].getWholesale() << setw(6) << vecItems[k].getPrice() << endl << endl;
+			}
 			cout << endl
 				<< "================================================================================"
 				<< "\t\t\t\tEnd of list" << endl
 				<< "================================================================================";
+				
 			system("pause");
 			break;
 		case '2':
@@ -82,7 +101,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			// Display inventory sorted by age
 			break;
 		case '7':	// Exit module
-			delete[] items;
+	//		delete[] items;
 			return;
 		}
 	}

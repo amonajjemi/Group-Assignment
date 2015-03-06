@@ -13,23 +13,17 @@ const string
 	strAuthorSorted = "author.txt";
 void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag)
 {
-	//// File creator using books.txt file
-	//Book books[50];
-	//InventoryItem arrItems[50];
-	//TextRead("books.txt", books);
-	//for (int k = 0; k < 50; k++)	// Assigns values for all objects in the arrItems[] array
-	//	arrItems[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
-	//TextWrite(strUnsorted, arrItems, 50);	// Write the array of objects into a file
+	vector<InventoryItem> vecItems(0);
+	TextRead(strUnsorted, vecItems);
 
-//	int iSize;
-	InventoryItem *items = nullptr;		// Pointer that will be used to store the database. When a file is read, it allocates enough memory for an array using this pointer
-	if (FileFlagTest(strUnsorted) == true)	// Tests the strUnsorted file (unsorted.txt), sets the bUnsortedFlag to true if the FileFlagTest returns true, then opens the file and reads the file into the items array
-	{
-		bUnsortedFlag = true;
-		TextRead(strUnsorted, items);	// TextRead will open the strUnsorted file, and allocate enough memory to read the whole file into an array assigned to the items pointer
-	}
-	else
-		bUnsortedFlag = false;
+	//InventoryItem *items = nullptr;		// Pointer that will be used to store the database. When a file is read, it allocates enough memory for an array using this pointer
+	//if (FileFlagTest(strUnsorted) == true)	// Tests the strUnsorted file (unsorted.txt), sets the bUnsortedFlag to true if the FileFlagTest returns true, then opens the file and reads the file into the items array
+	//{
+	//	bUnsortedFlag = true;
+	//	TextRead(strUnsorted, items);	// TextRead will open the strUnsorted file, and allocate enough memory to read the whole file into an array assigned to the items pointer
+	//}
+	//else
+	//	bUnsortedFlag = false;
 
 //	DatabaseMenu(items, 50);
 
@@ -213,10 +207,10 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				cout << "Would you like to add another item?  \"n\" for no, \"y\" for yes" << endl;
 			} while (exitFlag == false && tolower(YesNo()) == 'y');	// The loop will exit if the user chooses '2' in the sub menu, or if they choose 'n' when asked if they would like to loop again
 			break;
-		case '4':	// Remove an item
-			system("cls");
+		case '4':	// Remove an item	
 			do
 			{
+				system("cls");
 				exitFlag = false;
 				for (string temp : strSubMenu4)	// Display sub menu
 					cout << temp;
@@ -247,7 +241,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			break;
 		case '5':	// Exit module
 			// Should write current arrays to files, update file flags
-			delete[] items;
+//			delete[] items;
 			return;
 		}
 	}
