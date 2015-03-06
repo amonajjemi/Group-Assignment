@@ -53,7 +53,7 @@ string InventoryItem::GetPublisher(){ return BookItem.getPublisher(); }
 bool InventoryItem::operator==(const InventoryItem &obj){
 	// Equal to operator overload for InventoryItem class
 	// Returns true if all members of the objects are the same, otherwise returns false
-	if ((BookItem == obj.BookItem) && (DateAdded == obj.DateAdded) && (Quantity == obj.Quantity) && (Wholesale == obj.Wholesale) && (Price = obj.Price))
+	if ((BookItem == obj.BookItem) && (DateAdded == obj.DateAdded) && (Quantity == obj.Quantity) && (abs(Wholesale - obj.Wholesale) <= .0001) && (abs(Price - obj.Price) <= .0001))
 		return true;
 	else
 		return false;
