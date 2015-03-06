@@ -3,6 +3,9 @@
 
 #include <iomanip>
 #include <cstdlib>
+#include <vector>
+#include <algorithm>    // std::sort
+
 
 using namespace std;
 
@@ -246,4 +249,31 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		}
 	}
 
+}
+
+// ISBN Sorting functionality
+bool compareISBN(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getBook().getISBN() < itemTwo.getBook().getISBN();
+}
+void SortISBN(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareISBN);
+	TextWrite(strISBNSorted, items);
+}
+
+// Author Sorting functionality
+bool compareAuthor(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getBook().getAuthor().GetLastName() < itemTwo.getBook().getAuthor().GetLastName();
+}
+void SortAuthor(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareAuthor);
+	TextWrite(strAuthorSorted, items);
+}
+
+// Title Sorting functionality
+bool compareTitle(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getBook().getTitle() < itemTwo.getBook().getTitle();
+}
+void SortTitle(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareTitle);
+	TextWrite(strTitleSorted, items);
 }

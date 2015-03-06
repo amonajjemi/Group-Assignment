@@ -1,8 +1,10 @@
 #include "Report.h"
 #include "Files.h"
+#include "Database.h"
 
 #include <iomanip>
 #include <cstdlib>
+#include <algorithm>    // std::sort
 
 using namespace std;
 
@@ -44,46 +46,9 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 				<< "================================================================================"
 				<< "\t\t\tList of all inventory items" << endl
 				<< "================================================================================";
-
-			// Display all values for each object in the array
-			/*
-			for (int k = 0; k < 50; k++)
-			{
-				if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
-				{							// It will add a system pause and a new header for every 10th object written to screen
-					system("pause");
-					cout << endl
-						<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
-						<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
-						<< "--------------------------------------------------------------------------------";
-				}
-				cout << left
-					<< setw(14) << items[k].getBook().getISBN() << "\"" << items[k].getBook().getTitle() << "\"; " << items[k].getBook().getAuthor() << "; " << items[k].getBook().getPublisher() << endl
-					<< setw(12) << items[k].getDateAdded() << setw(4) << items[k].getQuantity()
-					<< setw(6) << fixed << setprecision(2) << items[k].getWholesale() << setw(6) << items[k].getPrice() << endl << endl;
-			}
-			*/
-			for (int k = 0; k < vecItems.size(); k++)
-			{
-				if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
-				{							// It will add a system pause and a new header for every 10th object written to screen
-					system("pause");
-					cout << endl
-						<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
-						<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
-						<< "--------------------------------------------------------------------------------";
-				}
-				cout << left
-					<< setw(14) << vecItems[k].getBook().getISBN() << "\"" << vecItems[k].getBook().getTitle() << "\"; " << vecItems[k].getBook().getAuthor() << "; " << vecItems[k].getBook().getPublisher() << endl
-					<< setw(12) << vecItems[k].getDateAdded() << setw(4) << vecItems[k].getQuantity()
-					<< setw(6) << fixed << setprecision(2) << vecItems[k].getWholesale() << setw(6) << vecItems[k].getPrice() << endl << endl;
-			}
-			cout << endl
-				<< "================================================================================"
-				<< "\t\t\t\tEnd of list" << endl
-				<< "================================================================================";
-				
-			system("pause");
+			// Sort the items by isbn and display
+			SortISBN(vecItems);
+			DisplayItems(vecItems);
 			break;
 		case '2':
 			// Display total wholesale value of inventory
@@ -92,13 +57,34 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			// Display total retal value of inventory
 			break;
 		case '4':
-			// Display inventory sorted by quanitity
+			// Display inventory sorted by Quantity
+			system("cls");
+			cout
+				<< "================================================================================"
+				<< "\t\t\tList of all inventory items, sorted by quantity" << endl
+				<< "================================================================================";
+			SortQuantity(vecItems);
+			DisplayItems(vecItems);
 			break;
 		case '5':
 			// Display inventory sorted by cost
+			system("cls");
+			cout
+				<< "================================================================================"
+				<< "\t\t\tList of all inventory items, sorted by cost" << endl
+				<< "================================================================================";
+			SortCost(vecItems);
+			DisplayItems(vecItems);
 			break;
 		case '6':
 			// Display inventory sorted by age
+			system("cls");
+			cout
+				<< "================================================================================"
+				<< "\t\t\tList of all inventory items, sorted by age" << endl
+				<< "================================================================================";
+			SortAge(vecItems);
+			DisplayItems(vecItems);
 			break;
 		case '7':	// Exit module
 	//		delete[] items;
@@ -106,3 +92,57 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 		}
 	}
 }
+
+// Displays a list of items in the form of a vector passed as a parameter
+// Breaks every 10 items for formatting purposes
+void DisplayItems(vector<InventoryItem> &vecItems) {
+	for (int k = 0; k < vecItems.size(); k++)
+	{
+		if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
+		{							// It will add a system pause and a new header for every 10th object written to screen
+			system("pause");
+			cout << endl
+				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+				<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+				<< "--------------------------------------------------------------------------------";
+		}
+		cout << left
+			<< setw(14) << vecItems[k].getBook().getISBN() << "\"" << vecItems[k].getBook().getTitle() << "\"; " << vecItems[k].getBook().getAuthor() << "; " << vecItems[k].getBook().getPublisher() << endl
+			<< setw(12) << vecItems[k].getDateAdded() << setw(4) << vecItems[k].getQuantity()
+			<< setw(6) << fixed << setprecision(2) << vecItems[k].getWholesale() << setw(6) << vecItems[k].getPrice() << endl << endl;
+	}
+	cout << endl
+		<< "================================================================================"
+		<< "\t\t\t\tEnd of list" << endl
+		<< "================================================================================";
+
+	system("pause");
+}
+
+// Quantity Sorting functionality
+// Sorts from greatest quantity to least
+bool compareQuantity(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getQuantity() > itemTwo.getQuantity();
+}
+void SortQuantity(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareQuantity);
+}
+
+// Sorting by Wholesale Cost functionality
+// Greatest cost to least
+bool compareCost(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getWholesale() > itemTwo.getWholesale();
+}
+void SortCost(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareCost);
+}
+
+// Sorting by Age functionality
+// Oldest to newest books
+bool compareAge(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getDateAdded() < itemTwo.getDateAdded();
+}
+void SortAge(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareAge);
+}
+
