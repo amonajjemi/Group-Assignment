@@ -330,4 +330,3 @@ double RandomPrice()
 	double price[] = { 6.25, 6.5, 6.75, 7, 7.25, 7.50, 7.75, 8, 8.25, 9.5, 9.75, 10, 10.25, 10.5, 10.75, 11, 11.25, 11.5, 11.75, 12 };
 	return price[Random(0, sizeof(price) / sizeof(price[0]) -1)];
 }
-
