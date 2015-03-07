@@ -97,26 +97,25 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			do	// Loop iterates the sub menmu until the user chooses not to
 			{	// The user can choose to exit the sub menu by either choosing '4' from the menu, or by choosing 'no' after they are prompted on whether to continue the loop
 				exitFlag = false;
-				string t;
-				int i;
+				string str;
 				system("cls");
 				for (string temp : strSubMenu1)	// Display sub menu 
 					cout << temp;
-				int itemIndex = 0;
+				vector<int> indexes(0);
 				switch (Choice('1', '4'))	// Get user input corresponding to options in the sub menu
 				{
 				case '1':
 					// Get user input for ISBN
 					// Search array by ISBN, retrieve indexes of found matches
-					cout << "Enter ISBN: ";
-					cin >> t;
+					str = InputISBN();
 					SortISBN(vecItems);
-					cout << searchByISBN(vecItems, t);
+					indexes.push_back(searchByISBN(vecItems, str));
 					break;
 				case '2':
 					// Get user input for book title
 					// Search array by book title, retreive indexes of found matches
 					cout << "Enter book title: " << endl;
+					str = InputTitle();
 					break;
 				case '3':
 					// Get user input for book author
@@ -127,6 +126,26 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					exitFlag = true;
 					break;
 				}
+				cout << endl
+					<< "================================================================================"
+					<< "\t\t\t\tFoundItems" << endl
+					<< "================================================================================";
+				for (int k = 0; k < indexes.size(); k++)
+				{
+					if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
+					{							// It will add a system pause and a new header for every 10th object written to screen
+						system("pause");
+						cout << endl
+							<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+							<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+							<< "--------------------------------------------------------------------------------";
+					}
+					DisplayItem(vecItems[indexes[k]]);
+				}
+				cout << endl
+					<< "================================================================================"
+					<< "\t\t\t\tEnd of list" << endl
+					<< "================================================================================";
 				// Display all items found matching search parameters
 				cout << "Would you like to search for another item? \"n\" for no, \"y\" for yes" << endl;
 			} while (exitFlag == false && tolower(YesNo()) == 'y');	// The loop will exit if the user chooses '4' in the sub menu, or if they choose 'n' when asked if they would like to loop again
@@ -219,6 +238,8 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		case '4':	// Remove an item	
 			do
 			{
+				vector<int> indexes(0);
+				string str;
 				system("cls");
 				exitFlag = false;
 				for (string temp : strSubMenu4)	// Display sub menu
@@ -228,7 +249,9 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				case '1':
 					// Get user input for ISBN
 					// Search array by ISBN, retrieve indexes of found matches
-					cout << "Enter ISBN: " << endl;
+					str = InputISBN();
+					SortISBN(vecItems);
+					indexes.push_back(searchByISBN(vecItems, str));
 					break;
 				case '2':
 					// Get user input for book title
@@ -243,6 +266,9 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				case '4':
 					exitFlag = true;
 				}
+				for (int k = 0; k < indexes.size(); k++)
+					vecItems.erase(vecItems.begin() + indexes[k]);
+
 				// Display all items found matching search parameters, with numbered options to allow selection
 				// Allow user to choose which result to remove
 				cout << "Would you like to remove another item?  \"n\" for no, \"y\" for yes" << endl;
@@ -251,6 +277,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		case '5':	// Exit module
 			// Should write current arrays to files, update file flags
 //			delete[] items;
+			TextWrite(strUnsorted, vecItems);
 			return;
 		}
 	}
