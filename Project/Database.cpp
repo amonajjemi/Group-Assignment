@@ -324,7 +324,6 @@ void UpdateTitleFile(vector<InventoryItem> &items, bool &bTitleFlag) {
 
 /* =====================================================*/
 
-
 /* ================= Searching Functions =================*/
 // Searches for a book according to ISBN, returns the index where it is found
 // Returns -1 if not found
@@ -347,5 +346,44 @@ int searchByISBN(vector<InventoryItem> &items, string ISBN) {
 
 	// In case the book was not found
 	return -1;
+}
+// Searches for a book according to the title
+// Returns a vector with the indexes of all of the exact matches
+// Vector will be of size 0 if no matches found
+vector<int> searchByTitle(vector<InventoryItem> &items, string title) {
+	vector<int> matches;
+	int mid, left = 0;
+	int right = items.size();
+	int oMid;
+
+	while (left < right) {
+		mid = left + (right - left) / 2;
+		if (title > items[mid].GetTitle()) {
+			left = mid + 1;
+		}
+		else if (title < items[mid].GetTitle()) {
+			right = mid;
+		}
+		else {
+			// Atleast one match found
+			oMid = mid;
+			// Look at following values
+			while (title == items[mid].GetTitle())
+			{
+				matches.push_back(mid);
+				mid = mid + 1;
+			}
+			// Look at preceding values
+			mid = oMid - 1;
+			while (title == items[mid].GetTitle())
+			{
+				matches.push_back(mid);
+				mid = mid - 1;
+			}
+
+			break;
+		}
+	}
+	return matches;
 }
 /* =======================================================*/
