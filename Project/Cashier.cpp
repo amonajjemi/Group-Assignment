@@ -28,7 +28,7 @@ double CompleteTransaction(vector<InventoryItem> &transaction)
 	double totalCost = 0;
 	for (int i = 0; i < transaction.size(); i++)
 	{
-		totalCost += transaction[i].getPrice;
+		totalCost += transaction[i].getPrice();
 		//Remove item from database
 	}
 	return totalCost;
@@ -73,7 +73,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 				<< "\t\t\tEnter ISBN number" << endl
 				<< "================================================================================";
 			cin >> searchISBN;
-			while (searchISBN.length != 13 || searchISBN.length != 11)
+			while (searchISBN.length() != 13 || searchISBN.length() != 11)
 			{
 				cout << "Please make sure that the ISBN number is the correct length." << endl;
 				cin >> searchISBN;
@@ -81,11 +81,11 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 			//Insert function for searching for the inventoryItem object and copy the object to temp
 
-			totalPrice = tempItem.getPrice;
+			totalPrice = tempItem.getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << setprecision(2);
-			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice << endl;
+			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice() << endl;
 			cout << "The cost of tax is:" << setw(8) << "$" << taxCost << endl;
 			cout << "The total cost of the item is:" << setw(8) << "$" << totalPrice << endl << endl;
 
@@ -109,11 +109,11 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 			//Insert function for searching for the inventoryItem object
 
-			totalPrice = tempItem.getPrice;
+			totalPrice = tempItem.getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << setprecision(2);
-			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice << endl;
+			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice() << endl;
 			cout << "The cost of tax is:" << setw(8) << "$" << taxCost << endl;
 			cout << "The total cost of the item is:" << setw(8) << "$" << totalPrice << endl;
 
@@ -141,11 +141,11 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 			//Insert function for searching for the inventoryItem object
 
-			totalPrice = tempItem.getPrice;
+			totalPrice = tempItem.getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << setprecision(2);
-			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice << endl;
+			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice() << endl;
 			cout << "The cost of tax is:" << setw(8) << "$" << taxCost << endl;
 			cout << "The total cost of the item is:" << setw(8) << "$" << totalPrice << endl;
 
@@ -168,11 +168,11 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 			//Insert function for searching for the inventoryItem object
 
-			totalPrice = tempItem.getPrice;
+			totalPrice = tempItem.getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << setprecision(2);
-			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice << endl;
+			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice() << endl;
 			cout << "The cost of tax is:" << setw(8) << "$" << taxCost << endl;
 			cout << "The total cost of the item is:" << setw(8) << "$" << totalPrice << endl;
 			break;
