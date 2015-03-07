@@ -27,6 +27,8 @@ bool compareAuthor(InventoryItem &, InventoryItem &);
 void UpdateAuthorFile(vector<InventoryItem> &, bool &);		// Updates the author.txt database file
 
 
+int searchByISBN(vector<InventoryItem> &, string);
+
 
 
 #endif DATABASE_H
