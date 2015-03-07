@@ -10,18 +10,23 @@ void DatabaseModule(bool&, bool&, bool&, bool&);
 void DatabaseMenu(InventoryItem*, int);
 
 // Sorts the vector by ISBN values in ascending order
-// And updates the ISBN.txt database file
 void SortISBN(vector<InventoryItem> &);
 bool compareISBN(InventoryItem &, InventoryItem &);
+void UpdateISBNFile(vector<InventoryItem> &, bool &);		//  Updates the ISBN.txt database file
+
 
 // Sorts the vector by titles in ascending order
-// And updates the title.txt database file
 void SortTitle(vector<InventoryItem> &);
 bool compareTitle(InventoryItem &, InventoryItem &);
+void UpdateTitleFile(vector<InventoryItem> &, bool &);		// Updates the title.txt database file
+
 
 // Sorts the vector by author's last names in ascending order
-// And updates the author.txt database file
 void SortAuthor(vector<InventoryItem> &);
 bool compareAuthor(InventoryItem &, InventoryItem &);
+void UpdateAuthorFile(vector<InventoryItem> &, bool &);		// Updates the author.txt database file
+
+
+
 
 #endif DATABASE_H

@@ -11,7 +11,7 @@ const string
 	strTitleSorted = "title.txt",
 	strAuthorSorted = "author.txt";
 
-void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag){
+void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &bAuthorFlag){
 	string strMainMenu[] = {
 		"================================================================================",
 		"\t\t\t\tCASHIER MODULE\n",

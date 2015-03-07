@@ -14,7 +14,7 @@ const string
 	strTitleSorted = "title.txt",
 	strAuthorSorted = "author.txt";
 
-void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag){
+void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &bAuthorFlag){
 //	ReportMenu();
 //	InventoryItem *items = nullptr;	// Pointer that will be used to store the database. When a file is read, it allocates enough memory for an array using this pointer
 //	TextRead(strUnsorted, items);	// TextRead will open the strUnsorted file, and allocate enough memory to read the whole file into an array assigned to the items pointer
