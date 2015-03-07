@@ -39,7 +39,6 @@ int main()
 		vecItemsBook[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
 	TextWrite(strUnsorted, vecItemsBook);	// Write the array of objects into a file
 	*/
-
 	string MainMenu[] = {	// String array to hold the main menu
 		"================================================================================",
 		"\t\t\t\tMAIN MENU\n",
@@ -50,6 +49,51 @@ int main()
 		"\t4) - Exit Program\n" };
 	while (1)	// Will always loop. The only exit condition is if the user chooses '4' in the main menu
 	{
+		system("cls");
+		try
+		{
+			if (FileFlagTest(strUnsorted))
+				bUnsortedFlag = true;
+		}
+		catch (char *str)
+		{
+			cout << "ERROR: Database " << str << endl;
+			system("pause");
+			exit(EXIT_FAILURE);
+		}
+		try
+		{
+			if (FileFlagTest(strISBNSorted))
+				bISBNFlag = true;
+		}
+		catch (char *str)
+		{
+			cout << "ERROR: Secondary (ISBN sorted) " << str << endl;
+			bISBNFlag = false;
+			system("pause");
+		}
+		try
+		{
+			if (FileFlagTest(strTitleSorted))
+				bTitleFlag = true;
+		}
+		catch (char *str)
+		{
+			cout << "ERROR: Secondary (title sorted) " << str << endl;
+			bTitleFlag = false;
+			system("pause");
+		}
+		try
+		{
+			if (FileFlagTest(strAuthorSorted))
+				bAuthorFlag = true;
+		}
+		catch (char *str)
+		{
+			cout << "ERROR: Secondary (author sorted) " << str << endl;
+			bAuthorFlag = false;
+			system("pause");
+		}
 		system("cls");
 		for (string temp : MainMenu)	// Display the Main Menu
 			cout << temp;

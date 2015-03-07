@@ -3,6 +3,9 @@
 
 #include <iomanip>
 #include <cstdlib>
+#include <vector>
+#include <algorithm>    // std::sort
+
 
 using namespace std;
 
@@ -11,7 +14,8 @@ const string
 	strISBNSorted = "ISBN.txt",
 	strTitleSorted = "title.txt",
 	strAuthorSorted = "author.txt";
-void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag)
+
+void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &bAuthorFlag)
 {
 	vector<InventoryItem> vecItems(0);
 	TextRead(strUnsorted, vecItems);
@@ -246,4 +250,40 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		}
 	}
 
+}
+
+// ISBN Sorting functionality
+bool compareISBN(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getBook().getISBN() < itemTwo.getBook().getISBN();
+}
+void SortISBN(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareISBN);
+}
+void UpdateISBNFile(vector<InventoryItem> &items, bool &bISBNFlag) {
+	TextWrite(strISBNSorted, items);
+	bISBNFlag = true;
+}
+
+// Author Sorting functionality
+bool compareAuthor(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getBook().getAuthor() < itemTwo.getBook().getAuthor();
+}
+void SortAuthor(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareAuthor);
+}
+void UpdateAuthorFile(vector<InventoryItem> &items, bool &bAuthorFlag) {
+	TextWrite(strAuthorSorted, items);
+	bAuthorFlag = true;
+}
+
+// Title Sorting functionality
+bool compareTitle(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getBook().getTitle() < itemTwo.getBook().getTitle();
+}
+void SortTitle(vector<InventoryItem> &items) {
+	sort(items.begin(), items.end(), compareTitle);
+}
+void UpdateTitleFile(vector<InventoryItem> &items, bool &bTitleFlag) {
+	TextWrite(strTitleSorted, items);
+	bTitleFlag = true;
 }

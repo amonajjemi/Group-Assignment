@@ -65,6 +65,15 @@
     <Text Include="unsorted.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="ISBN.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="author.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="title.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="bookgenerator.rb" />

@@ -85,8 +85,11 @@
     <ClCompile Include="Report.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="author.txt" />
     <Text Include="BenPseudocode.txt" />
     <Text Include="books.txt" />
+    <Text Include="ISBN.txt" />
+    <Text Include="title.txt" />
     <Text Include="unsorted.txt" />
   </ItemGroup>
   <ItemGroup>

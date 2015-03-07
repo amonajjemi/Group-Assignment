@@ -9,18 +9,34 @@ bool FileFlagTest(string strFile){
 		strFile - Name of the file to be tested
 	Returns: True or false, depending upon whether or not the file passed or failed the test
 	*/
-	bool flag;
+	bool flag = false;
 	fstream file;
-	file.open(strFile);	// Open the file
+	file.open(strFile, ios::in);	// Open the file
 	if (file.good())	// Test if the file can be successfully opened
 	{
-		flag = true;	
+		if (isEmpty(strFile))
+		{
+			file.close();
+			file.clear();
+			throw "File is empty";
+		}
+		else
+			flag = true;
 	}
-	else 
-		flag = false;
+	else
+	{
+		file.close();		// Close the file
+		file.clear();
+		throw "File cannot be opened";
+	}
 	file.close();		// Close the file
 	file.clear();		// Clear all flags from the file so it can be used again
 	return flag;
+}
+bool isEmpty(string strFile)
+{
+	fstream file(strFile);
+	return (file.peek() == ifstream::traits_type::eof());
 }
 void BinaryRead(string strInFile, InventoryItem *&items)
 {	/*
