@@ -1,5 +1,6 @@
 #include "Cashier.h"
 #include "Files.h"
+#include "Database.h"
 
 #include <iomanip>
 #include <cstdlib>
@@ -36,8 +37,11 @@ double CompleteTransaction(vector<InventoryItem> &transaction)
 
 void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag)
 {
+	vector<InventoryItem> vecItems(0);
+	TextRead(strUnsorted, vecItems);
+
 	vector<InventoryItem> purchases(0);
-	InventoryItem tempItem;
+	int itemIndex;
 	string searchISBN,
 		searchTitle,
 		searchAuthorLast,
@@ -60,7 +64,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 		"\t6) - Exit Module\n"
 	};
 
-	while (1)	// Loop repeats forever until the user choose '7' in the module's main menu
+	while (1)	// Loop repeats forever until the user choose '6' in the module's main menu
 	{
 		system("cls");
 		for (string temp : strMainMenu)	// Display the module's main menu
@@ -68,33 +72,37 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 		switch (Choice('1', '6'))
 		{
 		case '1':
+			SortISBN(vecItems);
 			cout
 				<< "================================================================================"
 				<< "\t\t\tEnter ISBN number" << endl
 				<< "================================================================================";
 			cin >> searchISBN;
-			while (searchISBN.length() != 13 || searchISBN.length() != 11)
+			cin.ignore();
+			while (searchISBN.length() != 13 && searchISBN.length() != 11)
 			{
 				cout << "Please make sure that the ISBN number is the correct length." << endl;
 				cin >> searchISBN;
+				cin.ignore();
 			}
-
+			itemIndex = searchByISBN(vecItems, searchISBN);
 			//Insert function for searching for the inventoryItem object and copy the object to temp
 
-			totalPrice = tempItem.getPrice();
+			totalPrice = vecItems[itemIndex].getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << setprecision(2);
-			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice() << endl;
-			cout << "The cost of tax is:" << setw(8) << "$" << taxCost << endl;
-			cout << "The total cost of the item is:" << setw(8) << "$" << totalPrice << endl << endl;
+			cout << "The price of the item is:\n" << setw(8) << "$" << vecItems[itemIndex].getPrice() << endl;
+			cout << "The cost of tax is:\n" << setw(8) << "$" << taxCost << endl;
+			cout << "The total cost of the item is:\n" << setw(8) << "$" << totalPrice << endl << endl;
 
 			cout << "Is this the book that you would like to purchase?" << endl;
 			cout << "Enter 'Y' or 'y' for yes." << endl;
 			cin >> confirmPurchase;
+			cin.ignore();
 			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
 			{
-				purchases.push_back(tempItem);
+				purchases.push_back(vecItems[itemIndex]);
 			}
 			else
 				break;
@@ -109,11 +117,11 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 			//Insert function for searching for the inventoryItem object
 
-			totalPrice = tempItem.getPrice();
+			totalPrice = vecItems[itemIndex].getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << setprecision(2);
-			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice() << endl;
+			cout << "The price of the item is:" << setw(8) << "$" << vecItems[itemIndex].getPrice() << endl;
 			cout << "The cost of tax is:" << setw(8) << "$" << taxCost << endl;
 			cout << "The total cost of the item is:" << setw(8) << "$" << totalPrice << endl;
 
@@ -122,7 +130,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cin >> confirmPurchase;
 			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
 			{
-				purchases.push_back(tempItem);
+				purchases.push_back(vecItems[itemIndex]);
 			}
 			else
 				break;
@@ -141,11 +149,11 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 			//Insert function for searching for the inventoryItem object
 
-			totalPrice = tempItem.getPrice();
+			totalPrice = vecItems[itemIndex].getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << setprecision(2);
-			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice() << endl;
+			cout << "The price of the item is:" << setw(8) << "$" << vecItems[itemIndex].getPrice() << endl;
 			cout << "The cost of tax is:" << setw(8) << "$" << taxCost << endl;
 			cout << "The total cost of the item is:" << setw(8) << "$" << totalPrice << endl;
 
@@ -154,7 +162,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cin >> confirmPurchase;
 			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
 			{
-				purchases.push_back(tempItem);
+				purchases.push_back(vecItems[itemIndex]);
 			}
 			else
 				break;
@@ -168,11 +176,11 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 			//Insert function for searching for the inventoryItem object
 
-			totalPrice = tempItem.getPrice();
+			totalPrice = vecItems[itemIndex].getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << setprecision(2);
-			cout << "The price of the item is:" << setw(8) << "$" << tempItem.getPrice() << endl;
+			cout << "The price of the item is:" << setw(8) << "$" << vecItems[itemIndex].getPrice() << endl;
 			cout << "The cost of tax is:" << setw(8) << "$" << taxCost << endl;
 			cout << "The total cost of the item is:" << setw(8) << "$" << totalPrice << endl;
 			break;
@@ -182,7 +190,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cin >> confirmPurchase;
 			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
 			{
-				purchases.push_back(tempItem);
+				purchases.push_back(vecItems[itemIndex]);
 			}
 			else
 				break;
@@ -193,8 +201,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 			break;
 		case '6':
-			cout
-				<< "================================================================================"
+			cout << "================================================================================"
 				<< "\t\t\tExit Module" << endl
 				<< "================================================================================";
 			return;
