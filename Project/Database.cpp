@@ -97,6 +97,8 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			do	// Loop iterates the sub menmu until the user chooses not to
 			{	// The user can choose to exit the sub menu by either choosing '4' from the menu, or by choosing 'no' after they are prompted on whether to continue the loop
 				exitFlag = false;
+				string t;
+				int i;
 				system("cls");
 				for (string temp : strSubMenu1)	// Display sub menu 
 					cout << temp;
@@ -106,7 +108,10 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				case '1':
 					// Get user input for ISBN
 					// Search array by ISBN, retrieve indexes of found matches
-					cout << "Enter ISBN: " << endl;
+					cout << "Enter ISBN: ";
+					cin >> t;
+					SortISBN(vecItems);
+					cout << searchByISBN(vecItems, t);
 					break;
 				case '2':
 					// Get user input for book title
@@ -252,6 +257,8 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 
 }
 
+
+/* ================= Sorting Functions =================*/
 // ISBN Sorting functionality
 bool compareISBN(InventoryItem &itemOne, InventoryItem &itemTwo) {
 	return itemOne.getBook().getISBN() < itemTwo.getBook().getISBN();
@@ -287,3 +294,31 @@ void UpdateTitleFile(vector<InventoryItem> &items, bool &bTitleFlag) {
 	TextWrite(strTitleSorted, items);
 	bTitleFlag = true;
 }
+
+/* =====================================================*/
+
+
+/* ================= Searching Functions =================*/
+// Searches for a book according to ISBN, returns the index where it is found
+// Returns -1 if not found
+int searchByISBN(vector<InventoryItem> &items, string ISBN) {
+	int mid, left = 0;
+	int right = items.size();
+
+	while (left < right) {
+		mid = left + (right - left) / 2;
+		if (ISBN > items[mid].GetISBN()){
+			left = mid + 1;
+		}
+		else if (ISBN < items[mid].GetISBN()){
+			right = mid;
+		}
+		else {
+			return mid;
+		}
+	}
+
+	// In case the book was not found
+	return -1;
+}
+/* =======================================================*/
