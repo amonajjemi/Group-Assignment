@@ -18,25 +18,13 @@
     <ClInclude Include="Date.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Book.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Name.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InventoryItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Database.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Files.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cashier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Report.h">
+    <ClInclude Include="Book.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
