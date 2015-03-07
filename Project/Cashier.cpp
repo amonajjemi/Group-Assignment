@@ -8,12 +8,46 @@ using namespace std;
 
 const double SALES_TAX = .0841;
 const string
-	strUnsorted = "unsorted.txt",
-	strISBNSorted = "ISBN.txt",
-	strTitleSorted = "title.txt",
-	strAuthorSorted = "author.txt";
+strUnsorted = "unsorted.txt",
+strISBNSorted = "ISBN.txt",
+strTitleSorted = "title.txt",
+strAuthorSorted = "author.txt";
 
-void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag){
+double SalesTax(double taxRate, double &itemPrice) //Calculate the tax cost and return it. Also return the total price by refernce.
+{
+	double taxCost;
+
+	taxCost = itemPrice * taxRate;
+	itemPrice += taxCost;
+
+	return taxCost;
+}
+
+double CompleteTransaction(vector<InventoryItem> &transaction)
+{
+	double totalCost = 0;
+	for (int i = 0; i < transaction.size(); i++)
+	{
+		totalCost += transaction[i].getPrice;
+		//Remove item from database
+	}
+	return totalCost;
+}
+
+void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &AuthorFlag)
+{
+	vector<InventoryItem> purchases(0);
+	InventoryItem tempItem;
+	string searchISBN,
+		searchTitle,
+		searchAuthorLast,
+		searchAuthorFirst,
+		searchPublisher;
+	double totalPrice,
+		taxCost,
+		finalPurchase;
+	char confirmPurchase;
+
 	string strMainMenu[] = {
 		"================================================================================",
 		"\t\t\t\tCASHIER MODULE\n",
@@ -28,7 +62,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 
 	while (1)	// Loop repeats forever until the user choose '7' in the module's main menu
 	{
-			system("cls");
+		system("cls");
 		for (string temp : strMainMenu)	// Display the module's main menu
 			cout << temp;
 		switch (Choice('1', '6'))
@@ -156,6 +190,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			finalPurchase = CompleteTransaction(purchases);
 			cout << setprecision(2);
 			cout << "The total cost for the purchases is:" << setw(8) << "$" << finalPurchase << endl;
+
 			break;
 		case '6':
 			cout
