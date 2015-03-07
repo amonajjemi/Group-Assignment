@@ -97,8 +97,6 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			do	// Loop iterates the sub menmu until the user chooses not to
 			{	// The user can choose to exit the sub menu by either choosing '4' from the menu, or by choosing 'no' after they are prompted on whether to continue the loop
 				exitFlag = false;
-				string t;
-				int i;
 				system("cls");
 				for (string temp : strSubMenu1)	// Display sub menu 
 					cout << temp;
@@ -109,9 +107,6 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					// Get user input for ISBN
 					// Search array by ISBN, retrieve indexes of found matches
 					cout << "Enter ISBN: ";
-					cin >> t;
-					SortISBN(vecItems);
-					cout << searchByISBN(vecItems, t);
 					break;
 				case '2':
 					// Get user input for book title
@@ -294,7 +289,6 @@ void UpdateTitleFile(vector<InventoryItem> &items, bool &bTitleFlag) {
 	TextWrite(strTitleSorted, items);
 	bTitleFlag = true;
 }
-
 /* =====================================================*/
 
 
@@ -320,5 +314,44 @@ int searchByISBN(vector<InventoryItem> &items, string ISBN) {
 
 	// In case the book was not found
 	return -1;
+}
+// Searches for a book according to the title
+// Returns a vector with the indexes of all of the exact matches
+// Vector will be of size 0 if no matches found
+vector<int> searchByTitle(vector<InventoryItem> &items, string title) {
+	vector<int> matches;
+	int mid, left = 0;
+	int right = items.size();
+	int oMid;
+
+	while (left < right) {
+		mid = left + (right - left) / 2;
+		if (title > items[mid].GetTitle()) {
+			left = mid + 1;
+		}
+		else if (title < items[mid].GetTitle()) {
+			right = mid;
+		}
+		else {
+			// Atleast one match found
+			oMid = mid;
+			// Look at following values
+			while (title == items[mid].GetTitle())
+			{
+				matches.push_back(mid);
+				mid = mid + 1;
+			}
+			// Look at preceding values
+			mid = oMid - 1;
+			while (title == items[mid].GetTitle())
+			{
+				matches.push_back(mid);
+				mid = mid - 1;
+			}
+
+			break;
+		}
+	}
+	return matches;
 }
 /* =======================================================*/

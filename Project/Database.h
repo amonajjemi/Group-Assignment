@@ -26,9 +26,10 @@ void SortAuthor(vector<InventoryItem> &);
 bool compareAuthor(InventoryItem &, InventoryItem &);
 void UpdateAuthorFile(vector<InventoryItem> &, bool &);		// Updates the author.txt database file
 
-
+// Searching functions
 int searchByISBN(vector<InventoryItem> &, string);
-
+vector<int> searchByTitle(vector<InventoryItem> &, string);
+vector<int> searchByAuthor(vector<InventoryItem> &, string);
 
 
 #endif DATABASE_H
