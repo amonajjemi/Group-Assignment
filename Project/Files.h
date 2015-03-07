@@ -6,6 +6,7 @@
 
 bool FileFlagTest(string);
 bool isEmpty(string);
+void DisplayItem(InventoryItem&);
 void TextRead(string, InventoryItem*&);
 void TextRead(string, vector<InventoryItem>&);
 void TextWrite(string, InventoryItem*, int);
@@ -13,6 +14,7 @@ void TextWrite(string, vector<InventoryItem>&);
 void BinaryRead(string, InventoryItem*&);
 void BinaryWrite(string, InventoryItem*, int);
 void TextRead(string, Book*);
+
 
 char Choice(char, char);
 char YesNo();
@@ -22,4 +24,7 @@ Date RandomDate();
 double RandomWholesale();
 double RandomPrice();
 
+string InputISBN();
+string InputTitle();
+Name InputAuthor();
 #endif
