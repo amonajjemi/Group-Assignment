@@ -29,7 +29,7 @@ void UpdateAuthorFile(vector<InventoryItem> &, bool &);		// Updates the author.t
 // Searching functions
 int searchByISBN(vector<InventoryItem> &, string);
 vector<int> searchByTitle(vector<InventoryItem> &, string);
-vector<int> searchByAuthor(vector<InventoryItem> &, string);
+vector<int> searchByAuthor(vector<InventoryItem> &, Name);
 
 
 #endif DATABASE_H

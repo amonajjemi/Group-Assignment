@@ -98,6 +98,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			{	// The user can choose to exit the sub menu by either choosing '4' from the menu, or by choosing 'no' after they are prompted on whether to continue the loop
 				exitFlag = false;
 				string str;
+				Name strName;
 				system("cls");
 				for (string temp : strSubMenu1)	// Display sub menu 
 					cout << temp;
@@ -114,13 +115,14 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				case '2':
 					// Get user input for book title
 					// Search array by book title, retreive indexes of found matches
-					cout << "Enter book title: " << endl;
 					str = InputTitle();
 					break;
 				case '3':
 					// Get user input for book author
 					// Search array by book author, retreive indexes of found matches
-					cout << "Enter book author: " << endl;
+					strName = InputAuthor();
+					SortAuthor(vecItems);
+					indexes = searchByAuthor(vecItems, strName);
 					break;
 				case '4':
 					exitFlag = true;
@@ -376,6 +378,45 @@ vector<int> searchByTitle(vector<InventoryItem> &items, string title) {
 			// Look at preceding values
 			mid = oMid - 1;
 			while (title == items[mid].GetTitle())
+			{
+				matches.push_back(mid);
+				mid = mid - 1;
+			}
+
+			break;
+		}
+	}
+	return matches;
+}
+// Searches for a book according to the author name
+// Returns a vector with the indexes of all of the exact matches
+// Vector will be of size 0 if no matches found
+vector<int> searchByAuthor(vector<InventoryItem> &items, Name authorName) {
+	vector<int> matches;
+	int mid, left = 0;
+	int right = items.size();
+	int oMid;
+
+	while (left < right) {
+		mid = left + (right - left) / 2;
+		if (authorName > items[mid].GetAuthor()) {
+			left = mid + 1;
+		}
+		else if (authorName < items[mid].GetAuthor()) {
+			right = mid;
+		}
+		else {
+			// Atleast one match found
+			oMid = mid;
+			// Look at following values
+			while (authorName == items[mid].GetAuthor())
+			{
+				matches.push_back(mid);
+				mid = mid + 1;
+			}
+			// Look at preceding values
+			mid = oMid - 1;
+			while (authorName == items[mid].GetAuthor())
 			{
 				matches.push_back(mid);
 				mid = mid - 1;
