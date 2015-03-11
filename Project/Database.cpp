@@ -18,20 +18,16 @@ const string
 void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &bAuthorFlag)
 {
 	vector<InventoryItem> vecItems(0);
-	TextRead(strUnsorted, vecItems);
+	if (bUnsortedFlag)		// Tests if the database file is ready for use (if the flag is set to true)
+		TextRead(strUnsorted, vecItems);
+	else
+	{
+		cout << "Could not open the database file!" << endl;
+		system("pause");
+		exit(EXIT_FAILURE);
+	}
 
-	//InventoryItem *items = nullptr;		// Pointer that will be used to store the database. When a file is read, it allocates enough memory for an array using this pointer
-	//if (FileFlagTest(strUnsorted) == true)	// Tests the strUnsorted file (unsorted.txt), sets the bUnsortedFlag to true if the FileFlagTest returns true, then opens the file and reads the file into the items array
-	//{
-	//	bUnsortedFlag = true;
-	//	TextRead(strUnsorted, items);	// TextRead will open the strUnsorted file, and allocate enough memory to read the whole file into an array assigned to the items pointer
-	//}
-	//else
-	//	bUnsortedFlag = false;
-
-//	DatabaseMenu(items, 50);
-
-	string strMainMenu[] = {
+	string strMainMenu[] = {	// Menu for the Main Menu for this module
 		"================================================================================",
 		"\t\t\t\tDATABASE MODULE\n",
 		"================================================================================",
@@ -40,7 +36,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		"\t2) - Modify an existing item\n",
 		"\t3) - Add a new item\n",
 		"\t4) - Remove an item\n",
-		"\t5) - Exit module\n"};
+		"\t5) - Exit module\n" };
 	string strSubMenu1[] = {	// Menu number corresponds to choice in the module's MainMenu. (1 is for searching for an item)
 		"================================================================================",
 		"\tSearch for an item\n",
@@ -48,7 +44,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		"\t1) - Search by ISBN\n",
 		"\t2) - Search by book title\n",
 		"\t3) - Search by book author\n",
-		"\t4) - Go back\n"};
+		"\t4) - Go back\n" };
 	string strSubMenu2[] = {	// Menu number corresponds to choice in the module's MainMenu. (2 is for modifying an item)
 		"================================================================================",
 		"\tModify an existing item\n",
@@ -74,7 +70,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		"\tAdd an item\n",
 		"================================================================================",
 		"\t1) - Add an item\n",
-		"\t2) - Go back\n"};
+		"\t2) - Go back\n" };
 	string strSubMenu4[] = {	// Menu number corresponds to choice in the module's MainMenu. (4 is for removing an item)
 		"================================================================================",
 		"\tRemove an item\n",
@@ -93,193 +89,362 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			cout << temp;
 		switch (Choice('1', '5'))	// Get user choice corresponding to options in the modules' Main Menu
 		{
-		case '1':	// Search for an item
+		case '1':	// Search for an item. Display all found matches
 			do	// Loop iterates the sub menmu until the user chooses not to
 			{	// The user can choose to exit the sub menu by either choosing '4' from the menu, or by choosing 'no' after they are prompted on whether to continue the loop
 				exitFlag = false;
-				string str;
-				Name strName;
+				vector<int> indexes(0);	// Vector of integers used to store the indexes of all found matches from searching the database vector
+				int index;
+				string strChoice;
+				Name naChoice;
 				system("cls");
 				for (string temp : strSubMenu1)	// Display sub menu 
 					cout << temp;
-				vector<int> indexes(0);
 				switch (Choice('1', '4'))	// Get user input corresponding to options in the sub menu
 				{
-				case '1':
-					// Get user input for ISBN
-					// Search array by ISBN, retrieve indexes of found matches
-					str = InputISBN();
-					SortISBN(vecItems);
-					indexes.push_back(searchByISBN(vecItems, str));
+				case '1':	// Get user input for ISBN, retrieve indexes retreivefound matches
+					do	
+					{	// Input validation for the ISBN. If the ISBN is not the proper length, the user is prompted for input again
+						cout << "Enter ISBN: ";
+						UserInput(strChoice);	// Use the UserInput() function to get user input for ISBN
+						if (strChoice.length() != 13)
+							cout << "The ISBN must be 13 digits" << endl;
+					} while (strChoice.length() != 13);
+					SortISBN(vecItems);		// Sort database vector by ISBN
+					index = searchByISBN(vecItems, strChoice);
+					if (index >= 0)
+						indexes.push_back(index);	// search vector by ISBN, retrieve index of found match (There should be a maximum of one match, as the ISBN is a unique identifier)
 					break;
-				case '2':
-					// Get user input for book title
-					// Search array by book title, retreive indexes of found matches
-					str = InputTitle();
+				case '2':	// Get user input for book title, retrieve indexes of found matches
+					cout << "Enter title: ";
+					getline(cin, strChoice);	// Get user input for title
+					cin.clear();
+					SortTitle(vecItems);	// Sort database vector by title
+					indexes = searchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
-				case '3':
-					// Get user input for book author
-					// Search array by book author, retreive indexes of found matches
-					strName = InputAuthor();
-					SortAuthor(vecItems);
-					indexes = searchByAuthor(vecItems, strName);
+				case '3':	// Get user input for book author, retrieve indexes of found matches
+					cout << "Enter author (Last Name First Name): ";
+					UserInput(naChoice);		// Use the UserInput() function to get user input for author's name
+					SortAuthor(vecItems);		// Sort datbase vector by author
+					indexes = searchByAuthor(vecItems, naChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
-				case '4':
+				case '4':	// Exit condition for the sub menu
 					exitFlag = true;
 					break;
 				}
-				cout << endl
-					<< "================================================================================"
-					<< "\t\t\t\tFoundItems" << endl
-					<< "================================================================================";
-				for (int k = 0; k < indexes.size(); k++)
-				{
-					if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
-					{							// It will add a system pause and a new header for every 10th object written to screen
-						system("pause");
-						cout << endl
-							<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
-							<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
-							<< "--------------------------------------------------------------------------------";
-					}
-					DisplayItem(vecItems[indexes[k]]);
+				if (exitFlag)	// If exit condition was triggered, exit the loop (exits the current sub menu, returns to the module's main menu)
+					break;
+				if (indexes.size() < 1)	// If the size of the indexes vector is less than 1, there were no found matches
+					cout << "No matches found" << endl;
+				else
+				{	// If the indexes vector is not empty, display all found matches
+					system("cls");
+					cout << endl
+						<< "================================================================================"
+						<< "\t\t\t\tFound Items" << endl
+						<< "================================================================================";
+					for (int k = 0; k < indexes.size(); k++)	// Iterates through the vector of indexes
+					{
+						if (k % 10 == 0)	// Allows user to view the results page by page
+						{					// It will add a system pause and a new header for every 10th object written to screen
+							system("pause");
+							cout << endl
+								<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+								<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+								<< "--------------------------------------------------------------------------------";
+						}
+						DisplayItem(vecItems[indexes[k]]);	// Display the element of vecItems that has the index of indexes[k] 
+					}										// (The index of all found matches are stored in indexes, so all found matches will be displayed)
+					cout << endl
+						<< "================================================================================"
+						<< "\t\t\t\tEnd of list" << endl
+						<< "================================================================================";
 				}
-				cout << endl
-					<< "================================================================================"
-					<< "\t\t\t\tEnd of list" << endl
-					<< "================================================================================";
-				// Display all items found matching search parameters
 				cout << "Would you like to search for another item? \"n\" for no, \"y\" for yes" << endl;
-			} while (exitFlag == false && tolower(YesNo()) == 'y');	// The loop will exit if the user chooses '4' in the sub menu, or if they choose 'n' when asked if they would like to loop again
+			} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates
 			break;
 		case '2':	// Modify an existing item
+					// The user chooses to find items with a given ISBN, book title, or book author
+					// All found matches are displayed to the user, and allows the user to choose which found item to modify
+					// The user can then choose which data members of the object to modify
 			do	// Loop iterates the sub menmu until the user chooses not to
 			{	// The user can choose to exit the sub menu by either choosing '4' from the menu, or by choosing 'no' after they are prompted on whether to continue the loop
+				vector<int> indexes(0); // Vector of integers used to store the indexes of all found matches from searching the database vector
+				string strChoice;
+				Name naChoice;
+				int index;
 				exitFlag = false;
 				system("cls");
 				for (string temp : strSubMenu2)	// Display sub menu
 					cout << temp;
 				switch (Choice('1', '4'))	// Get user input corresponding to options in the sub menu
 				{
-				case '1':
-					// Get user input for ISBN
-					// Search array by ISBN, retrieve indexes of found matches
-					cout << "Enter ISBN: " << endl;
+				case '1':	// Get user input for ISBN, retrieve indexes of found matches
+					do
+					{	// Input validation for the ISBN. If the ISBN is not the proper length, the user is prompted for input again
+						cout << "Enter ISBN: ";
+						UserInput(strChoice);
+						if (strChoice.length() != 13)
+							cout << "The ISBN must be 13 digits" << endl;
+					} while (strChoice.length() != 13);
+					SortISBN(vecItems);		// Sort database vector by ISBN
+					index = searchByISBN(vecItems, strChoice);
+					if (index >= 0)
+						indexes.push_back(index);	// search vector by ISBN, retrieve index of found match (There should be a maximum of one match, as the ISBN is a unique identifier)
 					break;
-				case '2':
-					// Get user input for book title
-					// Search array by book title, retreive indexes of found matches
-					cout << "Enter book title: " << endl;
+				case '2':	// Get user input for book title, retrieve indexes of found matches
+					cout << "Enter title: ";
+					getline(cin, strChoice);	// Get user input for title
+					cin.clear();
+					SortTitle(vecItems);	// Sort database vector by title
+					indexes = searchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
-				case '3':
-					// Get user input for book author
-					// Search array by book author, retreive indexes of found matches
-					cout << "Enter book author: " << endl;
+				case '3':	// Get user input for book author, retrieve indexes of found matches
+					cout << "Enter author (Last Name First Name): ";
+					UserInput(naChoice);		// Get user input for author's name
+					SortAuthor(vecItems);		// Sort datbase vector by author
+					indexes = searchByAuthor(vecItems, naChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
-				case '4':
+				case '4':	// Exit condition for the sub menu
 					exitFlag = true;
 					break;
 				}
-				// Display all items found matching search parameters, with numbered options to allow selection
-				// Allow user to choose which result to modify
-				/*
-				for (int count = 0; count < numMatches; index++)
-				{
-				//
-				}
-				*/
-				if (exitFlag == false)	// This statement allows to program to skip this loop if the user chooses '4' in the sub menu
-				{						// Choosing '4' in the sub menu exits the sub menu
-					do	
+				if (exitFlag)	// If exit condition was triggered, exit the loop (exits the current sub menu, returns to the module's main menu)
+					break;	
+				if (indexes.size() < 1)	// If the size of the indexes vector is less than 1, there were no found matches
+					cout << "No matches found" << endl;
+				else
+				{	// If the indexes vector is not empty, display all found matches
+					int k;
+					system("cls");
+					cout << endl
+						<< "================================================================================"
+						<< "\t\t\t\tFound Items" << endl
+						<< "================================================================================";
+					for (k = 0; k < indexes.size(); k++)	// Iterates through the vector of indexes
 					{
-						for (string temp : strFieldMenu)	// Display field menu
-							cout << temp;
-						switch (Choice('1', '8'))	// Get user input corresponding to options in the field menu menu
-						{							// The field menu allows the user to choose which data members of a chosen Inventory Item to modify
-						case '1':
-							break;
-						case '2':
-							break;
-						case '3':
-							break;
-						case '4':
-							break;
-						case '5':
-							break;
-						case '6':
-							break;
-						case '7':
-							break;
-						case '8':
-							break;
+						if (k % 10 == 0)		// Allows user to view the results page by page
+						{						// It will add a system pause and a new header for every 10th object written to screen
+							system("pause");
+							cout << endl
+								<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+								<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+								<< "--------------------------------------------------------------------------------";
 						}
-						cout << "Would you like to modify another field? \"n\" for no, \"y\" for yes" << endl;
-					} while (tolower(YesNo()) == 'y');
+						cout << k + 1 << ") ";		// This will ouput all the results of the search, with an incrementing number in front of them
+						DisplayItem(vecItems[indexes[k]]);	// The user can use that number to choose which result they wish to delete
+					}
+						cout << "Choose the number of the item to modify:" << endl;
+						//			num = Choice('0', 48 + k) - '0' - 1;
+						index = indexes[Choice('0', 48 + k) - '0' - 1];		// The user chooses a single item to modify. Assign the index of that item to the 'index' variable
+						do	// Loop iterates until the user chooses to exit (entering value for "no" when prompte dto continue or not)
+						{	// The loop allows the user to choose which value of the InventoryItem to modify
+							string strChoice;
+							Name naChoice;
+							Date daChoice;
+							int iChoice;
+							double dChoice;
+							system("cls");
+							for (string temp : strFieldMenu)	// Display field menu
+								cout << temp;					// The field menu allows the user to choose which data members of a chosen Inventory Item to modify
+							switch (Choice('1', '8'))	// Get user input corresponding to options in the field menu menu
+							{							
+							case '1':	// Modify ISBN
+								do
+								{	// Input validation for the ISBN. If the ISBN is not the proper length, the user is prompted for input again
+									cout << "Enter ISBN: ";
+									UserInput(strChoice); // Use the UserInput() function to get user input for ISBN
+									if (strChoice.length() != 13)
+										cout << "The ISBN must be 13 digits" << endl;
+								} while (strChoice.length() != 13);	
+								vecItems[index].setISBN(strChoice);
+								break;
+							case '2':	// Modify Book Title
+								cout << "Enter title: ";
+								getline(cin, strChoice);	// Get user input for book title
+								vecItems[index].setTitle(strChoice);
+								break;
+							case '3':	// Modify Book author
+								cout << "Enter author (Last Name First Name): ";
+								UserInput(naChoice);		// Use the UserInput() function to get user input for book author
+								vecItems[index].setAuthor(naChoice);
+								break;
+							case '4':	// Modify Book publisher 
+								cout << "Enter publisher: ";
+								UserInput(strChoice);		// Use the UserInput() function to get user input for book publisher
+								vecItems[index].setPublisher(strChoice);
+								break;
+							case '5':	// Modify Date added
+								cout << "Date added: ";
+								UserInput(daChoice);		// Use the UserInput() function to get user input for the date added (the date the inventory item was added to the database)
+								vecItems[index].setDateAdded(daChoice);
+								break;
+							case '6':	// Modify Quantity
+								cout << "Enter quantity: ";
+								UserInput(iChoice);			// Use the UserInput() function to get user input for the quantity of the inventory item
+								vecItems[index].setQuantity(iChoice);
+								break;
+							case '7':	// Modify Wholesale cost
+								cout << "Enter wholesale cost: ";
+								UserInput(dChoice);			// Use the UserInput() function to get user input for the wholesale cost of the inventory item
+								vecItems[index].setWholesale(dChoice);
+								break;
+							case '8':	// Modify Price
+								cout << "Enter price: ";
+								UserInput(dChoice);			// Use the UserInput() function to get user input for the retail price of the inventory item
+								vecItems[index].setPrice(dChoice);
+								break;
+							}
+							cout << "Would you like to modify another field? \"n\" for no, \"y\" for yes" << endl;
+						} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates
 				}
 				cout << "Would you like to modify another item? \"n\" for no, \"y\" for yes" << endl;
-			} while (exitFlag == false && tolower(YesNo()) == 'y');	// The loop will exit if the user chooses '4' in the sub menu, or if they choose 'n' when asked if they would like to loop again
+			} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates
 			break;
-		case '3':	// Add an item
-			system("cls");
+		case '3':	// Add an inventory item
 			do
 			{
+				string strChoice, strISBN, strTitle, strPublisher;
+				Name naChoice, naName;
+				Date daChoice, daDate;
+				int iChoice, iQuantity;
+				double dChoice, dWholesale, dPrice;
+				InventoryItem newItem;
 				exitFlag = false;
+				system("cls");
 				for (string temp : strSubMenu3)
 					cout << temp;
 				switch (Choice('1', '2'))
 				{
 				case '1':
+						// Input for ISBN
+					do
+					{
+						cout << "Enter ISBN: ";
+						UserInput(strChoice);
+						if (strChoice.length() != 13)
+							cout << "The ISBN must be 13 digits" << endl;
+					} while (strChoice.length() != 13);
+					newItem.setISBN(strChoice);
+						// Input for Book Title
+					cout << "Enter title: ";
+					getline(cin, strChoice);
+					newItem.setTitle(strChoice);
+						// Input for Book author
+					cout << "Enter author (Last Name First Name): ";
+					UserInput(naChoice);
+					newItem.setAuthor(naChoice);
+						// Input for Book publisher 
+					cout << "Enter publisher: ";
+					UserInput(strChoice);
+					newItem.setPublisher(strChoice);
+						// Get current date
+					newItem.setDateAdded(CurrentDate());
+						// Input for Quantity
+					cout << "Enter quantity: ";
+					UserInput(iChoice);
+					newItem.setQuantity(iChoice);
+						// Input for Wholesale cost
+					cout << "Enter wholesale cost: ";
+					UserInput(dChoice);
+					newItem.setWholesale(dChoice);
+						// Input for Price
+					cout << "Enter price: ";
+					UserInput(dChoice);
+					newItem.setPrice(dChoice);
+						// Add new Inventory Item to the database
+					vecItems.push_back(newItem);
 					break;
-				case '2':
+				case '2':	// Exit condition for the sub menu
 					exitFlag = true;
 					break;
 				}
+				if (exitFlag)	// If exit condition was triggered, exit the loop (exits the current sub menu, returns to the module's main menu)
+					break;
 				cout << "Would you like to add another item?  \"n\" for no, \"y\" for yes" << endl;
-			} while (exitFlag == false && tolower(YesNo()) == 'y');	// The loop will exit if the user chooses '2' in the sub menu, or if they choose 'n' when asked if they would like to loop again
+			} while (tolower(YesNo()) == 'y');	// The loop will exit if the user chooses '2' in the sub menu, or if they choose 'n' when asked if they would like to loop again
 			break;
 		case '4':	// Remove an item	
 			do
 			{
 				vector<int> indexes(0);
-				string str;
-				system("cls");
+				string strChoice;
+				Name naChoice;
+				int index, k; // iIndex
 				exitFlag = false;
+				system("cls");
 				for (string temp : strSubMenu4)	// Display sub menu
 					cout << temp;
 				switch (Choice('1', '4'))
 				{
-				case '1':
-					// Get user input for ISBN
-					// Search array by ISBN, retrieve indexes of found matches
-					str = InputISBN();
-					SortISBN(vecItems);
-					indexes.push_back(searchByISBN(vecItems, str));
+				case '1':	// Get user input for ISBN, retrieve indexes retreivefound matches
+					do	
+					{	// Input validation for the ISBN. If the ISBN is not the proper length, the user is prompted for input again
+						cout << "Enter ISBN: ";
+						UserInput(strChoice);	// Use the UserInput() function to get user input for ISBN
+						if (strChoice.length() != 13)
+							cout << "The ISBN must be 13 digits" << endl;
+					} while (strChoice.length() != 13);
+					SortISBN(vecItems);		// Sort database vector by ISBN
+					index = searchByISBN(vecItems, strChoice);
+					if (index >= 0)
+						indexes.push_back(index);	// search vector by ISBN, retrieve index of found match (There should be a maximum of one match, as the ISBN is a unique identifier)
 					break;
-				case '2':
-					// Get user input for book title
-					// Search array by book title, retreive indexes of found matches
-					cout << "Enter book title: " << endl;
+				case '2':	// Get user input for book title, retrieve indexes of found matches
+					cout << "Enter title: ";
+					getline(cin, strChoice);	// Get user input for title
+					cin.clear();
+					SortTitle(vecItems);	// Sort database vector by title
+					indexes = searchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
-				case '3':
-					// Get user input for book author
-					// Search array by book author, retreive indexes of found matches
-					cout << "Enter book author: " << endl;
+				case '3':	// Get user input for book author, retrieve indexes of found matches
+					cout << "Enter author (Last Name First Name): ";
+					UserInput(naChoice);		// Use the UserInput() function to get user input for author's name
+					SortAuthor(vecItems);		// Sort datbase vector by author
+					indexes = searchByAuthor(vecItems, naChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
-				case '4':
+				case '4':	// Exit condition for the sub menu
 					exitFlag = true;
+					break;
 				}
-				for (int k = 0; k < indexes.size(); k++)
-					vecItems.erase(vecItems.begin() + indexes[k]);
-
-				// Display all items found matching search parameters, with numbered options to allow selection
-				// Allow user to choose which result to remove
+				if (exitFlag)	// If exit condition was triggered, exit the loop (exits the current sub menu, returns to the module's main menu)
+					break;
+				// Code for deleting a choosen item
+				if (indexes.size() < 1)	// If the size of the indexes vector is less than 1, there were no found matches
+					cout << "No matches found" << endl;
+				else
+				{	// If the indexes vector is not empty, display all found matches
+					for (k = 0; k < indexes.size(); k++)	// Iterates through the vector of indexes
+					{
+						if (k % 10 == 0)	// Allows user to view the results page by page
+						{					// It will add a system pause and a new header for every 10th object written to screen
+							system("pause");
+							cout << endl
+								<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+								<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+								<< "--------------------------------------------------------------------------------";
+						}
+						cout << k + 1 << ") ";		// This will ouput all the results of the search, with an incrementing number in front of them
+						DisplayItem(vecItems[indexes[k]]);	// The user can use that number to choose which result they wish to delete
+					}
+					if (k > 0)
+					{
+						cout << "Choose the number of the item to remove:" << endl;
+						//			num = Choice('0', 48 + k) - '0' - 1;
+						index = indexes[Choice('0', 48 + k) - '0' - 1];	// The user chooses a single item to modify. Assign the index of that item to the 'index' variable
+					}
+					else
+						cout << "No matches found" << endl;
+					// Delete items, only if the indexes vector has values in it
+					vecItems.erase(vecItems.begin() + index);
+				}
 				cout << "Would you like to remove another item?  \"n\" for no, \"y\" for yes" << endl;
-			} while (exitFlag == false && tolower(YesNo()) == 'y');	// The loop will exit if the user chooses '4' in the sub menu, or if they choose 'n' when asked if they would like to loop again
+			} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates.
 			break;
 		case '5':	// Exit module
-			// Should write current arrays to files, update file flags
-//			delete[] items;
-			TextWrite(strUnsorted, vecItems);
+			SortISBN(vecItems);		// Sort the database vector by ISBN
+			TextWrite(strUnsorted, vecItems);	// Write the sorted vector to the database file
+			bISBNFlag = true;		// Set the flag for the database file to true
 			return;
 		}
 	}
