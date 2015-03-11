@@ -34,6 +34,10 @@ InventoryItem::InventoryItem(Book item, Date date, int eQuantity, double whole, 
 }
 
 void InventoryItem::setBook(Book eBook){ BookItem = eBook; }
+void InventoryItem::setISBN(string isbn){ BookItem.setISBN(isbn); }
+void InventoryItem::setTitle(string title){ BookItem.setTitle(title); }
+void InventoryItem::setAuthor(Name name){ BookItem.setAuthor(name); }
+void InventoryItem::setPublisher(string pub){ BookItem.setPublisher(pub); }
 void InventoryItem::setDateAdded(Date eDate){ DateAdded = eDate; }
 void InventoryItem::setQuantity(int eQuantity){ Quantity = eQuantity; }
 void InventoryItem::setWholesale(double eWhole){ Wholesale = eWhole; }

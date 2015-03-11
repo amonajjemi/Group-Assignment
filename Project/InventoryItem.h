@@ -22,6 +22,10 @@ public:
 
 	// Setters
 	void setBook(Book);
+	void setISBN(string);
+	void setTitle(string);
+	void setAuthor(Name);
+	void setPublisher(string);
 	void setDateAdded(Date);
 	void setQuantity(int);
 	void setWholesale(double);
