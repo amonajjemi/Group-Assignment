@@ -44,7 +44,8 @@ public:
 	friend ifstream& operator>>(ifstream &, Date &);
 	friend fstream& operator<<(fstream &, const Date &);
 	friend fstream& operator>>(fstream &, Date &);
-
+	
+	friend Date CurrentDate();
 };
 
 #endif DATE_H

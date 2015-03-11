@@ -1,6 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Date.h"
 #include <iostream>
-
+#include <ctime>
 using namespace std;
 
 //Constructors, Destructors
@@ -300,4 +301,29 @@ fstream& operator>>(fstream &fs, Date &obj){
 	obj.Month = stoi(temp);
 	fs >> obj.Day;
 	return fs;
+}
+Date CurrentDate()
+{	/*
+	Function: Retrieves the current date (the date when the function is called)
+	Parameters: 
+		None
+	Returns: Date object storing the current date
+	*/
+	Date currentDate;
+	string strYear, strMonth, strDay;
+	time_t rawtime;
+	struct tm * timeinfo;
+	char buffer[80];
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	// The date is temporarily stored in individual string variables, one for each field (Year, Month, and Day)
+	strftime(buffer, 80, "%Y", timeinfo);	// Uses the ctime library to get the year
+	strYear = buffer;	// Assigns the results from the strftime() function to a temporary string
+	strftime(buffer, 80, "%m", timeinfo);	// Uses the ctime library to get the month
+	strMonth = buffer;	// Assigns the results from the strftime() function to a temporary string
+	strftime(buffer, 80, "%d", timeinfo);	// Uses the ctime library to get the day
+	strDay = buffer;	// Assigns the results from the strftime() function to a temporary string
+	currentDate = { stoi(strYear), stoi(strMonth), stoi(strDay) };	// Use the stoi() function to convert the strings to integers, use those integers in the constructor for a Date object
+	return currentDate;	// Return the Date object
 }
