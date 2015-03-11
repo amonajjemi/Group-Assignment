@@ -4,6 +4,7 @@
 #include "InventoryItem.h"
 #include <vector>
 
+
 bool FileFlagTest(string);
 bool isEmpty(string);
 void DisplayItem(InventoryItem&);
@@ -24,7 +25,11 @@ Date RandomDate();
 double RandomWholesale();
 double RandomPrice();
 
-string InputISBN();
-string InputTitle();
-Name InputAuthor();
+template <class Type>
+void UserInput(Type &value)
+{
+	cin >> value;
+	cin.ignore(10000, '\n');
+	cin.clear();
+}
 #endif

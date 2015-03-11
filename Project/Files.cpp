@@ -1,6 +1,8 @@
 #include "Files.h"
 #include <iomanip>
+#include <ctime>
 using namespace std;
+
 
 bool FileFlagTest(string strFile){
 	/*
@@ -34,11 +36,22 @@ bool FileFlagTest(string strFile){
 	return flag;
 }
 bool isEmpty(string strFile)
-{
+{	/*
+	Function: Tests if a file is empty. If it is, it returns true. Otherwise it returns false
+	Parameters:	
+		strFile - Name of the file to be tested
+	Returns: True or false, depending on whether the file is empty or not
+	*/
 	fstream file(strFile);
-	return (file.peek() == ifstream::traits_type::eof());
+	return (file.peek() == ifstream::traits_type::eof());	// Peek into the file. If the result from the peek is the eof(), return true. Otherwise, return false
 }
 void DisplayItem(InventoryItem &item) {
+	/*
+	Function: Display a single InventoryItem object, formated for use in the database, report, and cashier modules
+	Parameters:
+		&item - An InventoryItem object, passed by reference to reduce overhead. The object is not modified in any way
+	Returns: Nothing
+	*/
 		cout << left
 			<< setw(14) << item.getBook().getISBN() << "\"" << item.getBook().getTitle() << "\"; " << item.getBook().getAuthor() << "; " << item.getBook().getPublisher() << endl
 			<< setw(12) << item.getDateAdded() << setw(4) << item.getQuantity()
@@ -335,31 +348,4 @@ double RandomPrice()
 	*/
 	double price[] = { 6.25, 6.5, 6.75, 7, 7.25, 7.50, 7.75, 8, 8.25, 9.5, 9.75, 10, 10.25, 10.5, 10.75, 11, 11.25, 11.5, 11.75, 12 };
 	return price[Random(0, sizeof(price) / sizeof(price[0]) -1)];
-}
-
-string InputISBN(){
-	string str;
-	do
-	{
-		cout << "Enter ISBN: ";
-		cin >> str;
-		cin.ignore(10000, '\n');
-		if (str.length() != 13)
-			cout << "Improper length of an ISBN" << endl;
-	} while (str.length() != 13);
-	return str;
-}
-string InputTitle(){
-	string str;
-	cout << "Enter Title: ";
-	getline(cin, str);
-	cin.ignore(10000, '\n');
-	return str;
-}
-Name InputAuthor(){
-	Name name;
-	cout << "Enter name (Last First): ";
-	cin >> name;
-	cin.ignore(10000, '\n');
-	return name;
 }
