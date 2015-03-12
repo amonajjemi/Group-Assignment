@@ -14,7 +14,7 @@ strISBNSorted = "ISBN.txt",
 strTitleSorted = "title.txt",
 strAuthorSorted = "author.txt";
 
-double SalesTax(double taxRate, double &itemPrice) //Calculate the tax cost and return it. Also return the total price by refernce.
+double SalesTax(double taxRate, double &itemPrice) //Calculate the tax cost and return it. Also return the total price by reference.
 {
 	double taxCost;
 
@@ -31,6 +31,9 @@ double CompleteTransaction(vector<InventoryItem> &transaction)
 	{
 		totalCost += transaction[i].getPrice();
 		//Remove item from database
+		//
+		//
+		//
 	}
 	return totalCost;
 }
@@ -39,14 +42,15 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 {
 	vector<InventoryItem> vecItems(0);
 	TextRead(strUnsorted, vecItems);
+	SortISBN(vecItems);// Sort the items by isbn
 
 	vector<InventoryItem> purchases(0);
 	int itemIndex;
-	string searchISBN,
-		searchTitle,
+	string searchISBN;
+		/*searchTitle,
 		searchAuthorLast,
 		searchAuthorFirst,
-		searchPublisher;
+		searchPublisher;*/
 	double totalPrice,
 		taxCost,
 		finalPurchase;
@@ -57,19 +61,19 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 		"\t\t\t\tCASHIER MODULE\n",
 		"================================================================================",
 		"\t1) - Search by ISBN number\n",
-		"\t2) - Search by book title\n",
-		"\t3) - Search by author's name\n",
-		"\t4) - Search by publisher's name\n",
-		"\t5) - Complete Transaction\n",
-		"\t6) - Exit Module\n"
+		//"\t2) - Search by book title\n",
+		//"\t3) - Search by author's name\n",
+		//"\t4) - Search by publisher's name\n",
+		//"\t5) - Complete Transaction\n",
+		"\t2) - Exit Module\n"
 	};
 
-	while (1)	// Loop repeats forever until the user choose '6' in the module's main menu
+	while (1)	// Loop repeats forever until the user choose '2' in the module's main menu
 	{
 		system("cls");
 		for (string temp : strMainMenu)	// Display the module's main menu
 			cout << temp;
-		switch (Choice('1', '6'))
+		switch (Choice('1', '2'))
 		{
 		case '1':
 			SortISBN(vecItems);
@@ -79,7 +83,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 				<< "================================================================================";
 			cin >> searchISBN;
 			cin.ignore();
-			while (searchISBN.length() != 13 && searchISBN.length() != 11)
+			while (searchISBN.length() != 13)
 			{
 				cout << "Please make sure that the ISBN number is the correct length." << endl;
 				cin >> searchISBN;
@@ -91,7 +95,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			totalPrice = vecItems[itemIndex].getPrice();
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
-			cout << setprecision(2);
+			cout << fixed << setprecision(2);
 			cout << "The price of the item is:\n" << setw(8) << "$" << vecItems[itemIndex].getPrice() << endl;
 			cout << "The cost of tax is:\n" << setw(8) << "$" << taxCost << endl;
 			cout << "The total cost of the item is:\n" << setw(8) << "$" << totalPrice << endl << endl;
@@ -107,7 +111,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			else
 				break;
 			break;
-		case '2':
+		/*case '2':
 			cout
 				<< "================================================================================"
 				<< "\t\t\tEnter the book title" << endl
@@ -199,8 +203,8 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cout << setprecision(2);
 			cout << "The total cost for the purchases is:" << setw(8) << "$" << finalPurchase << endl;
 
-			break;
-		case '6':
+			break;*/
+		case '2':
 			cout << "================================================================================"
 				<< "\t\t\tExit Module" << endl
 				<< "================================================================================";
