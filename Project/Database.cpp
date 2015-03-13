@@ -103,7 +103,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				switch (Choice('1', '4'))	// Get user input corresponding to options in the sub menu
 				{
 				case '1':	// Get user input for ISBN, retrieve indexes retreivefound matches
-					do	
+					do
 					{	// Input validation for the ISBN. If the ISBN is not the proper length, the user is prompted for input again
 						cout << "Enter ISBN: ";
 						UserInput(strChoice);	// Use the UserInput() function to get user input for ISBN
@@ -120,7 +120,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					getline(cin, strChoice);	// Get user input for title
 					cin.clear();
 					SortTitle(vecItems);	// Sort database vector by title
-					indexes = searchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
+					indexes = fuzzySearchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
 				case '3':	// Get user input for book author, retrieve indexes of found matches
 					cout << "Enter author (Last Name First Name): ";
@@ -139,7 +139,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				else
 				{	// If the indexes vector is not empty, display all found matches
 					system("cls");
-					cout << endl
+					cout
 						<< "================================================================================"
 						<< "\t\t\t\tFound Items" << endl
 						<< "================================================================================";
@@ -149,7 +149,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 						{					// It will add a system pause and a new header for every 10th object written to screen
 							system("pause");
 							cout << endl
-								<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
+								<< left << setw(14) << "ISBN" << setw(15) << "Title" << right << setw(12) << "Author" << setw(10) << "Publisher" << endl << left
 								<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
 								<< "--------------------------------------------------------------------------------";
 						}
@@ -164,14 +164,16 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 			} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates
 			break;
 		case '2':	// Modify an existing item
-					// The user chooses to find items with a given ISBN, book title, or book author
-					// All found matches are displayed to the user, and allows the user to choose which found item to modify
-					// The user can then choose which data members of the object to modify
+			// The user chooses to find items with a given ISBN, book title, or book author
+			// All found matches are displayed to the user, and allows the user to choose which found item to modify
+			// The user can then choose which data members of the object to modify
 			do	// Loop iterates the sub menmu until the user chooses not to
 			{	// The user can choose to exit the sub menu by either choosing '4' from the menu, or by choosing 'no' after they are prompted on whether to continue the loop
 				vector<int> indexes(0); // Vector of integers used to store the indexes of all found matches from searching the database vector
+				// Variables used to set the data type of the UserInput() template
 				string strChoice;
 				Name naChoice;
+
 				int index;
 				exitFlag = false;
 				system("cls");
@@ -210,14 +212,14 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					break;
 				}
 				if (exitFlag)	// If exit condition was triggered, exit the loop (exits the current sub menu, returns to the module's main menu)
-					break;	
+					break;
 				if (indexes.size() < 1)	// If the size of the indexes vector is less than 1, there were no found matches
 					cout << "No matches found" << endl;
 				else
 				{	// If the indexes vector is not empty, display all found matches
 					int k;
 					system("cls");
-					cout << endl
+					cout
 						<< "================================================================================"
 						<< "\t\t\t\tFound Items" << endl
 						<< "================================================================================";
@@ -234,69 +236,72 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 						cout << k + 1 << ") ";		// This will ouput all the results of the search, with an incrementing number in front of them
 						DisplayItem(vecItems[indexes[k]]);	// The user can use that number to choose which result they wish to delete
 					}
-						cout << "Choose the number of the item to modify:" << endl;
-						//			num = Choice('0', 48 + k) - '0' - 1;
-						index = indexes[Choice('0', 48 + k) - '0' - 1];		// The user chooses a single item to modify. Assign the index of that item to the 'index' variable
-						do	// Loop iterates until the user chooses to exit (entering value for "no" when prompte dto continue or not)
-						{	// The loop allows the user to choose which value of the InventoryItem to modify
-							string strChoice;
-							Name naChoice;
-							Date daChoice;
-							int iChoice;
-							double dChoice;
-							system("cls");
-							for (string temp : strFieldMenu)	// Display field menu
-								cout << temp;					// The field menu allows the user to choose which data members of a chosen Inventory Item to modify
-							switch (Choice('1', '8'))	// Get user input corresponding to options in the field menu menu
-							{							
-							case '1':	// Modify ISBN
-								do
-								{	// Input validation for the ISBN. If the ISBN is not the proper length, the user is prompted for input again
-									cout << "Enter ISBN: ";
-									UserInput(strChoice); // Use the UserInput() function to get user input for ISBN
-									if (strChoice.length() != 13)
-										cout << "The ISBN must be 13 digits" << endl;
-								} while (strChoice.length() != 13);	
-								vecItems[index].setISBN(strChoice);
-								break;
-							case '2':	// Modify Book Title
-								cout << "Enter title: ";
-								getline(cin, strChoice);	// Get user input for book title
-								vecItems[index].setTitle(strChoice);
-								break;
-							case '3':	// Modify Book author
-								cout << "Enter author (Last Name First Name): ";
-								UserInput(naChoice);		// Use the UserInput() function to get user input for book author
-								vecItems[index].setAuthor(naChoice);
-								break;
-							case '4':	// Modify Book publisher 
-								cout << "Enter publisher: ";
-								UserInput(strChoice);		// Use the UserInput() function to get user input for book publisher
-								vecItems[index].setPublisher(strChoice);
-								break;
-							case '5':	// Modify Date added
-								cout << "Date added: ";
-								UserInput(daChoice);		// Use the UserInput() function to get user input for the date added (the date the inventory item was added to the database)
-								vecItems[index].setDateAdded(daChoice);
-								break;
-							case '6':	// Modify Quantity
-								cout << "Enter quantity: ";
-								UserInput(iChoice);			// Use the UserInput() function to get user input for the quantity of the inventory item
-								vecItems[index].setQuantity(iChoice);
-								break;
-							case '7':	// Modify Wholesale cost
-								cout << "Enter wholesale cost: ";
-								UserInput(dChoice);			// Use the UserInput() function to get user input for the wholesale cost of the inventory item
-								vecItems[index].setWholesale(dChoice);
-								break;
-							case '8':	// Modify Price
-								cout << "Enter price: ";
-								UserInput(dChoice);			// Use the UserInput() function to get user input for the retail price of the inventory item
-								vecItems[index].setPrice(dChoice);
-								break;
-							}
-							cout << "Would you like to modify another field? \"n\" for no, \"y\" for yes" << endl;
-						} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates
+					cout << "Choose the number of the item to modify:" << endl;
+					// The user chooses a single item to modify. Assign the index of that item to the 'index' variable
+					index = indexes[Choice(1, k + 1) - 1];
+					do	// Loop iterates until the user chooses to exit (entering value for "no" when prompte dto continue or not)
+					{	// The loop allows the user to choose which value of the InventoryItem to modify
+						// Variables used to set the data type of the UserInput() template
+						string strChoice;
+						Name naChoice;
+						Date daChoice;
+						int iChoice;
+						double dChoice;
+
+						system("cls");
+						for (string temp : strFieldMenu)	// Display field menu
+							cout << temp;					// The field menu allows the user to choose which data members of a chosen Inventory Item to modify
+						switch (Choice('1', '8'))	// Get user input corresponding to options in the field menu menu
+						{
+						case '1':	// Modify ISBN
+							do
+							{	// Input validation for the ISBN. If the ISBN is not the proper length, the user is prompted for input again
+								cout << "Enter ISBN: ";
+								UserInput(strChoice); // Use the UserInput() function to get user input for ISBN
+								if (strChoice.length() != 13)
+									cout << "The ISBN must be 13 digits" << endl;
+							} while (strChoice.length() != 13);
+							vecItems[index].setISBN(strChoice);
+							break;
+						case '2':	// Modify Book Title
+							cout << "Enter title: ";
+							getline(cin, strChoice);	// Get user input for book title
+							vecItems[index].setTitle(strChoice);
+							break;
+						case '3':	// Modify Book author
+							cout << "Enter author (Last Name First Name): ";
+							UserInput(naChoice);		// Use the UserInput() function to get user input for book author
+							vecItems[index].setAuthor(naChoice);
+							break;
+						case '4':	// Modify Book publisher 
+							cout << "Enter publisher: ";
+							UserInput(strChoice);		// Use the UserInput() function to get user input for book publisher
+							vecItems[index].setPublisher(strChoice);
+							break;
+						case '5':	// Modify Date added
+							cout << "Date added: ";
+							UserInput(daChoice);		// Use the UserInput() function to get user input for the date added (the date the inventory item was added to the database)
+							vecItems[index].setDateAdded(daChoice);
+							break;
+						case '6':	// Modify Quantity
+							cout << "Enter quantity: ";
+							UserInput(iChoice);			// Use the UserInput() function to get user input for the quantity of the inventory item
+							vecItems[index].setQuantity(iChoice);
+							break;
+						case '7':	// Modify Wholesale cost
+							cout << "Enter wholesale cost: ";
+							UserInput(dChoice);			// Use the UserInput() function to get user input for the wholesale cost of the inventory item
+							vecItems[index].setWholesale(dChoice);
+							break;
+						case '8':	// Modify Price
+							cout << "Enter price: ";
+							UserInput(dChoice);			// Use the UserInput() function to get user input for the retail price of the inventory item
+							vecItems[index].setPrice(dChoice);
+							break;
+						}
+						cout << "Would you like to modify another field? \"n\" for no, \"y\" for yes" << endl;
+					} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates
+					bUnsortedFlag = false;	// The database vector has been changed, so the database file is no longer up to date
 				}
 				cout << "Would you like to modify another item? \"n\" for no, \"y\" for yes" << endl;
 			} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates
@@ -304,11 +309,13 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		case '3':	// Add an inventory item
 			do
 			{
-				string strChoice, strISBN, strTitle, strPublisher;
-				Name naChoice, naName;
-				Date daChoice, daDate;
-				int iChoice, iQuantity;
-				double dChoice, dWholesale, dPrice;
+				// Variables used to set the data type of the UserInput() template
+				string strChoice;
+				Name naChoice;
+				Date daChoice;
+				int iChoice;
+				double dChoice;
+
 				InventoryItem newItem;
 				exitFlag = false;
 				system("cls");
@@ -317,7 +324,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				switch (Choice('1', '2'))
 				{
 				case '1':
-						// Input for ISBN
+					// Input for ISBN
 					do
 					{
 						cout << "Enter ISBN: ";
@@ -326,34 +333,35 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 							cout << "The ISBN must be 13 digits" << endl;
 					} while (strChoice.length() != 13);
 					newItem.setISBN(strChoice);
-						// Input for Book Title
+					// Input for Book Title
 					cout << "Enter title: ";
 					getline(cin, strChoice);
 					newItem.setTitle(strChoice);
-						// Input for Book author
+					// Input for Book author
 					cout << "Enter author (Last Name First Name): ";
 					UserInput(naChoice);
 					newItem.setAuthor(naChoice);
-						// Input for Book publisher 
+					// Input for Book publisher 
 					cout << "Enter publisher: ";
 					UserInput(strChoice);
 					newItem.setPublisher(strChoice);
-						// Get current date
+					// Get current date
 					newItem.setDateAdded(CurrentDate());
-						// Input for Quantity
+					// Input for Quantity
 					cout << "Enter quantity: ";
 					UserInput(iChoice);
 					newItem.setQuantity(iChoice);
-						// Input for Wholesale cost
+					// Input for Wholesale cost
 					cout << "Enter wholesale cost: ";
 					UserInput(dChoice);
 					newItem.setWholesale(dChoice);
-						// Input for Price
+					// Input for Price
 					cout << "Enter price: ";
 					UserInput(dChoice);
 					newItem.setPrice(dChoice);
-						// Add new Inventory Item to the database
+					// Add new Inventory Item to the database
 					vecItems.push_back(newItem);
+					bUnsortedFlag = false;	// The database vector has been changed, so the database file is no longer up to date
 					break;
 				case '2':	// Exit condition for the sub menu
 					exitFlag = true;
@@ -378,7 +386,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 				switch (Choice('1', '4'))
 				{
 				case '1':	// Get user input for ISBN, retrieve indexes retreivefound matches
-					do	
+					do
 					{	// Input validation for the ISBN. If the ISBN is not the proper length, the user is prompted for input again
 						cout << "Enter ISBN: ";
 						UserInput(strChoice);	// Use the UserInput() function to get user input for ISBN
@@ -430,28 +438,30 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					if (k > 0)
 					{
 						cout << "Choose the number of the item to remove:" << endl;
-						//			num = Choice('0', 48 + k) - '0' - 1;
-						index = indexes[Choice('0', 48 + k) - '0' - 1];	// The user chooses a single item to modify. Assign the index of that item to the 'index' variable
+						// The user chooses a single item to modify. Assign the index of that item to the 'index' variable
+						index = indexes[Choice(1, k + 1) - 1];
 					}
 					else
 						cout << "No matches found" << endl;
 					// Delete items, only if the indexes vector has values in it
 					vecItems.erase(vecItems.begin() + index);
+					bUnsortedFlag = false;	// The database vector has been changed, so the database file is no longer up to date
 				}
 				cout << "Would you like to remove another item?  \"n\" for no, \"y\" for yes" << endl;
 			} while (tolower(YesNo()) == 'y');	// Use the YesNo() function get user choice of "yes" or "no". If "no" is choosen, the loop terminates.
 			break;
 		case '5':	// Exit module
-			SortISBN(vecItems);		// Sort the database vector by ISBN
-			TextWrite(strUnsorted, vecItems);	// Write the sorted vector to the database file
-			bISBNFlag = true;		// Set the flag for the database file to true
+			if (bUnsortedFlag == false)
+			{
+				SortISBN(vecItems);		// Sort the database vector by ISBN
+				TextWrite(strUnsorted, vecItems);	// Write the sorted vector to the database file
+				bUnsortedFlag = true;		// Set the flag for the database file to true
+			}
 			return;
 		}
 	}
 
 }
-
-
 /* ================= Sorting Functions =================*/
 // ISBN Sorting functionality
 bool compareISBN(InventoryItem &itemOne, InventoryItem &itemTwo) {
