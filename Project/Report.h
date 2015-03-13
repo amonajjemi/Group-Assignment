@@ -9,7 +9,7 @@ using namespace std;
 void ReportModule(bool&, bool&, bool&, bool&);
 void ReportMenu();
 
-// Generic functions to display the items in the order of the vector passed in 
+// Functions to display the items in the order of the vector passed in 
 void DisplayItems(vector<InventoryItem> &);
 void DisplayWholesale(vector<InventoryItem> &);
 void DisplayRetail(vector<InventoryItem> &);
@@ -29,6 +29,5 @@ bool compareAge(InventoryItem &, InventoryItem &);
 // Calculation functions
 double getTotalWholesale(vector<InventoryItem> &);
 double getTotalRetail(vector<InventoryItem> &);
-
 
 #endif REPORT_H
