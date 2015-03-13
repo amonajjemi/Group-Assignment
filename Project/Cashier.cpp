@@ -89,40 +89,47 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 				cin.ignore();
 			}
 			itemIndex = searchByISBN(vecItems, searchISBN);
-			//Insert function for searching for the inventoryItem object and copy the object to temp
-
-			totalPrice = vecItems[itemIndex].getPrice();
-			taxCost = SalesTax(SALES_TAX, totalPrice);
-
-			cout << fixed << setprecision(2);
-			cout << left << setw(40) << vecItems[itemIndex].GetTitle() << endl;
-			cout << left << setw(40) << "The price of the item is:" << "$" << vecItems[itemIndex].getPrice() << endl;
-			cout << left << setw(40) << "The cost of tax is:" << "$" << taxCost << endl;
-			cout << left << setw(40) << "The total cost of the item is:" << "$" << totalPrice << endl << endl;
-
-			cout << "Is this the book that you would like to purchase?" << endl;
-			cout << "Enter 'Y' or 'y' for yes." << endl;
-			cin >> confirmPurchase;
-			cin.ignore();
-			if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Confirmation to purchase the book
+			if (itemIndex == -1)
 			{
-				index.push_back(itemIndex);
+				cout << "The item is not in the inventory." << endl;
+				system("pause");
+				break;
 			}
 			else
-				break;
-
-			cout << "Would you like to check out?" << endl;
-			cout << "Enter 'Y' or 'y' for yes." << endl;
-			cin >> confirmPurchase;
-			cin.ignore();
-			if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Determine whether to checkout and pay for the books
 			{
-				finish = true;
-				system("cls");
-				cout << "Your final total is:" << endl;
-				finalPurchase = CompleteTransaction(vecItems, index);
-				cout << finalPurchase;
-				system("pause");
+				totalPrice = vecItems[itemIndex].getPrice();
+				taxCost = SalesTax(SALES_TAX, totalPrice);
+
+				cout << fixed << setprecision(2);
+				cout << left << setw(40) << vecItems[itemIndex].GetTitle() << endl;
+				cout << left << setw(40) << "The price of the item is:" << "$" << vecItems[itemIndex].getPrice() << endl;
+				cout << left << setw(40) << "The cost of tax is:" << "$" << taxCost << endl;
+				cout << left << setw(40) << "The total cost of the item is:" << "$" << totalPrice << endl << endl;
+
+				cout << "Is this the book that you would like to purchase?" << endl;
+				cout << "Enter 'Y' or 'y' for yes." << endl;
+				cin >> confirmPurchase;
+				cin.ignore();
+				if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Confirmation to purchase the book
+				{
+					index.push_back(itemIndex);
+				}
+				else
+					break;
+
+				cout << "Would you like to check out?" << endl;
+				cout << "Enter 'Y' or 'y' for yes." << endl;
+				cin >> confirmPurchase;
+				cin.ignore();
+				if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Determine whether to checkout and pay for the books
+				{
+					finish = true;
+					system("cls");
+					cout << "Your final total is:" << endl;
+					finalPurchase = CompleteTransaction(vecItems, index);
+					cout << "$" << finalPurchase << endl;
+					system("pause");
+				}
 			}
 			break;
 			/*case '2':
