@@ -52,75 +52,16 @@ void DisplayItem(InventoryItem &item) {
 		&item - An InventoryItem object, passed by reference to reduce overhead. The object is not modified in any way
 	Returns: Nothing
 	*/
+	/*
+	cout << endl
+		<< left << setw(14) << "ISBN" << setw(15) << "Title" << right << setw(12) << "Author" << setw(10) << "Publisher" << endl << left
+		<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+		<< "--------------------------------------------------------------------------------";
+		*/
 		cout << left
-			<< setw(14) << item.getBook().getISBN() << "\"" << item.getBook().getTitle() << "\"; " << item.getBook().getAuthor() << "; " << item.getBook().getPublisher() << endl
+			<< setw(14) << item.getBook().getISBN() << "\"" << item.getBook().getTitle() << "\"; " << right << setw(15) << item.getBook().getAuthor() << "; " << item.getBook().getPublisher() << endl << left
 			<< setw(12) << item.getDateAdded() << setw(4) << item.getQuantity()
 			<< setw(6) << fixed << setprecision(2) << item.getWholesale() << setw(6) << item.getPrice() << endl << endl;
-}
-void BinaryRead(string strInFile, InventoryItem *&items)
-{	/*
-	Function: Reads a binary file of stored objects, reads the values into the passed array
-			The binary file must be properly formated. The first value must be the number of objects written to the file.
-	Parameters:
-		strInFile - Name of the file to be read from
-		*items - Pointer for an array of InventoryItem objects
-	Returns: Nothing
-	*/
-	fstream inBinary;
-	inBinary.open(strInFile, ios::in | ios::binary);	// Open the binary file for input
-	if (!inBinary.good())	// If the file was not successfully opened
-	{
-		cout << "Error opening file" << endl;
-		system("pause");
-	}
-	else		// If the file was successfully opened
-	{
-		int iSize;
-		inBinary.read(reinterpret_cast<char *>(&iSize), sizeof(iSize));	// Gets the first value in the binary file (which should be the number of objects in the file)
-		cout << "Number of Inventory Items: " << iSize << endl;
-		InventoryItem temp;
-		items = new InventoryItem[iSize];	// Allocate enough memory to hold all the objects in the file
-		for (int k = 0; k < iSize; k++)
-		{
-			inBinary.read(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));	// Read the file into the newly created objects
-		}
-	//	cout << "End of binary read" << endl;
-	//	delete reinterpret_cast<char *>(temp);
-	}		
-	system("pause");
-	inBinary.close();
-	inBinary.clear();
-}
-void BinaryWrite(string strOutFile, InventoryItem *items, int size)
-{	/*
-	Function: Writes an array of objects to a binary file. The first value in the binary file will be the number of elements in the array
-	Parameters:
-		strOutFile - Name of the file to be written to
-		*items - Pointer to an array of InventoryItem objects, this array will be written to the file
-		size - Number of elements in the array
-	Returns: Nothing
-	*/
-	fstream outFile;
-	outFile.open(strOutFile, ios::out | ios::binary);	// Open the binary file for output
-	if (!outFile.good())		// If the file was not successfully opened
-	{
-		cout << "Error opening file" << endl;
-		system("pause");
-	}
-	else		// If the file was successfully opened
-	{
-		outFile.write(reinterpret_cast<char *>(&size), sizeof(size));	// Write the number of objects as the first value of the file
-		InventoryItem temp;
-		for (int k = 0; k < size; k++)
-		{
-			outFile.write(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));	// Write all of the objects to the file
-		}
-	//	cout << "End of binary write" << endl;
-	//	system("pause");
-		//	delete reinterpret_cast<char *>(temp);
-	}
-	outFile.close();
-	outFile.clear();
 }
 void TextRead(string strFile, InventoryItem *&items)
 {	/*
@@ -289,6 +230,26 @@ char Choice(char low, char high)
 	} while (cI < low || cI > high);
 	return cI;
 }
+int Choice(int low, int high)
+{	/*
+	Function: Allows user to input int values between two values
+	Parameters:
+	low - Lowest int value to be used
+	high - Highest int value to be used
+	Returns: Valid integer input (integers between 'low' and 'high') (including 'low' and 'high')
+	*/
+	int cI;
+	do			// Loop runs until valid integer input is received (integers between 'low' and 'high')
+	{
+		cout << "Choice: ";
+		cin >> cI;
+		cin.ignore(10000, '\n');
+		cin.clear();
+		if (cI < low || cI > high)
+			cout << "Invalid choice, try again" << endl;
+	} while (cI < low || cI > high);
+	return cI;
+}
 char YesNo()
 {	/*
 	Function: Allows user to input char values that corresponds to a yes/no decision
@@ -307,45 +268,116 @@ char YesNo()
 	} while (!(tolower(cYN) == 'y' || tolower(cYN) == 'n'));
 	return cYN;
 }
-int Random(int min, int max)
-{	/*
-	Function: Generates a random integer value that is between two values
-	Parameters:
-	min - Minimum value for the random number
-	max - Maximum value for the random number
-	Returns: A random integer between min and max
-	*/
-	return (rand() % (max - min + 1)) + min;
+void Pause(){
+	cout << "Press <ENTER> to continue" << endl;
+//	cin.get();
+	cin.ignore(1,'\n');
 }
-Date RandomDate()
-{	/*
-	Function: Generates a Date object with random values (Between Jan 1, 1990 and Dec 31, 2005). Uses the Date object constructor to ensure valid dates
-	Parameters:
-	None
-	Returns: A Date object with random values
-	*/
-	Date ranDate = { Random(1990, 2005), Random(1, 12), Random(1, 31) };
-	return ranDate;
-}
-double RandomWholesale()
-{	/*
-	Function: Generates a randomly selected double value
-	The design is to generate a random value for a salary from a pool of pre-set values
-	Parameters:
-	none
-	Returns: A randomly selected double value from the salary[] array
-	*/
-	double wholesale[] = { 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 5, 5.25, 5.5, 5.75, 6 };
-	return wholesale[Random(0, sizeof(wholesale) / sizeof(wholesale[0]) -1)];
-}
-double RandomPrice()
-{	/*
-	Function: Generates a randomly selected double value
-	The design is to generate a random value for a salary from a pool of pre-set values
-	Parameters:
-	none
-	Returns: A randomly selected double value from the salary[] array
-	*/
-	double price[] = { 6.25, 6.5, 6.75, 7, 7.25, 7.50, 7.75, 8, 8.25, 9.5, 9.75, 10, 10.25, 10.5, 10.75, 11, 11.25, 11.5, 11.75, 12 };
-	return price[Random(0, sizeof(price) / sizeof(price[0]) -1)];
-}
+//
+//int Random(int min, int max)
+//{	/*
+//	Function: Generates a random integer value that is between two values
+//	Parameters:
+//	min - Minimum value for the random number
+//	max - Maximum value for the random number
+//	Returns: A random integer between min and max
+//	*/
+//	return (rand() % (max - min + 1)) + min;
+//}
+//Date RandomDate()
+//{	/*
+//	Function: Generates a Date object with random values (Between Jan 1, 1990 and Dec 31, 2005). Uses the Date object constructor to ensure valid dates
+//	Parameters:
+//	None
+//	Returns: A Date object with random values
+//	*/
+//	Date ranDate = { Random(1990, 2005), Random(1, 12), Random(1, 31) };
+//	return ranDate;
+//}
+//double RandomWholesale()
+//{	/*
+//	Function: Generates a randomly selected double value
+//	The design is to generate a random value for a salary from a pool of pre-set values
+//	Parameters:
+//	none
+//	Returns: A randomly selected double value from the salary[] array
+//	*/
+//	double wholesale[] = { 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 5, 5.25, 5.5, 5.75, 6 };
+//	return wholesale[Random(0, sizeof(wholesale) / sizeof(wholesale[0]) -1)];
+//}
+//double RandomPrice()
+//{	/*
+//	Function: Generates a randomly selected double value
+//	The design is to generate a random value for a salary from a pool of pre-set values
+//	Parameters:
+//	none
+//	Returns: A randomly selected double value from the salary[] array
+//	*/
+//	double price[] = { 6.25, 6.5, 6.75, 7, 7.25, 7.50, 7.75, 8, 8.25, 9.5, 9.75, 10, 10.25, 10.5, 10.75, 11, 11.25, 11.5, 11.75, 12 };
+//	return price[Random(0, sizeof(price) / sizeof(price[0]) -1)];
+//}
+//void BinaryRead(string strInFile, InventoryItem *&items)
+//{	/*
+//	Function: Reads a binary file of stored objects, reads the values into the passed array
+//	The binary file must be properly formated. The first value must be the number of objects written to the file.
+//	Parameters:
+//	strInFile - Name of the file to be read from
+//	*items - Pointer for an array of InventoryItem objects
+//	Returns: Nothing
+//	*/
+//	fstream inBinary;
+//	inBinary.open(strInFile, ios::in | ios::binary);	// Open the binary file for input
+//	if (!inBinary.good())	// If the file was not successfully opened
+//	{
+//		cout << "Error opening file" << endl;
+//		system("pause");
+//	}
+//	else		// If the file was successfully opened
+//	{
+//		int iSize;
+//		inBinary.read(reinterpret_cast<char *>(&iSize), sizeof(iSize));	// Gets the first value in the binary file (which should be the number of objects in the file)
+//		cout << "Number of Inventory Items: " << iSize << endl;
+//		InventoryItem temp;
+//		items = new InventoryItem[iSize];	// Allocate enough memory to hold all the objects in the file
+//		for (int k = 0; k < iSize; k++)
+//		{
+//			inBinary.read(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));	// Read the file into the newly created objects
+//		}
+//		//	cout << "End of binary read" << endl;
+//		//	delete reinterpret_cast<char *>(temp);
+//	}
+//	system("pause");
+//	inBinary.close();
+//	inBinary.clear();
+//}
+//void BinaryWrite(string strOutFile, InventoryItem *items, int size)
+//{	/*
+//	Function: Writes an array of objects to a binary file. The first value in the binary file will be the number of elements in the array
+//	Parameters:
+//	strOutFile - Name of the file to be written to
+//	*items - Pointer to an array of InventoryItem objects, this array will be written to the file
+//	size - Number of elements in the array
+//	Returns: Nothing
+//	*/
+//	fstream outFile;
+//	outFile.open(strOutFile, ios::out | ios::binary);	// Open the binary file for output
+//	if (!outFile.good())		// If the file was not successfully opened
+//	{
+//		cout << "Error opening file" << endl;
+//		system("pause");
+//	}
+//	else		// If the file was successfully opened
+//	{
+//		outFile.write(reinterpret_cast<char *>(&size), sizeof(size));	// Write the number of objects as the first value of the file
+//		InventoryItem temp;
+//		for (int k = 0; k < size; k++)
+//		{
+//			outFile.write(reinterpret_cast<char *>(&items[k]), sizeof(items[k]));	// Write all of the objects to the file
+//		}
+//		//	cout << "End of binary write" << endl;
+//		//	system("pause");
+//		//	delete reinterpret_cast<char *>(temp);
+//	}
+//	outFile.close();
+//	outFile.clear();
+//}
