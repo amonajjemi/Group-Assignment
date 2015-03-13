@@ -52,9 +52,25 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			break;
 		case '2':
 			// Display total wholesale value of inventory
+			system("cls");
+			cout
+				<< "================================================================================"
+				<< "\t\t\tList of all inventory items, with wholesale values" << endl
+				<< "================================================================================";
+			SortQuantity(vecItems);
+			cout << "Total wholesale value of the inventory: $" << getTotalWholesale(vecItems) << endl << endl;
+			DisplayWholesale(vecItems);
 			break;
 		case '3':
-			// Display total retal value of inventory
+			// Display total retail value of inventory
+			system("cls");
+			cout
+				<< "================================================================================"
+				<< "\t\t\tList of all inventory items, with retail values" << endl
+				<< "================================================================================";
+			SortQuantity(vecItems);
+			cout << "Total retail value of the inventory: $" << getTotalRetail(vecItems) << endl << endl;
+			DisplayRetail(vecItems);
 			break;
 		case '4':
 			// Display inventory sorted by Quantity
@@ -119,6 +135,55 @@ void DisplayItems(vector<InventoryItem> &vecItems) {
 	system("pause");
 }
 
+// Displays a list of the wholesale value of the vector of books provided
+// Breaks every 10 items for formatting purposes
+void DisplayWholesale(vector<InventoryItem> &vecItems) {
+	for (int k = 0; k < vecItems.size(); k++)
+	{
+		if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
+		{							// It will add a system pause and a new header for every 10th object written to screen
+			system("pause");
+			cout << endl
+				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Wholesale" << endl
+				<< "--------------------------------------------------------------------------------";
+		}
+		cout << left
+			<< setw(14) << vecItems[k].getBook().getISBN() << "\"" << vecItems[k].getBook().getTitle() << "\"; " << vecItems[k].getBook().getAuthor() << "; " << vecItems[k].getWholesale() << endl
+			<< endl << endl;
+	}
+	cout << endl
+		<< "================================================================================"
+		<< "\t\t\t\tEnd of list" << endl
+		<< "================================================================================";
+
+	system("pause");
+}
+
+// Displays a list of the retail values of the vector of books provided
+// Breaks every 10 items for formatting purposes
+void DisplayRetail(vector<InventoryItem> &vecItems) {
+	for (int k = 0; k < vecItems.size(); k++)
+	{
+		if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
+		{							// It will add a system pause and a new header for every 10th object written to screen
+			system("pause");
+			cout << endl
+				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Retail Price" << endl
+				<< "--------------------------------------------------------------------------------";
+		}
+		cout << left
+			<< setw(14) << vecItems[k].getBook().getISBN() << "\"" << vecItems[k].getBook().getTitle() << "\"; " << vecItems[k].getBook().getAuthor() << "; " << vecItems[k].getPrice() << endl
+			<< endl << endl;
+	}
+	cout << endl
+		<< "================================================================================"
+		<< "\t\t\t\tEnd of list" << endl
+		<< "================================================================================";
+
+	system("pause");
+}
+
+
 // Quantity Sorting functionality
 // Sorts from greatest quantity to least
 bool compareQuantity(InventoryItem &itemOne, InventoryItem &itemTwo) {
@@ -146,3 +211,21 @@ void SortAge(vector<InventoryItem> &items) {
 	sort(items.begin(), items.end(), compareAge);
 }
 
+
+// Calculation functions
+// Returns the total wholesale value of the vector of inventory items passed in
+double getTotalWholesale(vector<InventoryItem> &items) {
+	double total = 0;
+	for (int i = 0; i < items.size(); i++) {
+		total += items[i].getWholesale() * items[i].getQuantity();
+	}
+	return total;
+}
+// Returns the total retail value of the vector of inventory items passed in
+double getTotalRetail(vector<InventoryItem> &items) {
+	double total = 0;
+	for (int i = 0; i < items.size(); i++) {
+		total += items[i].getPrice() * items[i].getQuantity();
+	}
+	return total;
+}

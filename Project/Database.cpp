@@ -539,15 +539,20 @@ vector<int> searchByTitle(vector<InventoryItem> &items, string title) {
 			{
 				matches.push_back(mid);
 				mid = mid + 1;
+				if (mid >= items.size())
+					break;
 			}
 			// Look at preceding values
 			mid = oMid - 1;
-			while (title == items[mid].GetTitle())
-			{
-				matches.push_back(mid);
-				mid = mid - 1;
+			if (mid >= 0) {
+				while (title == items[mid].GetTitle())
+				{
+					matches.push_back(mid);
+					mid = mid - 1;
+					if (mid < 0)
+						break;
+				}
 			}
-
 			break;
 		}
 	}
@@ -578,13 +583,19 @@ vector<int> searchByAuthor(vector<InventoryItem> &items, Name authorName) {
 			{
 				matches.push_back(mid);
 				mid = mid + 1;
+				if (mid >= items.size())
+					break;
 			}
 			// Look at preceding values
 			mid = oMid - 1;
-			while (authorName == items[mid].GetAuthor())
-			{
-				matches.push_back(mid);
-				mid = mid - 1;
+			if (mid >= 0) {
+				while (authorName == items[mid].GetAuthor())
+				{
+					matches.push_back(mid);
+					mid = mid - 1;
+					if (mid < 0)
+						break;
+				}
 			}
 
 			break;
