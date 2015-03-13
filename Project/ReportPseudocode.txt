@@ -1,0 +1,135 @@
+Files:
+  A single text file containing the whole database. The file is called "ISBN.txt"
+  The file should always be sorted by ISBN
+  The first line of the file has the number of items in the database
+  Each inventory item is stored on a single line
+  The items are stored in the following format:
+		ISBN "title" Author Last name, Author first name publisher date added (year-month-day) quantity wholesale cost retail price
+
+PSEUDO CODE
+
+
+// main
+while loop (Infinite loop, only exit condition is if the user chooses to exit in the main menu (a choice of '4'))
+	Test database file(ISBN.txt)
+		If file cannot be opened, or file is empty, throw an exception, and end the program
+	Display main menu
+		Main Menu:
+		1) - Cashier module
+		2) - Database module
+		3) - Report module
+		4) - Exit module
+	Get user input corresponding to choices in main menu
+		Call the respective module functions for user choice
+End while loop
+
+// database module
+while loop (Infinite loop, only exit condition is if the user chooses to exit in the module menu (a choice of '5'))
+	Open database file (ISBN.txt), read it into the vector vecItems
+	If file could not be opened, exit with EXIT_FAILURE
+	Display module main menu
+		Databse Menu:
+		1) - Search for an item
+		2) - Modify an existing item
+		3) - Add a new item
+		4) - Remove an item
+		5) - Exit module
+	Get user input corresponding to choices in module main menu
+	Switch statement for menu choices:
+		case '1' is for searching for an item
+			Create empty vector of integers called indexes
+			Display sub menu
+				Sub menu:
+				1) - Search by ISBN
+				2) - Search by book title
+				3) - Search by book author
+				4) - Go back
+			Get user input corresponding to choices in sub menu
+				If user chooses '4', the program exits the sub menu and returns the the module's main menu
+			User chooses the way to search for an item (Search by ISBN, title, or author)
+			Get user input for search method
+			Sort the database vector (vecItems) by the method of search to be used (so sort by ISBN, title, or author)
+			Use search functions to get the indexes of all inventory items that match search parameters, store the indexes in the indexes vector
+			Display all found matches (Inventory items with the indexes stored in the indexes vector)
+			Ask the user if they want to do another search. If so, repeat. If not, go back to the module's main menu
+		case '2' is for modifying an item
+				// The user will modify an existing item, by searching for items and choosing the item to modify from the found matches
+				// The user can search for items based off of ISBN, book title, or book author
+			Create empty vector of integers called indexes
+			Display sub menu
+				Sub menu:
+				1) - Search by ISBN
+				2) - Search by book title
+				3) - Search by book author
+				4) - Go back
+			Get user input for search method
+			Sort the database vector (vecItems) by the method of search to be used (so sort by ISBN, title, or author)
+			Use search functions to get the indexes of all inventory items that match search parameters, store the indexes in the indexes vector
+			Display all found matches (Inventory items with the indexes stored in the indexes vector)
+			User can choose which found match to modify
+			Get user input for their choice
+				Display menu, allowing the user to choose which data member of the item to modify
+				Can modify ISBN, title, author, publisher, date added, wholesale cost, retail price
+				After each modification, ask the user if they want to modify another data member
+			After the user has finished modifying an item, ask if they want to modify another item. If so, repeat. If not, go back to the module's main menu'
+		case '3' is for adding a new item
+			Create a new InventoryItem object
+			Get user input for the ISBN, book title, book author, book publisher, item quantity, wholesale cost, and retail price
+			Store those values into the inventory item object, fetch the current date for the date the item was added
+			Add a copy of the InventoryItem object to the database vector of InventoryItems (vecItems)
+			Ask if the user wants to add another item. If so, repeat. If not, go back to the module's main menu
+		case '4' Is for removing an item
+				// The user will remove an existing item, by searching for items and choosing the item to modify from the found matches
+				// The user can search for items based off of ISBN, book title, or book author
+			Create empty vector of integers called indexes
+			Display sub menu
+				Sub menu:
+				1) - Search by ISBN
+				2) - Search by book title
+				3) - Search by book author
+				4) - Go back
+			Get user input for search method
+			Sort the database vector (vecItems) by the method of search to be used (so sort by ISBN, title, or author)
+			Use search functions to get the indexes of all inventory items that match search parameters, store the indexes in the indexes vector
+			Display all found matches (Inventory items with the indexes stored in the indexes vector)
+			User can choose which found match to remove
+			Get user input for their choice
+				Remove the choosen item from the database vector of InventoryItems (vecItems)
+			Ask if the user wants to remove another item. If so, repeat. If not, go back to the module's main menu
+		case '5'
+			Exit the module
+End while loop
+
+// Report Module
+Load the inventory items from the text file into a vector
+Display menu of options
+Switch statement for user choice
+	Case 1: Inventory Listing
+			For all books in the database
+				Display ISBN, title, etc.
+	Case 2: Inventory Wholesale Value
+			Calculate the total wholesale value of the books in the database
+			Display total wholesale value
+			For all books in the database
+				Display wholesale values
+			Return to main menu for the Report Module
+	Case 3: Inventory Retail Value
+			Calculate the total retail value of the books in the database
+			Display total retail value
+			For all books in the database 
+				Display retail values
+			Return to main menu for the Report Module
+	Case 4: Listing by Quantity
+			For all books in database, from highest quantity to lowest quantity
+				Display ISBN, title, etc
+			Return to main menu for the Report Module
+	Case 5: Listing by Cost
+			For all books in database, from highest cost to lowest cost
+				Display ISBN, title, etc
+			Return to main menu for the Report Module
+	Case 6: Listing by Age
+			For all books in database, from oldest to newest
+				Display ISBN, title, etc
+			Return to main menu for the Report Module
+	Case 7: Exit Module
+			Return to Main Menu
