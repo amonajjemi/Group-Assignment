@@ -48,7 +48,30 @@ int main()
 		"\t2) - Inventory Database Module\n",
 		"\t3) - Report Module\n",
 		"\t4) - Exit Program\n" };
-
+	string Help[] = {
+		"================================================================================",
+		"\t\t\tHelp Menu\n",
+		"================================================================================",
+		"This program is designed for use in a book store\n",
+		"This program manages a database, and can function as a cashier\n",
+		"What would you like to know more about?\n",
+		"1) - Cashier module\n",
+		"2) - Database module\n",
+		"3) - Report module\n",
+		"5) - Nothing (go back)\n"};
+	string CashierHelp[] = { 
+		""
+	};
+	string DatabaseHelp[] = {
+		"The database module manages a database file that stores all the information of\n",
+		"the current inventory.\n",
+		"Each inventory item has the following attributes:\n",
+		"ISBN, title, author, publisher, date added, quantity, wholeale cost, retail price",
+		"You can search the database, and add, remove, or modify inventory items\n",
+		"The database is stored in the file ISBN.txt\n",
+		"Do NOT directly modify the database file. Instead, use the database module\n"
+		"	to add, remove, or modify items\n"
+		"The database file is always sorted by ISBN\n"};
 	while (1)	// Will always loop. The only exit condition is if the user chooses '4' in the main menu
 	{
 		try

@@ -19,8 +19,8 @@ double SalesTax(double taxRate, double &itemPrice) //Calculate the tax cost and 
 {
 	double taxCost;
 
-	taxCost = itemPrice * taxRate; //calculates the tax for a single item
-	itemPrice += taxCost; //calculates the cost with tax for a single item
+	taxCost = itemPrice * taxRate;
+	itemPrice += taxCost;
 
 	return taxCost;
 }
@@ -31,9 +31,10 @@ double CompleteTransaction(vector<InventoryItem> &transaction, vector<int> &inde
 	for (int i = 0; i < indexes.size(); i++)
 	{
 		totalCost += transaction[indexes[i]].getPrice(); //Addup total transaction price
-		ReduceQuantity(transaction, indexes[i]);
+		//transaction.erase(transaction.begin() + indexes[i]); //Remove item from database
+		Pause();
 	}
-	totalCost *= (1 + SALES_TAX); //calculate total transaction cost with tax
+	totalCost *= (1 + SALES_TAX);
 	return totalCost;
 }
 
@@ -90,8 +91,8 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			}
 			else
 			{
-				totalPrice = vecItems[itemIndex].getPrice(); //Total price containst the cost of the item without tax
-				taxCost = SalesTax(SALES_TAX, totalPrice); //Now Total price contains the cost of the item with tax
+				totalPrice = vecItems[itemIndex].getPrice();
+				taxCost = SalesTax(SALES_TAX, totalPrice);
 
 				cout << fixed << setprecision(2);
 				cout << left << setw(40) << vecItems[itemIndex].GetTitle() << endl; //Display book's name
@@ -103,43 +104,25 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 				cout << "Enter 'Y' or 'y' for yes." << endl;
 				cin >> confirmPurchase;
 				cin.ignore();
-				cout << endl;
 				if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Confirmation to purchase the book
 				{
 					index.push_back(itemIndex);
 				}
 				else
-				{
-					cout << "Returning to Cashier Menu." << endl;
-					Pause();
 					break;
-				}
 
 				cout << "Would you like to check out?" << endl;
 				cout << "Enter 'Y' or 'y' for yes." << endl;
 				cin >> confirmPurchase;
 				cin.ignore();
-				cout << endl;
 				if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Determine whether to checkout and pay for the books
 				{
 					finish = true;
 					system("cls");
-					cout << "Books purchased:" << endl;
-					for (int i = 0; i < index.size(); i++)
-					{
-						cout << vecItems[index[i]].GetTitle() << endl;
-					}
-					cout << endl;
 					cout << "Your final total is:" << endl;
 					finalPurchase = CompleteTransaction(vecItems, index);
 					cout << "$" << finalPurchase << endl; //Display final price for user
-					Pause();//pauses program for user
-				}
-				else
-				{
-					cout << "Your item is saved." << endl;
-					cout << "Returning to Cashier Menu." << endl;
-					Pause();
+					Pause();//puases program for user
 				}
 			}
 			break;

@@ -70,9 +70,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="BenPseudocode.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="books.txt" />
     <Text Include="unsorted.txt">
       <Filter>Resource Files</Filter>
@@ -86,7 +83,7 @@
     <Text Include="title.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="ReportPseudocode.txt">
+    <Text Include="Pseudocode.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
@@ -95,6 +92,5 @@
     <None Include="unsorted">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
