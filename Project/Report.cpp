@@ -117,7 +117,7 @@ void DisplayItems(vector<InventoryItem> &vecItems) {
 	{
 		if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
 		{							// It will add a system pause and a new header for every 10th object written to screen
-			system("pause");
+			Pause();
 			cout << endl
 				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
 				<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
@@ -133,7 +133,7 @@ void DisplayItems(vector<InventoryItem> &vecItems) {
 		<< "\t\t\t\tEnd of list" << endl
 		<< "================================================================================";
 
-	system("pause");
+	Pause();
 }
 
 // Displays a list of the wholesale value of the vector of books provided
@@ -143,7 +143,7 @@ void DisplayWholesale(vector<InventoryItem> &vecItems) {
 	{
 		if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
 		{							// It will add a system pause and a new header for every 10th object written to screen
-			system("pause");
+			Pause();
 			cout << endl
 				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Wholesale" << endl
 				<< "--------------------------------------------------------------------------------";
@@ -157,7 +157,7 @@ void DisplayWholesale(vector<InventoryItem> &vecItems) {
 		<< "\t\t\t\tEnd of list" << endl
 		<< "================================================================================";
 
-	system("pause");
+	Pause();
 }
 
 // Displays a list of the retail values of the vector of books provided
@@ -167,7 +167,7 @@ void DisplayRetail(vector<InventoryItem> &vecItems) {
 	{
 		if (k % 10 == 0 || k == 0)	// Allows user to view the results page by page
 		{							// It will add a system pause and a new header for every 10th object written to screen
-			system("pause");
+			Pause();
 			cout << endl
 				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Retail Price" << endl
 				<< "--------------------------------------------------------------------------------";
@@ -181,7 +181,7 @@ void DisplayRetail(vector<InventoryItem> &vecItems) {
 		<< "\t\t\t\tEnd of list" << endl
 		<< "================================================================================";
 
-	system("pause");
+	Pause();
 }
 
 
