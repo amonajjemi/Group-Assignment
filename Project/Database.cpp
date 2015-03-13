@@ -23,7 +23,8 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 	else
 	{
 		cout << "Could not open the database file!" << endl;
-		system("pause");
+		//	system("pause");
+		Pause();
 		exit(EXIT_FAILURE);
 	}
 
@@ -32,7 +33,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		"\t\t\t\tDATABASE MODULE\n",
 		"================================================================================",
 		"\tWhat would you like to do?\n",
-		"\t1) - Search for an Item\n",
+		"\t1) - Search for an item\n",
 		"\t2) - Modify an existing item\n",
 		"\t3) - Add a new item\n",
 		"\t4) - Remove an item\n",
@@ -200,7 +201,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					getline(cin, strChoice);	// Get user input for title
 					cin.clear();
 					SortTitle(vecItems);	// Sort database vector by title
-					indexes = searchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
+					indexes = fuzzySearchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
 				case '3':	// Get user input for book author, retrieve indexes of found matches
 					cout << "Enter author (Last Name First Name): ";
@@ -228,7 +229,8 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					{
 						if (k % 10 == 0)		// Allows user to view the results page by page
 						{						// It will add a system pause and a new header for every 10th object written to screen
-							system("pause");
+							//	system("pause");
+							Pause();
 							cout << endl
 								<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
 								<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
@@ -404,7 +406,7 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					getline(cin, strChoice);	// Get user input for title
 					cin.clear();
 					SortTitle(vecItems);	// Sort database vector by title
-					indexes = searchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
+					indexes = fuzzySearchByTitle(vecItems, strChoice);		// Search vector by book title, retreive indexes of found matches. Indexes are stored in the indexes vector
 					break;
 				case '3':	// Get user input for book author, retrieve indexes of found matches
 					cout << "Enter author (Last Name First Name): ";
@@ -427,7 +429,8 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 					{
 						if (k % 10 == 0)	// Allows user to view the results page by page
 						{					// It will add a system pause and a new header for every 10th object written to screen
-							system("pause");
+							//	system("pause");
+							Pause();
 							cout << endl
 								<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
 								<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
@@ -462,6 +465,13 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 		}
 	}
 
+}
+void ReduceQuantity(vector<InventoryItem> &vecItems, int index)
+{
+	if (vecItems[index].getQuantity == 1)
+		vecItems.erase(vecItems.begin() + index);
+	else
+		vecItems[index].setQuantity(vecItems[index].getQuantity - 1);
 }
 /* ================= Sorting Functions =================*/
 // ISBN Sorting functionality
