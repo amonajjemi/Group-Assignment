@@ -468,10 +468,10 @@ void DatabaseModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool
 }
 void ReduceQuantity(vector<InventoryItem> &vecItems, int index)
 {
-	if (vecItems[index].getQuantity == 1)
+	if (vecItems[index].getQuantity() == 1)
 		vecItems.erase(vecItems.begin() + index);
 	else
-		vecItems[index].setQuantity(vecItems[index].getQuantity - 1);
+		vecItems[index].setQuantity(vecItems[index].getQuantity() - 1);
 }
 /* ================= Sorting Functions =================*/
 // ISBN Sorting functionality
