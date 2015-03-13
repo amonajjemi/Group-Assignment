@@ -4,7 +4,7 @@
 
 #include <iomanip>
 #include <cstdlib>
-#include <algorithm>    // std::sort
+#include <algorithm>
 
 using namespace std;
 
@@ -14,12 +14,14 @@ const string
 	strTitleSorted = "title.txt",
 	strAuthorSorted = "author.txt";
 
+// Fires up the Report Module
 void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &bAuthorFlag){
-//	ReportMenu();
-//	InventoryItem *items = nullptr;	// Pointer that will be used to store the database. When a file is read, it allocates enough memory for an array using this pointer
-//	TextRead(strUnsorted, items);	// TextRead will open the strUnsorted file, and allocate enough memory to read the whole file into an array assigned to the items pointer
+	// Array to hold all of the inventory items being used
 	vector<InventoryItem> vecItems(0);
 	TextRead(strUnsorted, vecItems);
+
+	// Holds contents of the main menu
+	// To be displayed wherever needed
 	string strMainMenu[] = {
 		"================================================================================",
 		"\t\t\t\tREPORT MODULE\n",
@@ -40,7 +42,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 		switch (Choice('1', '7'))
 		{
 		case '1':
-			// Display inventory sorted by ISBN or title
+			// Display inventory sorted by ISBN 
 			system("cls");
 			cout
 				<< "================================================================================"
@@ -73,7 +75,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			DisplayRetail(vecItems);
 			break;
 		case '4':
-			// Display inventory sorted by Quantity
+			// Display inventory sorted by quantity
 			system("cls");
 			cout
 				<< "================================================================================"
@@ -103,7 +105,6 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			DisplayItems(vecItems);
 			break;
 		case '7':	// Exit module
-	//		delete[] items;
 			return;
 		}
 	}
@@ -184,6 +185,7 @@ void DisplayRetail(vector<InventoryItem> &vecItems) {
 }
 
 
+/* ================= Report/Sorting Functions =================*/
 // Quantity Sorting functionality
 // Sorts from greatest quantity to least
 bool compareQuantity(InventoryItem &itemOne, InventoryItem &itemTwo) {
@@ -210,9 +212,9 @@ bool compareAge(InventoryItem &itemOne, InventoryItem &itemTwo) {
 void SortAge(vector<InventoryItem> &items) {
 	sort(items.begin(), items.end(), compareAge);
 }
+/* ============================================================*/
 
-
-// Calculation functions
+/* ================= Calculation Functions =================*/
 // Returns the total wholesale value of the vector of inventory items passed in
 double getTotalWholesale(vector<InventoryItem> &items) {
 	double total = 0;
@@ -229,3 +231,4 @@ double getTotalRetail(vector<InventoryItem> &items) {
 	}
 	return total;
 }
+/* =========================================================*/
