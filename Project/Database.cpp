@@ -558,6 +558,18 @@ vector<int> searchByTitle(vector<InventoryItem> &items, string title) {
 	}
 	return matches;
 }
+// Title search, made fuzzy
+// Returns all books whose titles' contain the search term
+vector<int> fuzzySearchByTitle(vector<InventoryItem> &items, string title) {
+	vector<int> matches;
+	for (int i = 0; i < items.size(); i++) {
+		if (items[i].GetTitle().find(title) != string::npos) {
+			// Some part of the title matched
+			matches.push_back(i);
+		}
+	}
+	return matches;
+}
 // Searches for a book according to the author name
 // Returns a vector with the indexes of all of the exact matches
 // Vector will be of size 0 if no matches found
