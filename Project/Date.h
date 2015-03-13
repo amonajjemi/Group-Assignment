@@ -27,8 +27,6 @@ public:
 	int GetMonth();
 	int GetYear();
 	string GetDate();
-	// Other
-	void BoundsChecker();
 
 	//Operator overloads
 	bool operator>(const Date&);
@@ -45,6 +43,8 @@ public:
 	friend fstream& operator<<(fstream &, const Date &);
 	friend fstream& operator>>(fstream &, Date &);
 	
+	// Other
+	void BoundsChecker();
 	friend Date CurrentDate();
 };
 

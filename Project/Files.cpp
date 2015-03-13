@@ -271,6 +271,7 @@ char YesNo()
 void Pause(){
 	cout << "Press <ENTER> to continue" << endl;
 //	cin.get();
+	cin.clear();
 	cin.ignore(1,'\n');
 }
 //

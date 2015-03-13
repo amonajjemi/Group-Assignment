@@ -86,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="author.txt" />
-    <Text Include="BenPseudocode.txt" />
+    <Text Include="Pseudocode.txt" />
     <Text Include="books.txt" />
     <Text Include="ISBN.txt" />
     <Text Include="title.txt" />
