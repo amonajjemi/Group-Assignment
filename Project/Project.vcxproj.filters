@@ -86,11 +86,15 @@
     <Text Include="title.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="ReportPseudocode.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="bookgenerator.rb" />
     <None Include="unsorted">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

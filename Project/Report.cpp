@@ -46,7 +46,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items" << endl
+				<< "\t\t\REPORT MODULE > List of All Books" << endl
 				<< "================================================================================";
 			// Sort the items by isbn and display
 			SortISBN(vecItems);
@@ -57,7 +57,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, with wholesale values" << endl
+				<< "\t\t\REPORT MODULE > Total Wholesale Values" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			cout << "Total wholesale value of the inventory: $" << getTotalWholesale(vecItems) << endl << endl;
@@ -68,7 +68,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, with retail values" << endl
+				<< "\t\t\REPORT MODULE > Total Retail Values" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			cout << "Total retail value of the inventory: $" << getTotalRetail(vecItems) << endl << endl;
@@ -79,7 +79,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, sorted by quantity" << endl
+				<< "\t\t\REPORT MODULE > All Books > Sorted by Quantity" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			DisplayItems(vecItems);
@@ -89,7 +89,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, sorted by cost" << endl
+				<< "\t\t\tREPORT MODULE > All Books > Sorted by Cost" << endl
 				<< "================================================================================";
 			SortCost(vecItems);
 			DisplayItems(vecItems);
@@ -99,7 +99,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, sorted by age" << endl
+				<< "\t\t\tREPORT MODULE > All Books > Sorted by Age" << endl
 				<< "================================================================================";
 			SortAge(vecItems);
 			DisplayItems(vecItems);
@@ -188,34 +188,37 @@ void DisplayRetail(vector<InventoryItem> &vecItems) {
 /* ================= Report/Sorting Functions =================*/
 // Quantity Sorting functionality
 // Sorts from greatest quantity to least
-bool compareQuantity(InventoryItem &itemOne, InventoryItem &itemTwo) {
-	return itemOne.getQuantity() > itemTwo.getQuantity();
-}
+// Parameters: items - vector of inventory items
 void SortQuantity(vector<InventoryItem> &items) {
 	sort(items.begin(), items.end(), compareQuantity);
+}
+bool compareQuantity(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getQuantity() > itemTwo.getQuantity();
 }
 
 // Sorting by Wholesale Cost functionality
 // Greatest cost to least
-bool compareCost(InventoryItem &itemOne, InventoryItem &itemTwo) {
-	return itemOne.getWholesale() > itemTwo.getWholesale();
-}
+// Parameters: items - vector of inventory items
 void SortCost(vector<InventoryItem> &items) {
 	sort(items.begin(), items.end(), compareCost);
 }
-
-// Sorting by Age functionality
-// Oldest to newest books
-bool compareAge(InventoryItem &itemOne, InventoryItem &itemTwo) {
-	return itemOne.getDateAdded() < itemTwo.getDateAdded();
+bool compareCost(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getWholesale() > itemTwo.getWholesale();
 }
+
+// Sorting by Age functionality, oldest to newest books
+// Parameters: items - vector of inventory items
 void SortAge(vector<InventoryItem> &items) {
 	sort(items.begin(), items.end(), compareAge);
+}
+bool compareAge(InventoryItem &itemOne, InventoryItem &itemTwo) {
+	return itemOne.getDateAdded() < itemTwo.getDateAdded();
 }
 /* ============================================================*/
 
 /* ================= Calculation Functions =================*/
 // Returns the total wholesale value of the vector of inventory items passed in
+// Parameters: items - vector of inventory items
 double getTotalWholesale(vector<InventoryItem> &items) {
 	double total = 0;
 	for (int i = 0; i < items.size(); i++) {
@@ -224,6 +227,7 @@ double getTotalWholesale(vector<InventoryItem> &items) {
 	return total;
 }
 // Returns the total retail value of the vector of inventory items passed in
+// Parameters: items - vector of inventory items
 double getTotalRetail(vector<InventoryItem> &items) {
 	double total = 0;
 	for (int i = 0; i < items.size(); i++) {

@@ -11,6 +11,7 @@ void ReportMenu();
 
 // Functions to display the items in the order of the vector passed in 
 void DisplayItems(vector<InventoryItem> &);
+void DisplayItemsCondensed(vector<InventoryItem> &, int);
 void DisplayWholesale(vector<InventoryItem> &);
 void DisplayRetail(vector<InventoryItem> &);
 

@@ -89,11 +89,13 @@
     <Text Include="BenPseudocode.txt" />
     <Text Include="books.txt" />
     <Text Include="ISBN.txt" />
+    <Text Include="ReportPseudocode.txt" />
     <Text Include="title.txt" />
     <Text Include="unsorted.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bookgenerator.rb" />
+    <None Include="ClassDiagram.cd" />
     <None Include="unsorted" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
