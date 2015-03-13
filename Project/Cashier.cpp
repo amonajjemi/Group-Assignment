@@ -95,6 +95,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << fixed << setprecision(2);
+			cout << left << setw(40) << vecItems[itemIndex].GetTitle() << endl;
 			cout << left << setw(40) << "The price of the item is:" << "$" << vecItems[itemIndex].getPrice() << endl;
 			cout << left << setw(40) << "The cost of tax is:" << "$" << taxCost << endl;
 			cout << left << setw(40) << "The total cost of the item is:" << "$" << totalPrice << endl << endl;
@@ -103,7 +104,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cout << "Enter 'Y' or 'y' for yes." << endl;
 			cin >> confirmPurchase;
 			cin.ignore();
-			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
+			if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Confirmation to purchase the book
 			{
 				index.push_back(itemIndex);
 			}
@@ -114,7 +115,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cout << "Enter 'Y' or 'y' for yes." << endl;
 			cin >> confirmPurchase;
 			cin.ignore();
-			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
+			if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Determine whether to checkout and pay for the books
 			{
 				finish = true;
 				system("cls");
