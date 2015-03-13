@@ -67,7 +67,8 @@ int main()
 		"The database module manages a database file that stores all the information of\n",
 		"the current inventory.\n",
 		"Each inventory item has the following attributes:\n",
-		"ISBN, title, author, publisher, date added, quantity, wholeale cost, retail price",
+		"ISBN, title, author, publisher, date added, quantity, wholeale cost\n",
+		"	and retail price\n",
 		"You can search the database, and add, remove, or modify inventory items\n",
 		"The database is stored in the file ISBN.txt\n",
 		"Do NOT directly modify the database file. Instead, use the database module\n"
@@ -114,14 +115,17 @@ int main()
 			case '1':
 				for (string temp : CashierHelp)
 					cout << temp;
+				Pause();
 				break;
 			case '2':
 				for (string temp : DatabaseHelp)
 					cout << temp;
+				Pause();
 				break;
 			case '3':
 				for (string temp : ReportHelp)
 					cout << temp;
+				Pause();
 				break;
 			case '4':
 				break;
