@@ -24,17 +24,15 @@ double SalesTax(double taxRate, double &itemPrice) //Calculate the tax cost and 
 	return taxCost;
 }
 
-double CompleteTransaction(vector<InventoryItem> &transaction)
+double CompleteTransaction(vector<InventoryItem> &transaction, vector<int> &indexes)
 {
 	double totalCost = 0;
-	for (int i = 0; i < transaction.size(); i++)
+	for (int i = 0; i < indexes.size(); i++)
 	{
-		totalCost += transaction[i].getPrice();
-		//Remove item from database
-		//
-		//
-		//
+		totalCost += transaction[indexes[i]].getPrice(); //Addup total transaction price
+		transaction.erase(transaction.begin() + indexes[i]); //Remove item from database
 	}
+	totalCost *= (1 + SALES_TAX);
 	return totalCost;
 }
 
@@ -44,17 +42,18 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 	TextRead(strUnsorted, vecItems);
 	SortISBN(vecItems);// Sort the items by isbn
 
-	vector<InventoryItem> purchases(0);
+	vector<int> index(0);
 	int itemIndex;
 	string searchISBN;
-		/*searchTitle,
-		searchAuthorLast,
-		searchAuthorFirst,
-		searchPublisher;*/
+	/*searchTitle,
+	searchAuthorLast,
+	searchAuthorFirst,
+	searchPublisher;*/
 	double totalPrice,
 		taxCost,
 		finalPurchase;
 	char confirmPurchase;
+	bool finish = false;
 
 	string strMainMenu[] = {
 		"================================================================================",
@@ -68,7 +67,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 		"\t2) - Exit Module\n"
 	};
 
-	while (1)	// Loop repeats forever until the user choose '2' in the module's main menu
+	while (!finish)	// Loop repeats forever until the user choose '2' in the module's main menu or completes a transaction.
 	{
 		system("cls");
 		for (string temp : strMainMenu)	// Display the module's main menu
@@ -96,9 +95,9 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			taxCost = SalesTax(SALES_TAX, totalPrice);
 
 			cout << fixed << setprecision(2);
-			cout << "The price of the item is:\n" << setw(8) << "$" << vecItems[itemIndex].getPrice() << endl;
-			cout << "The cost of tax is:\n" << setw(8) << "$" << taxCost << endl;
-			cout << "The total cost of the item is:\n" << setw(8) << "$" << totalPrice << endl << endl;
+			cout << left << setw(40) << "The price of the item is:" << "$" << vecItems[itemIndex].getPrice() << endl;
+			cout << left << setw(40) << "The cost of tax is:" << "$" << taxCost << endl;
+			cout << left << setw(40) << "The total cost of the item is:" << "$" << totalPrice << endl << endl;
 
 			cout << "Is this the book that you would like to purchase?" << endl;
 			cout << "Enter 'Y' or 'y' for yes." << endl;
@@ -106,16 +105,30 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cin.ignore();
 			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
 			{
-				purchases.push_back(vecItems[itemIndex]);
+				index.push_back(itemIndex);
 			}
 			else
 				break;
+
+			cout << "Would you like to check out?" << endl;
+			cout << "Enter 'Y' or 'y' for yes." << endl;
+			cin >> confirmPurchase;
+			cin.ignore();
+			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
+			{
+				finish = true;
+				system("cls");
+				cout << "Your final total is:" << endl;
+				finalPurchase = CompleteTransaction(vecItems, index);
+				cout << finalPurchase;
+				system("pause");
+			}
 			break;
-		/*case '2':
+			/*case '2':
 			cout
-				<< "================================================================================"
-				<< "\t\t\tEnter the book title" << endl
-				<< "================================================================================";
+			<< "================================================================================"
+			<< "\t\t\tEnter the book title" << endl
+			<< "================================================================================";
 			cin.ignore();
 			getline(cin, searchTitle);
 
@@ -134,21 +147,21 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cin >> confirmPurchase;
 			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
 			{
-				purchases.push_back(vecItems[itemIndex]);
+			purchases.push_back(vecItems[itemIndex]);
 			}
 			else
-				break;
 			break;
-		case '3':
+			break;
+			case '3':
 			cout
-				<< "================================================================================"
-				<< "\t\t\tEnter the author's last name" << endl
-				<< "================================================================================";
+			<< "================================================================================"
+			<< "\t\t\tEnter the author's last name" << endl
+			<< "================================================================================";
 			cin >> searchAuthorLast;
 			cout
-				<< "================================================================================"
-				<< "\t\t\tEnter the author's first name" << endl
-				<< "================================================================================";
+			<< "================================================================================"
+			<< "\t\t\tEnter the author's first name" << endl
+			<< "================================================================================";
 			cin >> searchAuthorFirst;
 
 			//Insert function for searching for the inventoryItem object
@@ -166,16 +179,16 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cin >> confirmPurchase;
 			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
 			{
-				purchases.push_back(vecItems[itemIndex]);
+			purchases.push_back(vecItems[itemIndex]);
 			}
 			else
-				break;
 			break;
-		case '4':
+			break;
+			case '4':
 			cout
-				<< "================================================================================"
-				<< "\t\t\tEnter the publisher's name" << endl
-				<< "================================================================================";
+			<< "================================================================================"
+			<< "\t\t\tEnter the publisher's name" << endl
+			<< "================================================================================";
 			cin >> searchPublisher;
 
 			//Insert function for searching for the inventoryItem object
@@ -194,11 +207,11 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			cin >> confirmPurchase;
 			if (confirmPurchase == 'y' || confirmPurchase == 'Y')
 			{
-				purchases.push_back(vecItems[itemIndex]);
+			purchases.push_back(vecItems[itemIndex]);
 			}
 			else
-				break;
-		case '5':
+			break;
+			case '5':
 			finalPurchase = CompleteTransaction(purchases);
 			cout << setprecision(2);
 			cout << "The total cost for the purchases is:" << setw(8) << "$" << finalPurchase << endl;
@@ -212,4 +225,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			break;
 		}
 	}
+	TextWrite(strUnsorted, vecItems);	// Write the sorted vector to the database file
+	bISBNFlag = true;		// Set the flag for the database file to true
+	return;
 }
