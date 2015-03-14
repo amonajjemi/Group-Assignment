@@ -47,7 +47,8 @@ int main()
 		"\t1) - Cashier module\n",
 		"\t2) - Inventory Database Module\n",
 		"\t3) - Report Module\n",
-		"\t4) - Exit Program\n" };
+		"\t4) - Exit Program\n",
+		"\t5) - Help\n"};
 	string Help[] = {
 		"================================================================================",
 		"\t\t\tHelp Menu\n",
@@ -58,7 +59,7 @@ int main()
 		"1) - Cashier module\n",
 		"2) - Database module\n",
 		"3) - Report module\n",
-		"5) - Nothing (go back)\n"};
+		"4) - Nothing (go back)\n"};
 	string CashierHelp[] = { 
 		""
 	};
@@ -66,12 +67,16 @@ int main()
 		"The database module manages a database file that stores all the information of\n",
 		"the current inventory.\n",
 		"Each inventory item has the following attributes:\n",
-		"ISBN, title, author, publisher, date added, quantity, wholeale cost, retail price",
+		"ISBN, title, author, publisher, date added, quantity, wholeale cost\n",
+		"	and retail price\n",
 		"You can search the database, and add, remove, or modify inventory items\n",
 		"The database is stored in the file ISBN.txt\n",
 		"Do NOT directly modify the database file. Instead, use the database module\n"
 		"	to add, remove, or modify items\n"
 		"The database file is always sorted by ISBN\n"};
+	string ReportHelp[] = {
+		""
+	};
 	while (1)	// Will always loop. The only exit condition is if the user chooses '4' in the main menu
 	{
 		try
@@ -88,7 +93,7 @@ int main()
 		system("cls");
 		for (string temp : MainMenu)	// Display the Main Menu
 			cout << temp;
-		switch (Choice('1', '4'))	// Choice in switch statement corresponds to choice in the menu
+		switch (Choice('1', '5'))	// Choice in switch statement corresponds to choice in the menu
 		{
 		case '1':
 			CashierModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);	// Call the cashier module, passing all the file flags by reference so they can be modified if necessary
@@ -101,6 +106,30 @@ int main()
 			break;
 		case '4':		// Exit condition for the Main Menu loop
 			return 0;
+			break;
+		case '5':
+			for (string temp : Help)
+				cout << temp;
+			switch (Choice('1', '4'))
+			{
+			case '1':
+				for (string temp : CashierHelp)
+					cout << temp;
+				Pause();
+				break;
+			case '2':
+				for (string temp : DatabaseHelp)
+					cout << temp;
+				Pause();
+				break;
+			case '3':
+				for (string temp : ReportHelp)
+					cout << temp;
+				Pause();
+				break;
+			case '4':
+				break;
+			}
 			break;
 		}
 	};
