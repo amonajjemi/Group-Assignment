@@ -1,8 +1,8 @@
 #include "Cashier.h"
 #include "Files.h"
 #include "Database.h"
-
 #include <iostream>
+
 #include <iomanip>
 #include <cstdlib>
 
@@ -18,10 +18,8 @@ strAuthorSorted = "author.txt";
 double SalesTax(double taxRate, double &itemPrice) //Calculate the tax cost and return it. Also return the total price by reference.
 {
 	double taxCost;
-
-	taxCost = itemPrice * taxRate;
-	itemPrice += taxCost;
-
+	taxCost = itemPrice * taxRate; //calculates the tax for a single item
+	itemPrice += taxCost; //calculates the cost with tax for a single item
 	return taxCost;
 }
 
@@ -31,10 +29,9 @@ double CompleteTransaction(vector<InventoryItem> &transaction, vector<int> &inde
 	for (int i = 0; i < indexes.size(); i++)
 	{
 		totalCost += transaction[indexes[i]].getPrice(); //Addup total transaction price
-		//transaction.erase(transaction.begin() + indexes[i]); //Remove item from database
-		Pause();
+		ReduceQuantity(transaction, indexes[i]);
 	}
-	totalCost *= (1 + SALES_TAX);
+	totalCost *= (1 + SALES_TAX); //calculate total transaction cost with tax
 	return totalCost;
 }
 
@@ -43,9 +40,9 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 	vector<InventoryItem> vecItems(0); //Holds the all the books in teh inventory
 	TextRead(strUnsorted, vecItems); //Reads in all books from the file
 	SortISBN(vecItems);// Sort the items by isbn
-
 	vector<int> index(0);
-	int itemIndex; //Receives teh serached book's index from teh search function
+
+	int itemIndex; //Receives teh serached book's index from the search function
 	string searchISBN; //holds the users input for the ISBN to search for
 	double totalPrice,//Holds the the price plus tax for each book is entered (replaced by each new book)
 		taxCost,// holds the tax cost for each individual book entered (replaced by each new book)
@@ -61,11 +58,12 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 		"\t2) - Exit Module\n" //MENU
 	};
 
-	while (!finish)	// Loop repeats forever until the user choose '2' in the module's main menu or completes a transaction.
+	while (!finish) // Loop repeats forever until the user choose '2' in the module's main menu or completes a transaction.
 	{
 		system("cls");
-		for (string temp : strMainMenu)	// Display the module's main menu
+		for (string temp : strMainMenu) // Display the module's main menu
 			cout << temp;
+
 		switch (Choice('1', '2'))
 		{
 		case '1':
@@ -91,42 +89,56 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			}
 			else
 			{
-				totalPrice = vecItems[itemIndex].getPrice();
-				taxCost = SalesTax(SALES_TAX, totalPrice);
-
+				totalPrice = vecItems[itemIndex].getPrice(); //Total price containst the cost of the item without tax
+				taxCost = SalesTax(SALES_TAX, totalPrice); //Now Total price contains the cost of the item with tax
 				cout << fixed << setprecision(2);
 				cout << left << setw(40) << vecItems[itemIndex].GetTitle() << endl; //Display book's name
 				cout << left << setw(40) << "The price of the item is:" << "$" << vecItems[itemIndex].getPrice() << endl; //Display book's price
 				cout << left << setw(40) << "The cost of tax is:" << "$" << taxCost << endl; //Display book's tax
 				cout << left << setw(40) << "The total cost of the item is:" << "$" << totalPrice << endl << endl; //Display book's total cost
-
 				cout << "Is this the book that you would like to purchase?" << endl;
 				cout << "Enter 'Y' or 'y' for yes." << endl;
 				cin >> confirmPurchase;
 				cin.ignore();
+				cout << endl;
 				if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Confirmation to purchase the book
 				{
 					index.push_back(itemIndex);
 				}
 				else
+				{
+					cout << "Returning to Cashier Menu." << endl;
+					Pause();
 					break;
-
+				}
 				cout << "Would you like to check out?" << endl;
 				cout << "Enter 'Y' or 'y' for yes." << endl;
 				cin >> confirmPurchase;
 				cin.ignore();
+				cout << endl;
 				if (confirmPurchase == 'y' || confirmPurchase == 'Y') //Determine whether to checkout and pay for the books
 				{
 					finish = true;
 					system("cls");
+					cout << "Books purchased:" << endl;
+					for (int i = 0; i < index.size(); i++)
+					{
+						cout << vecItems[index[i]].GetTitle() << endl;
+					}
+					cout << endl;
 					cout << "Your final total is:" << endl;
 					finalPurchase = CompleteTransaction(vecItems, index);
 					cout << "$" << finalPurchase << endl; //Display final price for user
-					Pause();//puases program for user
+					Pause();//pauses program for user
+				}
+				else
+				{
+					cout << "Your item is saved." << endl;
+					cout << "Returning to Cashier Menu." << endl;
+					Pause();
 				}
 			}
 			break;
-
 		case '2'://Exit the module
 			cout << "================================================================================"
 				<< "\t\t\tExit Module" << endl
@@ -135,7 +147,7 @@ void CashierModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool 
 			break;
 		}
 	}
-	TextWrite(strUnsorted, vecItems);	// Write the sorted vector to the database file
-	bISBNFlag = true;		// Set the flag for the database file to true
+	TextWrite(strUnsorted, vecItems); // Write the sorted vector to the database file
+	bISBNFlag = true; // Set the flag for the database file to true
 	return;
 }

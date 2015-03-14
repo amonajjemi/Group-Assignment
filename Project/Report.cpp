@@ -46,7 +46,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items" << endl
+				<< "\t\t\REPORT MODULE > List of All Books" << endl
 				<< "================================================================================";
 			// Sort the items by isbn and display
 			SortISBN(vecItems);
@@ -57,7 +57,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, with wholesale values" << endl
+				<< "\t\t\REPORT MODULE > Total Wholesale Values" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			cout << "Total wholesale value of the inventory: $" << getTotalWholesale(vecItems) << endl << endl;
@@ -68,7 +68,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, with retail values" << endl
+				<< "\t\t\REPORT MODULE > Total Retail Values" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			cout << "Total retail value of the inventory: $" << getTotalRetail(vecItems) << endl << endl;
@@ -79,7 +79,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, sorted by quantity" << endl
+				<< "\t\t\REPORT MODULE > All Books > Sorted by Quantity" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			DisplayItems(vecItems);
@@ -89,7 +89,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, sorted by cost" << endl
+				<< "\t\t\tREPORT MODULE > All Books > Sorted by Cost" << endl
 				<< "================================================================================";
 			SortCost(vecItems);
 			DisplayItems(vecItems);
@@ -99,7 +99,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\tList of all inventory items, sorted by age" << endl
+				<< "\t\t\tREPORT MODULE > All Books > Sorted by Age" << endl
 				<< "================================================================================";
 			SortAge(vecItems);
 			DisplayItems(vecItems);
