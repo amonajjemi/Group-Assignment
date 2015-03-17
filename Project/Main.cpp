@@ -61,7 +61,12 @@ int main()
 		"3) - Report module\n",
 		"4) - Nothing (go back)\n"};
 	string CashierHelp[] = { 
-		""
+		"The Cashier Module allows the cashier to search for a book by its ISBN number.\n"
+		"It then displays the book name and cost and asks if it is the book that the\n"
+		"customer wants to purchase.\n"
+		"Then the module asks if the customer would like to check out, if not, it allows\n"
+		"the cashier to serach for another book and repeats the process until the customer\n"
+		"decides to cash out and then it displays the final total.\n"
 	};
 	string DatabaseHelp[] = {
 		"The database module manages a database file that stores all the information of\n",
