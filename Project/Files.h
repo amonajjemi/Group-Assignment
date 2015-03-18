@@ -25,7 +25,8 @@ void UserInput(Type &value)
 	cin.ignore(10000, '\n');
 	cin.clear();
 }
-
+void InputISBN(string &);
+void InputAuthor(Name &);
 // UNUSED FUNCTIONS //
 void BinaryRead(string, InventoryItem*&);
 void BinaryWrite(string, InventoryItem*, int);

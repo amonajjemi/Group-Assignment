@@ -10,15 +10,13 @@ using namespace std;
 
 const string
 	strUnsorted = "unsorted.txt",
-	strISBNSorted = "ISBN.txt",
-	strTitleSorted = "title.txt",
-	strAuthorSorted = "author.txt";
+	strISBNSorted = "ISBN.txt";
 
 // Fires up the Report Module
-void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &bAuthorFlag){
+void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag){
 	// Array to hold all of the inventory items being used
 	vector<InventoryItem> vecItems(0);
-	TextRead(strUnsorted, vecItems);
+	TextRead(strISBNSorted, vecItems);
 
 	// Holds contents of the main menu
 	// To be displayed wherever needed
@@ -46,7 +44,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\REPORT MODULE > List of All Books" << endl
+				<< "\t\t\tREPORT MODULE > List of All Books" << endl
 				<< "================================================================================";
 			// Sort the items by isbn and display
 			SortISBN(vecItems);
@@ -57,7 +55,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\REPORT MODULE > Total Wholesale Values" << endl
+				<< "\t\t\tREPORT MODULE > Total Wholesale Values" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			cout << "Total wholesale value of the inventory: $" << getTotalWholesale(vecItems) << endl << endl;
@@ -68,7 +66,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\REPORT MODULE > Total Retail Values" << endl
+				<< "\t\t\tREPORT MODULE > Total Retail Values" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			cout << "Total retail value of the inventory: $" << getTotalRetail(vecItems) << endl << endl;
@@ -79,7 +77,7 @@ void ReportModule(bool &bUnsortedFlag, bool &bISBNFlag, bool &bTitleFlag, bool &
 			system("cls");
 			cout
 				<< "================================================================================"
-				<< "\t\t\REPORT MODULE > All Books > Sorted by Quantity" << endl
+				<< "\t\t\tREPORT MODULE > All Books > Sorted by Quantity" << endl
 				<< "================================================================================";
 			SortQuantity(vecItems);
 			DisplayItems(vecItems);
@@ -119,14 +117,30 @@ void DisplayItems(vector<InventoryItem> &vecItems) {
 		{							// It will add a system pause and a new header for every 10th object written to screen
 			Pause();
 			cout << endl
-				<< left << setw(14) << "ISBN" << setw(15) << "Title" << setw(12) << "Author" << setw(10) << "Publisher" << endl
-				<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
+				<< left << setw(15) << "ISBN" << setw(36) << "Title" << setw(2) << "Author" << endl
+				<< setw(15) << "Publisher" << setw(15) << "Date Added" << setw(10) << "Quantity" << setw(11) << "Wholesale" << setw(10) << "Price" << endl
 				<< "--------------------------------------------------------------------------------";
 		}
+		string temp;
+		cout << setw(15) << vecItems[k].getBook().getISBN();
+		if (vecItems[k].getBook().getTitle().length() > 36 - 3) // Limits the length of the title field, so that the combined length (Title, 2 quotation marks, and a space) doesn't exceed 36 characters (the setw() amount for the title)
+		{
+			temp = "\"";
+			for (int l = 0; l < 36 - 3 - 4; l++)	// Adds as many characters as will fit without overflowing (which is the setw() amount, minus space for the 3 dots, and minus space for two quotation marks and two spaces
+				temp += vecItems[k].getBook().getTitle()[l];
+			temp += "...\"";	// Adds three dots at the end, to signify that not all of the title is being displayed
+		}
+		else
+			temp = "\"" + vecItems[k].getBook().getTitle() + "\"";
+		cout
+			<< setw(36) << temp<< setw(20) << vecItems[k].getBook().getAuthor() << endl
+			<< setw(15) << vecItems[k].getBook().getPublisher() << setw(15) << vecItems[k].getDateAdded() << setw(10) << vecItems[k].getQuantity() << "$" << setw(10) << fixed << setprecision(2) << vecItems[k].getWholesale() << "$" << setw(9) << vecItems[k].getPrice() << endl << endl;
+		/*
 		cout << left
 			<< setw(14) << vecItems[k].getBook().getISBN() << "\"" << vecItems[k].getBook().getTitle() << "\"; " << vecItems[k].getBook().getAuthor() << "; " << vecItems[k].getBook().getPublisher() << endl
 			<< setw(12) << vecItems[k].getDateAdded() << setw(4) << vecItems[k].getQuantity()
 			<< setw(6) << fixed << setprecision(2) << vecItems[k].getWholesale() << setw(6) << vecItems[k].getPrice() << endl << endl;
+			*/
 	}
 	cout << endl
 		<< "================================================================================"

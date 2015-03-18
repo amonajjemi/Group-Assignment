@@ -243,15 +243,15 @@ ostream& operator<<(ostream &os, const Date &obj){
 	// ostream operator overload for the Date class
 	// Outputs the date in the format of "year-month-day"
 	// If a month or day is a single digit, a '0' is placed in front of it
-	string temp;
-	temp = to_string(obj.Year) + '-';
+	string date;
+	date = to_string(obj.Year) + '-';
 	if (to_string(obj.Month).length() == 1)
-		temp += '0';
-	temp += to_string(obj.Month) + '-';
+		date += '0';
+	date += to_string(obj.Month) + '-';
 	if (to_string(obj.Day).length() == 1)
-		temp += '0';
-	temp += to_string(obj.Day);
-	os << temp;
+		date += '0';
+	date += to_string(obj.Day);
+	os << date;
 	//os << obj.Year << "-";
 	//if (to_string(obj.Month).length() == 1)
 	//	os << "0";
@@ -270,7 +270,8 @@ istream& operator>>(istream &is, Date &obj){
 ofstream& operator<<(ofstream &ofs, const Date &obj){
 	// ofstream operator overload for the Date class
 	// Outputs the date in the formate of "year-month-day"
-	ofs << obj.Year << "-" << obj.Month << "-" << obj.Day << " ";
+	string date = to_string(obj.Year) + "-" + to_string(obj.Month) + "-" + to_string(obj.Day);
+	ofs << date;
 	return ofs;
 }
 ifstream& operator>>(ifstream &ifs, Date &obj){
@@ -288,7 +289,8 @@ ifstream& operator>>(ifstream &ifs, Date &obj){
 fstream& operator<<(fstream &fs, const Date &obj){
 	// output fstream operator overload for the Date class
 	// Works the same as the ofstream operator overload
-	fs << obj.Year << "-" << obj.Month << "-" << obj.Day << " ";
+	string date = to_string(obj.Year) + "-" + to_string(obj.Month) + "-" + to_string(obj.Day);
+	fs << date;
 	return fs;
 }
 fstream& operator>>(fstream &fs, Date &obj){

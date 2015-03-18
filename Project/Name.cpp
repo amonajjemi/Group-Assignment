@@ -77,7 +77,8 @@ void Name::operator=(const Name &obj){
 ostream& operator<<(ostream &os, const Name &obj){
 	// ostream operator for the Name class
 	// Gives output in the form of "last name, first name"
-	os << obj.Last << ", " << obj.First;
+	string name = obj.Last + ", " + obj.First;
+	os << name;
 	return os;
 }
 istream& operator>>(istream &is, Name &obj){
@@ -89,7 +90,8 @@ istream& operator>>(istream &is, Name &obj){
 ofstream& operator<<(ofstream &ofs, const Name &obj){
 	// ofstream operator for the Name class
 	// Gives output in the form of "last name, first name"
-	ofs << obj.Last << " " << obj.First;
+	string name = obj.Last + ", " + obj.First;
+	ofs << name;
 	return ofs;
 }
 ifstream& operator>>(ifstream &ifs, Name &obj){
@@ -104,7 +106,8 @@ ifstream& operator>>(ifstream &ifs, Name &obj){
 fstream& operator<<(fstream &fs, const Name &obj){
 	// input fstream operator for the Name class
 	// Gives output in the form of "last name, first name"
-	fs << obj.Last << " " << obj.First;
+	string name = obj.Last + ", " + obj.First;
+	fs << name;
 	return fs;
 }
 fstream& operator>>(fstream &fs, Name &obj){

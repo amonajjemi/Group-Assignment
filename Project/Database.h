@@ -7,8 +7,7 @@
 using namespace std;
 
 void ReduceQuantity(vector<InventoryItem> &, int);
-void DatabaseModule(bool&, bool&, bool&, bool&);
-void DatabaseMenu(InventoryItem*, int);
+void DatabaseModule(bool&, bool&);
 
 // Sorts the vector by ISBN values in ascending order
 void SortISBN(vector<InventoryItem> &);

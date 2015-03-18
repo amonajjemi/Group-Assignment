@@ -52,16 +52,20 @@ void DisplayItem(InventoryItem &item) {
 		&item - An InventoryItem object, passed by reference to reduce overhead. The object is not modified in any way
 	Returns: Nothing
 	*/
-	/*
-	cout << endl
-		<< left << setw(14) << "ISBN" << setw(15) << "Title" << right << setw(12) << "Author" << setw(10) << "Publisher" << endl << left
-		<< setw(12) << "Date Added" << setw(10) << "Quantity" << setw(10) << "Wholesale" << setw(6) << "Price" << endl
-		<< "--------------------------------------------------------------------------------";
-		*/
-		cout << left
-			<< setw(14) << item.getBook().getISBN() << "\"" << item.getBook().getTitle() << "\"; " << right << setw(15) << item.getBook().getAuthor() << "; " << item.getBook().getPublisher() << endl << left
-			<< setw(12) << item.getDateAdded() << setw(4) << item.getQuantity()
-			<< setw(6) << fixed << setprecision(2) << item.getWholesale() << setw(6) << item.getPrice() << endl << endl;
+	string temp;
+	cout << setw(15) << item.getBook().getISBN();
+	if (item.getBook().getTitle().length() > 36 - 3) // Limits the length of the title field, so that the combined length (Title, 2 quotation marks, and a space) doesn't exceed 36 characters (the setw() amount for the title)
+	{
+		temp = "\"";
+		for (int k = 0; k < 36 - 3 - 4; k++)	// Adds as many characters as will fit without overflowing (which is the setw() amount, minus space for the 3 dots, and minus space for two quotation marks and two spaces
+			temp += item.getBook().getTitle()[k];
+		temp += "...\"";	// Adds three dots at the end, to signify that not all of the title is being displayed
+	}
+	else
+		temp = "\"" + item.getBook().getTitle() + "\"";	
+	cout
+		<< setw(36) << temp << setw(20) << item.getBook().getAuthor() << endl
+		<< setw(15) << item.getBook().getPublisher() << setw(15) << item.getDateAdded() << setw(10) << item.getQuantity() << "$" << setw(10) << fixed << setprecision(2) << item.getWholesale() << "$" << setw(9) << item.getPrice() << endl << endl;
 }
 void TextRead(string strFile, InventoryItem *&items)
 {	/*
@@ -274,6 +278,66 @@ void Pause(){
 	cin.clear();
 	cin.ignore(1,'\n');
 }
+void InputISBN(string &strChoice){	// This code is repeated so often, and is so long, it is worth making a function for
+	/*
+	Function: Get user input for ISBN, and validate that input
+	Paramters: 
+		&strChoice - Value being passed to store input
+	Returns: Nothing
+	*/
+	bool flag;	// Flag for validation testing
+	do	// Loop repeats until valid input is recieved. If invalid input is recieved, flag is set to false, and the loop repeats
+	{
+		flag = false;
+		do
+		{	// If the ISBN is not the proper length, the user is prompted for input again
+			cout << "Enter ISBN: ";
+			UserInput(strChoice);	// Use UserInput() function to get input for the ISBN
+			if (strChoice.length() != 13)
+				cout << "The ISBN must be 13 digits" << endl;
+		} while (strChoice.length() != 13);
+		for (int k = 0; k < strChoice.length(); k++)
+		{
+			if (!isdigit(strChoice[k]))	// If the ISBN contains any non-digit characters, the user is prompted for input again
+				flag = true;
+		}
+	} while (flag);
+}
+void InputAuthor(Name &naChoice){	// This code is repeated so often, and is so long, it is worth making a function for
+	/*
+	Function: Get user input for book author, and validate that input
+	Paramters: 
+		&naChoice - Value being passed to store input
+	Returns: Nothing
+	*/
+	bool flag;	// Flag for validation testing
+	do	// Loop repeats until valid input is recieved. If invalid input is recieved, flag is set to false, and the loop repeats
+	{
+		flag = false;
+		cout << "Enter author (Last Name First Name): ";
+		UserInput(naChoice);	// Use UserInput() function to get input for author name
+		for (int k = 0; k < naChoice.GetFirstName().length(); k++)
+			if (!isalpha(naChoice.GetFirstName()[k]))	// If the first name contains anything that is not an alphabetic character
+				flag = true;
+		for (int k = 0; k < naChoice.GetLastName().length(); k++)
+			if (!isalpha(naChoice.GetLastName()[k]))	// If the last name contains anything that is not an alphabetic character
+				flag = true;
+		if (flag)
+			cout << "Invalid name" << endl;
+	} while (flag);
+}
+
+/*
+// File creator using books.txt file
+unsigned seed = time(0);
+srand(seed);
+Book books[50];
+vector<InventoryItem> vecItemsBook(50);
+TextRead("books.txt", books);
+for (int k = 0; k < 50; k++)	// Assigns values for all objects in the arrItems[] array
+vecItemsBook[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
+TextWrite(strUnsorted, vecItemsBook);	// Write the array of objects into a file
+*/
 //
 //int Random(int min, int max)
 //{	/*

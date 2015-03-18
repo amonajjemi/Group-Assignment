@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void ReportModule(bool&, bool&, bool&, bool&);
+void ReportModule(bool&, bool&);
 void ReportMenu();
 
 // Functions to display the items in the order of the vector passed in 

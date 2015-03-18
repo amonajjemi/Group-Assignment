@@ -14,32 +14,17 @@ using namespace std;
 // The files should all hold the same information, just sorted in different ways. Having pre sorted files allows for faster data access.
 const string
 	strUnsorted = "unsorted.txt",
-	strISBNSorted = "ISBN.txt",
-	strTitleSorted = "title.txt",
-	strAuthorSorted = "author.txt";
+	strISBNSorted = "ISBN.txt";
 
 // File flags that are used to let the program know that certain files exist and have up to date values
 // Each file has its own corresponding flag
 bool
 	bUnsortedFlag = false,
-	bISBNFlag = false,
-	bTitleFlag = false,
-	bAuthorFlag = false;
+	bISBNFlag = false;
 
 int main()
 {
 
-	/*
-	// File creator using books.txt file
-	unsigned seed = time(0);
-	srand(seed);
-	Book books[50];
-	vector<InventoryItem> vecItemsBook(50);
-	TextRead("books.txt", books);
-	for (int k = 0; k < 50; k++)	// Assigns values for all objects in the arrItems[] array
-		vecItemsBook[k] = { books[k], RandomDate(), Random(1, 100), RandomWholesale(), RandomPrice() };
-	TextWrite(strUnsorted, vecItemsBook);	// Write the array of objects into a file
-	*/
 	string MainMenu[] = {	// String array to hold the main menu
 		"================================================================================",
 		"\t\t\t\tMAIN MENU\n",
@@ -47,8 +32,8 @@ int main()
 		"\t1) - Cashier module\n",
 		"\t2) - Inventory Database Module\n",
 		"\t3) - Report Module\n",
-		"\t4) - Exit Program\n",
-		"\t5) - Help\n"};
+		"\t4) - Help\n",
+		"\t5) - Exit Program\n"};
 	string Help[] = {
 		"================================================================================",
 		"\t\t\tHelp Menu\n",
@@ -59,9 +44,9 @@ int main()
 		"1) - Cashier module\n",
 		"2) - Database module\n",
 		"3) - Report module\n",
-		"4) - Nothing (go back)\n"};
+		"4) - Go back to main menu\n"};
 	string CashierHelp[] = { 
-		"The Cashier Module allows the cashier to search for a book by its ISBN number.\n"
+		"\nThe Cashier Module allows the cashier to search for a book by its ISBN number.\n"
 		"It then displays the book's name and cost and asks if it is the book that the\n"
 		"customer wants to purchase.\n"
 		"Then the module asks if the customer would like to check out, if not, it allows\n"
@@ -69,12 +54,13 @@ int main()
 		"customer decides to cash out and then it displays the final total.\n"
 	};
 	string DatabaseHelp[] = {
-		"The database module manages a database file that stores all the information of\n",
+		"\nThe database module manages a database file that stores all the information of\n",
 		"the current inventory.\n",
 		"Each inventory item has the following attributes:\n",
 		"ISBN, title, author, publisher, date added, quantity, wholeale cost\n",
 		"	and retail price\n",
 		"You can search the database, and add, remove, or modify inventory items\n",
+		"To add more of an item, modify the inventory item's quantity\n",
 		"The database is stored in the file ISBN.txt\n",
 		"Do NOT directly modify the database file. Instead, use the database module\n"
 		"	to add, remove, or modify items\n"
@@ -86,8 +72,8 @@ int main()
 	{
 		try
 		{
-			if (FileFlagTest(strUnsorted))
-				bUnsortedFlag = true;
+			if (FileFlagTest(strISBNSorted))
+				bISBNFlag = true;
 		}
 		catch (char *str)
 		{
@@ -101,40 +87,48 @@ int main()
 		switch (Choice('1', '5'))	// Choice in switch statement corresponds to choice in the menu
 		{
 		case '1':
-			CashierModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);	// Call the cashier module, passing all the file flags by reference so they can be modified if necessary
+			CashierModule(bUnsortedFlag, bISBNFlag);	// Call the cashier module, passing all the file flags by reference so they can be modified if necessary
 			break;
 		case '2':
-			DatabaseModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);	// Call the database module, passing all the file flags by reference so they can be modified if necessary
+			DatabaseModule(bUnsortedFlag, bISBNFlag);	// Call the database module, passing all the file flags by reference so they can be modified if necessary
 			break;
 		case '3':
-			ReportModule(bUnsortedFlag, bISBNFlag, bTitleFlag, bAuthorFlag);	// Call the report module, passing all the file flags by reference so they can be modified if necessary
+			ReportModule(bUnsortedFlag, bISBNFlag);	// Call the report module, passing all the file flags by reference so they can be modified if necessary
 			break;
 		case '4':		// Exit condition for the Main Menu loop
-			return 0;
+			while (true)
+			{
+				bool exitStatus = false;
+				system("cls");
+				for (string temp : Help)
+					cout << temp;
+				switch (Choice('1', '4'))
+				{
+				case '1':
+					for (string temp : CashierHelp)
+						cout << temp;
+					Pause();
+					break;
+				case '2':
+					for (string temp : DatabaseHelp)
+						cout << temp;
+					Pause();
+					break;
+				case '3':
+					for (string temp : ReportHelp)
+						cout << temp;
+					Pause();
+					break;
+				case '4':
+					exitStatus = true;
+					break;
+				}
+				if (exitStatus)
+					break;
+			}
 			break;
 		case '5':
-			for (string temp : Help)
-				cout << temp;
-			switch (Choice('1', '4'))
-			{
-			case '1':
-				for (string temp : CashierHelp)
-					cout << temp;
-				Pause();
-				break;
-			case '2':
-				for (string temp : DatabaseHelp)
-					cout << temp;
-				Pause();
-				break;
-			case '3':
-				for (string temp : ReportHelp)
-					cout << temp;
-				Pause();
-				break;
-			case '4':
-				break;
-			}
+			return 0;
 			break;
 		}
 	};
