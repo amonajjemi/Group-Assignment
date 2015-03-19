@@ -66,7 +66,11 @@ int main()
 		"	to add, remove, or modify items\n"
 		"The database file is always sorted by ISBN\n"};
 	string ReportHelp[] = {
-		""
+		"The report module allows you to view various reports according to the \n",
+		"information about the current inventory.\n",
+		"You can calculate the total wholesale and retail values of all \n",
+		"of the books in the database, as well as view lists of books \n",
+		"sorted by quantity, cost, and age.\n"
 	};
 	while (1)	// Will always loop. The only exit condition is if the user chooses '4' in the main menu
 	{
